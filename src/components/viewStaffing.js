@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProjectRow = () => (
   <div>
-    <h3>Hey, you got a staffing project! Now what?</h3>
+    <h3>TODO: viewStaffing.js</h3>
   </div>
 );
 
