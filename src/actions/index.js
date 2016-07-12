@@ -6,6 +6,8 @@ export const GET_EMPLOYEES = 'GET_EMPLOYEES';
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_STAFFING = 'GET_STAFFING';
 export const SELECT_EMPLOYEE = 'SELECT_EMPLOYEE';
+export const SELECT_YEAR = 'SELECT_YEAR';
+export const SELECT_WEEK = 'SELECT_WEEK';
 export const CREATE_STAFFING = 'CREATE_STAFFING';
 
 export const apiError = (message) => ({
@@ -35,6 +37,16 @@ export const getStaffing = () => ({
 export const selectEmployee = (id) => ({
   type: SELECT_EMPLOYEE,
   payload: id
+});
+
+export const selectYear = (year) => ({
+  type: SELECT_YEAR,
+  payload: year
+});
+
+export const selectWeek = (week) => ({
+  type: SELECT_WEEK,
+  payload: week
 });
 
 export const createStaffing = (data) => ({
