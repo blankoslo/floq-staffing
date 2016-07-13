@@ -73,7 +73,7 @@ describe('<EditStaffing />-table', () => {
     const { wrapper, actions } = setup();
     const valueUnderTest = 3;
     // The input-field's are on the form 'project.id-week.number'
-    wrapper.find('#TEST1000-1').simulate('change', { target: { value: valueUnderTest } });
+    wrapper.find('#field-TEST1000-1').simulate('change', { target: { value: valueUnderTest } });
     expect(actions.onChange.calls.length).toEqual(1);
     expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 1, valueUnderTest]);
   });
