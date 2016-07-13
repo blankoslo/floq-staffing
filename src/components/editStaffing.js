@@ -10,7 +10,7 @@ const EditStaffing = props =>
 (
   <div>
     <div style={{ textAlign: 'center' }}>
-      <h3>{props.employee.data.name}</h3>
+      <h1>{props.employee.data.name}</h1>
       <h2>{props.tableData.data.weeks[0].year}</h2>
     </div>
     <div>
