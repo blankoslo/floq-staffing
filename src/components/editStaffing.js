@@ -37,6 +37,11 @@ const EditStaffing = props =>
                       value={col}
                       style={{ width: 20 }}
                       id={`${project.id}-${props.tableData.data.weeks[colIndex].week}`}
+                      onChange={e => props.onChange(
+                        project.id,
+                        props.tableData.data.weeks[colIndex].week,
+                        e.target.value)
+                      }
                     />
                     <IconButton>
                       <ContentAdd />
