@@ -50,7 +50,14 @@ const EditStaffing = props =>
                         e.target.value)
                       }
                     />
-                    <IconButton>
+                    <IconButton
+                      id={`add-${project.id}-${props.tableData.data.weeks[colIndex].week}`}
+                      onClick={() => props.onChange(
+                        project.id,
+                        props.tableData.data.weeks[colIndex].week,
+                        col + 1)
+                      }
+                    >
                       <ContentAdd />
                     </IconButton>
                   </div>
