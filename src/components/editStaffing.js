@@ -30,7 +30,14 @@ const EditStaffing = props =>
               {project.days.map((col, colIndex) => (
                 <TableRowColumn key={colIndex}>
                   <div>
-                    <IconButton>
+                    <IconButton
+                      id={`remove-${project.id}-${props.tableData.data.weeks[colIndex].week}`}
+                      onClick={() => props.onChange(
+                        project.id,
+                        props.tableData.data.weeks[colIndex].week,
+                        col - 1)
+                      }
+                    >
                       <ContentRemove />
                     </IconButton>
                     <TextField

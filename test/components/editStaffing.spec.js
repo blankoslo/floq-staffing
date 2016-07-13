@@ -77,4 +77,11 @@ describe('<EditStaffing />-table', () => {
     expect(actions.onChange.calls.length).toEqual(1);
     expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 1, valueUnderTest]);
   });
+
+  it('contains remove-button which triggers onChange when clicked with expected arguments', () => {
+    const { wrapper, actions } = setup();
+    wrapper.find('#remove-TEST1000-2').simulate('click');
+    expect(actions.onChange.calls.length).toEqual(1);
+    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 2, 0]);
+  });
 });
