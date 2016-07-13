@@ -36,7 +36,7 @@ const EditStaffing = props =>
                     <TextField
                       value={col}
                       style={{ width: 20 }}
-                      id={`${project.id}-${props.tableData.data.weeks[colIndex]}`}
+                      id={`${project.id}-${props.tableData.data.weeks[colIndex].week}`}
                     />
                     <IconButton>
                       <ContentAdd />
