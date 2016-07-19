@@ -47,11 +47,17 @@ const getTableData = (selectedEmployee, selectedYear, selectedWeek, staffing, pr
     return { loading: true, data: new Immutable.Map() };
   }
   const weeks = showWeeks(selectedWeek, selectedYear);
+  const projectsWithWeeks = showProjects(projects, staffing, weeks, selectedEmployee);
   const result = {
     loading: false,
     data: {
-      weeks,
-      projects: showProjects(projects, staffing, weeks, selectedEmployee),
+      weeks: weeks.map((w, index) =>
+        Object.assign({}, w, {
+          total: projectsWithWeeks
+            .map(p => p.days[index])
+            .reduce((pre, cur) => parseInt(pre) + parseInt(cur), 0)
+        })),
+      projects: projectsWithWeeks,
     }
   };
   return result;

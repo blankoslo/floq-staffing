@@ -32,7 +32,7 @@ export const getStaffing = () => fetch(`${baseURL}/staffing`, {
   headers
 }).then(response => response.json());
 
-export const createStaffing = body => fetch(`${baseURL}/rpc/add_day_to_week`, {
+export const createStaffing = body => fetch(`${baseURL}/rpc/add_days_to_week`, {
   method: 'POST',
   headers: dataHeaders,
   body: JSON.stringify(body)

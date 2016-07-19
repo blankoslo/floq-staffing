@@ -19,7 +19,9 @@ const EditStaffing = props =>
           <TableRow>
             <TableHeaderColumn>Prosjekter</TableHeaderColumn>
             {props.tableData.data.weeks.map((row, index) => (
-              <TableHeaderColumn key={index}>Uke {row.week}</TableHeaderColumn>
+              <TableHeaderColumn key={index}>
+                Uke {row.week} ({props.tableData.data.weeks[index].total})
+              </TableHeaderColumn>
             ))}
           </TableRow>
         </TableHeader>
@@ -32,10 +34,11 @@ const EditStaffing = props =>
                   <div>
                     <IconButton
                       id={`remove-${project.id}-${props.tableData.data.weeks[colIndex].week}`}
+                      disabled={props.tableData.data.weeks[colIndex].total < 1}
                       onClick={() => props.onChange(
                         project.id,
                         props.tableData.data.weeks[colIndex].week,
-                        col - 1)
+                        -1)
                       }
                     >
                       <ContentRemove />
@@ -47,15 +50,16 @@ const EditStaffing = props =>
                       onChange={e => props.onChange(
                         project.id,
                         props.tableData.data.weeks[colIndex].week,
-                        e.target.value)
+                        e.target.value - col)
                       }
                     />
                     <IconButton
                       id={`add-${project.id}-${props.tableData.data.weeks[colIndex].week}`}
+                      disabled={props.tableData.data.weeks[colIndex].total > 6}
                       onClick={() => props.onChange(
                         project.id,
                         props.tableData.data.weeks[colIndex].week,
-                        col + 1)
+                        1)
                       }
                     >
                       <ContentAdd />

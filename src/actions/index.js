@@ -51,5 +51,7 @@ export const selectWeek = (week) => ({
 
 export const createStaffing = (data) => ({
   type: CREATE_STAFFING,
-  payload: api.createStaffing(data)
+  payload: api.createStaffing(data),
+  employee: data.in_employee,
+  project: data.in_project
 });

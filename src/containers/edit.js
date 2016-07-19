@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import employeeSelector from '../selectors/employeeSelector';
 import tableDataSelector from '../selectors/tableDataSelector';
-import { selectEmployee, selectYear, selectWeek } from '../actions/index';
+import { selectEmployee, selectYear, selectWeek, createStaffing } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +15,21 @@ class App extends Component {
     }
   }
 
+  onChange = (projectId, week, days) => {
+    // TODO: replace with validation.
+    if (!days || days > 7 || days < -7) {
+      return;
+    }
+    // TODO: createStaffing is actually add-staffing only
+    this.props.createStaffing({
+      in_employee: this.props.employee.data.id,
+      in_project: projectId,
+      in_week: week,
+      in_days: days,
+      in_year: this.props.selected_year,
+    });
+  };
+
   // TODO: componentwillrender ny params id
 
   render() {
@@ -24,7 +39,8 @@ class App extends Component {
     const children = React.Children.map(this.props.children,
       child => React.cloneElement(child, {
         employee: this.props.employee,
-        tableData: this.props.tableData
+        tableData: this.props.tableData,
+        onChange: this.onChange
       }));
 
     return (
@@ -42,6 +58,7 @@ App.propTypes = {
   projects: React.PropTypes.object.isRequired,
   employees: React.PropTypes.object.isRequired,
   staffing: React.PropTypes.object.isRequired,
+  selected_year: React.PropTypes.number.isRequired,
 
   // mapStateToProps
   employee: React.PropTypes.object.isRequired,
@@ -50,18 +67,21 @@ App.propTypes = {
   // mapDispatchToProps
   selectEmployee: React.PropTypes.func.isRequired,
   selectYear: React.PropTypes.func.isRequired,
-  selectWeek: React.PropTypes.func.isRequired
+  selectWeek: React.PropTypes.func.isRequired,
+  createStaffing: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   employee: employeeSelector(state),
-  tableData: tableDataSelector(state)
+  tableData: tableDataSelector(state),
+  selected_year: state.selected_year
 });
 
 const mapDispatchToProps = {
   selectEmployee,
   selectYear,
-  selectWeek
+  selectWeek,
+  createStaffing
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

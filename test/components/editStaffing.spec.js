@@ -18,15 +18,18 @@ const setup = () => {
       weeks: [
         {
           week: 1,
-          year: 2016
+          year: 2016,
+          total: 5
         },
         {
           week: 2,
-          year: 2016
+          year: 2016,
+          total: 6
         },
         {
           week: 3,
-          year: 2016
+          year: 2016,
+          total: 7
         }
       ],
       projects: [
@@ -38,12 +41,12 @@ const setup = () => {
         {
           id: 'TEST1001',
           name: 'test_project_two',
-          days: [5, 2, 6]
+          days: [3, 2, 0]
         },
         {
           id: 'TEST1002',
           name: 'test_project_two',
-          days: [2, 0, 5]
+          days: [2, 3, 5]
         }
       ]
     }
@@ -82,13 +85,13 @@ describe('<EditStaffing />-table', () => {
     const { wrapper, actions } = setup();
     wrapper.find('#remove-TEST1000-2').simulate('click');
     expect(actions.onChange.calls.length).toEqual(1);
-    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 2, 0]);
+    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 2, -1]);
   });
 
   it('contains add-button which triggers onChange when clicked with expected arguments', () => {
     const { wrapper, actions } = setup();
     wrapper.find('#add-TEST1000-2').simulate('click');
     expect(actions.onChange.calls.length).toEqual(1);
-    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 2, 2]);
+    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 2, 1]);
   });
 });
