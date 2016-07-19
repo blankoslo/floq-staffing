@@ -26,10 +26,8 @@ const getProjectDays = (projectId, staffing, weeks, employeeId) =>
 
     // moment().add(..) mutates
     for (let i = 0; i < 7; (i++, firstDate.add(1, 'days'))) {
-      const staffedDay = staffing.data
-        .get(`${employeeId}${projectId}${firstDate.format('YYYY-MM-DD')}`);
-
-      if (staffedDay != null) {
+      if (staffing.data
+        .contains(`${employeeId}${projectId}${firstDate.format('YYYY-MM-DD')}`)) {
         sumWeek++;
       }
     }

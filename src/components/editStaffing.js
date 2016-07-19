@@ -34,11 +34,12 @@ const EditStaffing = props =>
                   <div>
                     <IconButton
                       id={`remove-${project.id}-${props.tableData.data.weeks[colIndex].week}`}
-                      disabled={props.tableData.data.weeks[colIndex].total < 1}
+                      disabled={props.tableData.data.weeks[colIndex].total > 6
+                      && col === 0}
                       onClick={() => props.onChange(
                         project.id,
                         props.tableData.data.weeks[colIndex].week,
-                        -1)
+                        col === 0 ? 7 - props.tableData.data.weeks[colIndex].total : -1)
                       }
                     >
                       <ContentRemove />

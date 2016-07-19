@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import employeeSelector from '../selectors/employeeSelector';
 import tableDataSelector from '../selectors/tableDataSelector';
-import { selectEmployee, selectYear, selectWeek, createStaffing } from '../actions/index';
+import { selectEmployee, selectYear, selectWeek,
+  addStaffing, removeStaffing } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
@@ -16,18 +17,24 @@ class App extends Component {
   }
 
   onChange = (projectId, week, days) => {
-    // TODO: replace with validation.
-    if (!days || days > 7 || days < -7) {
-      return;
+    // TODO: replace checks with validation?
+    if (days > 0 && days <= 7) {
+      this.props.addStaffing({
+        in_employee: this.props.employee.data.id,
+        in_project: projectId,
+        in_week: week,
+        in_days: days,
+        in_year: this.props.selected_year,
+      });
+    } else if (days < 0 && days >= -7) {
+      this.props.removeStaffing({
+        in_employee: this.props.employee.data.id,
+        in_project: projectId,
+        in_week: week,
+        in_days: Math.abs(days),
+        in_year: this.props.selected_year,
+      });
     }
-    // TODO: createStaffing is actually add-staffing only
-    this.props.createStaffing({
-      in_employee: this.props.employee.data.id,
-      in_project: projectId,
-      in_week: week,
-      in_days: days,
-      in_year: this.props.selected_year,
-    });
   };
 
   // TODO: componentwillrender ny params id
@@ -68,7 +75,8 @@ App.propTypes = {
   selectEmployee: React.PropTypes.func.isRequired,
   selectYear: React.PropTypes.func.isRequired,
   selectWeek: React.PropTypes.func.isRequired,
-  createStaffing: React.PropTypes.func.isRequired
+  addStaffing: React.PropTypes.func.isRequired,
+  removeStaffing: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -81,7 +89,8 @@ const mapDispatchToProps = {
   selectEmployee,
   selectYear,
   selectWeek,
-  createStaffing
+  addStaffing,
+  removeStaffing
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

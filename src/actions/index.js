@@ -8,7 +8,8 @@ export const GET_STAFFING = 'GET_STAFFING';
 export const SELECT_EMPLOYEE = 'SELECT_EMPLOYEE';
 export const SELECT_YEAR = 'SELECT_YEAR';
 export const SELECT_WEEK = 'SELECT_WEEK';
-export const CREATE_STAFFING = 'CREATE_STAFFING';
+export const ADD_STAFFING = 'ADD_STAFFING';
+export const REMOVE_STAFFING = 'REMOVE_STAFFING';
 
 export const apiError = (message) => ({
   type: API_ERROR,
@@ -49,9 +50,16 @@ export const selectWeek = (week) => ({
   payload: week
 });
 
-export const createStaffing = (data) => ({
-  type: CREATE_STAFFING,
-  payload: api.createStaffing(data),
+export const addStaffing = (data) => ({
+  type: ADD_STAFFING,
+  payload: api.addStaffing(data),
+  employee: data.in_employee,
+  project: data.in_project
+});
+
+export const removeStaffing = (data) => ({
+  type: REMOVE_STAFFING,
+  payload: api.removeStaffing(data),
   employee: data.in_employee,
   project: data.in_project
 });
