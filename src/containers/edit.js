@@ -5,7 +5,7 @@ import tableDataSelector from '../selectors/tableDataSelector';
 import { selectEmployee, selectYear, selectWeek,
   addStaffing, removeStaffing } from '../actions/index';
 
-class App extends Component {
+class Edit extends Component {
   constructor(props) {
     super(props);
     if (props.params.id !== undefined) {
@@ -58,7 +58,7 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
+Edit.propTypes = {
   params: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired,
   children: React.PropTypes.object,
@@ -93,4 +93,4 @@ const mapDispatchToProps = {
   removeStaffing
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Edit);
