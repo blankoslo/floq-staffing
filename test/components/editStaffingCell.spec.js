@@ -28,11 +28,11 @@ const setup = () => {
 describe('<EditStaffingCell />-table', () => {
   it('contains input-field which triggers onChange with expected arguments', () => {
     const { wrapper, actions } = setup();
-    const valueUnderTest = 7;
+    const valueUnderTest = 6;
     // The input-field's are on the form 'project.id-week.number'
     wrapper.find('#field-TEST1000-40').simulate('change', { target: { value: valueUnderTest } });
     expect(actions.onChange.calls.length).toEqual(1);
-    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 40, 5]);
+    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 40, 4]);
   });
 
   it('contains remove-button which triggers onChange when clicked with expected arguments', () => {
