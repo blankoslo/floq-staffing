@@ -20,78 +20,36 @@ const setup = () => {
           week: 1,
           year: 2016,
           total: 5
-        },
-        {
-          week: 2,
-          year: 2016,
-          total: 6
-        },
-        {
-          week: 3,
-          year: 2016,
-          total: 7
         }
       ],
       projects: [
         {
           id: 'TEST1000',
           name: 'test_project_one',
-          days: [0, 1, 2]
-        },
-        {
-          id: 'TEST1001',
-          name: 'test_project_two',
-          days: [3, 2, 0]
-        },
-        {
-          id: 'TEST1002',
-          name: 'test_project_two',
-          days: [2, 3, 5]
+          days: [0]
         }
       ]
     }
-  };
-
-  const actions = {
-    onChange: expect.createSpy()
   };
 
   const wrapper = shallow(
     <EditStaffing
       employee={employee}
       tableData={tableData}
-      onChange={actions.onChange}
+      onChange={() => {}}
     />);
 
   return {
     employee,
     tableData,
-    actions,
     wrapper
   };
 };
 
 describe('<EditStaffing />-table', () => {
-  it('contains input-field which triggers onChange with expected arguments', () => {
-    const { wrapper, actions } = setup();
-    const valueUnderTest = 3;
-    // The input-field's are on the form 'project.id-week.number'
-    wrapper.find('#field-TEST1000-1').simulate('change', { target: { value: valueUnderTest } });
-    expect(actions.onChange.calls.length).toEqual(1);
-    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 1, valueUnderTest]);
-  });
-
-  it('contains remove-button which triggers onChange when clicked with expected arguments', () => {
-    const { wrapper, actions } = setup();
-    wrapper.find('#remove-TEST1000-2').simulate('click');
-    expect(actions.onChange.calls.length).toEqual(1);
-    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 2, -1]);
-  });
-
-  it('contains add-button which triggers onChange when clicked with expected arguments', () => {
-    const { wrapper, actions } = setup();
-    wrapper.find('#add-TEST1000-2').simulate('click');
-    expect(actions.onChange.calls.length).toEqual(1);
-    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', 2, 1]);
+  it('contains name and year in headers', () => {
+    const { wrapper } = setup();
+    expect(wrapper.find('h1').text()).toContain('test_employee_one');
+    expect(wrapper.find('h2').text()).toContain('2016');
   });
 });

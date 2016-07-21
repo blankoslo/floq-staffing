@@ -1,10 +1,7 @@
 import React from 'react';
 import { Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn } from 'material-ui/Table';
-import TextField from 'material-ui/TextField';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentRemove from 'material-ui/svg-icons/content/remove';
-import IconButton from 'material-ui/IconButton';
+import EditStaffingCell from './editStaffingCell';
 
 const EditStaffing = props =>
 (
@@ -31,41 +28,16 @@ const EditStaffing = props =>
               <TableRowColumn>{project.name}</TableRowColumn>
               {project.days.map((col, colIndex) => (
                 <TableRowColumn key={colIndex}>
-                  <div>
-                    <IconButton
-                      id={`remove-${project.id}-${props.tableData.data.weeks[colIndex].week}`}
-                      disabled={props.tableData.data.weeks[colIndex].total > 6
-                      && col === 0}
-                      onClick={() => props.onChange(
-                        project.id,
-                        props.tableData.data.weeks[colIndex].week,
-                        col === 0 ? 7 - props.tableData.data.weeks[colIndex].total : -1)
-                      }
-                    >
-                      <ContentRemove />
-                    </IconButton>
-                    <TextField
-                      value={col}
-                      style={{ width: 20 }}
-                      id={`field-${project.id}-${props.tableData.data.weeks[colIndex].week}`}
-                      onChange={e => props.onChange(
-                        project.id,
-                        props.tableData.data.weeks[colIndex].week,
-                        e.target.value - col)
-                      }
-                    />
-                    <IconButton
-                      id={`add-${project.id}-${props.tableData.data.weeks[colIndex].week}`}
-                      disabled={props.tableData.data.weeks[colIndex].total > 6}
-                      onClick={() => props.onChange(
-                        project.id,
-                        props.tableData.data.weeks[colIndex].week,
-                        1)
-                      }
-                    >
-                      <ContentAdd />
-                    </IconButton>
-                  </div>
+                  <EditStaffingCell
+                    value={col}
+                    colIndex={colIndex}
+                    week={props.tableData.data.weeks[colIndex].week}
+                    total={props.tableData.data.weeks[colIndex].total}
+                    projectId={project.id}
+                    employee={props.employee}
+                    tableData={props.tableData}
+                    onChange={props.onChange}
+                  />
                 </TableRowColumn>
               ))}
             </TableRow>
