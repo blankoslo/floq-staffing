@@ -1,19 +1,7 @@
 import { createSelector } from 'reselect';
 import * as Immutable from 'immutable';
 import moment from 'moment';
-
-// TODO: Needs heavy testing.
-const showWeeks = (week, year) => {
-  const weeks = [];
-  const maxWeek = moment().year(year).isoWeeksInYear();
-  const start = Math.min(Math.max(week, 1), maxWeek);
-  const elements = 5;
-
-  for (let i = start, j = year; weeks.length < elements; i === maxWeek ? (i = 1, j++) : i++) {
-    weeks.push({ week: i, year: j });
-  }
-  return weeks;
-};
+import weeksSelector from '../selectors/weeksSelector';
 
 const getProjectDays = (projectId, staffing, weeks, employeeId) =>
   weeks.map(w => {
@@ -34,18 +22,17 @@ const getProjectDays = (projectId, staffing, weeks, employeeId) =>
     return sumWeek;
   });
 
-const showProjects = (projects, staffing, weeks, employeeId) =>
+const showProjects = (weeks, employeeId, staffing, projects) =>
   projects.data.toList().map(p => {
     const days = getProjectDays(p.id, staffing, weeks, employeeId);
     return Object.assign({}, p, { days });
   });
 
-const getTableData = (selectedEmployee, selectedYear, selectedWeek, staffing, projects) => {
+const getTableData = (weeks, selectedEmployee, staffing, projects) => {
   if (projects.loading || staffing.loading || selectedEmployee === null) {
     return { loading: true, data: new Immutable.Map() };
   }
-  const weeks = showWeeks(selectedWeek, selectedYear);
-  const projectsWithWeeks = showProjects(projects, staffing, weeks, selectedEmployee);
+  const projectsWithWeeks = showProjects(weeks, selectedEmployee, staffing, projects);
   const result = {
     loading: false,
     data: {
@@ -62,9 +49,8 @@ const getTableData = (selectedEmployee, selectedYear, selectedWeek, staffing, pr
 };
 
 export default createSelector(
+  weeksSelector,
   state => state.selected_employee,
-  state => state.selected_year,
-  state => state.selected_week,
   state => state.staffing,
   state => state.projects,
   getTableData
