@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import EditStaffingCell from '../../src/components/editStaffingCell';
+import EditStaffingCell from '../../../src/components/edit/cell';
 
 // setup is a function, so that each test get its own state
 const setup = () => {

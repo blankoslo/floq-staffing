@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn } from 'material-ui/Table';
-import EditStaffingCell from './editStaffingCell';
+import EditStaffingCell from './cell';
 
 const EditStaffing = props =>
 (
