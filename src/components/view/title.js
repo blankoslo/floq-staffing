@@ -1,8 +1,9 @@
 import React from 'react';
 
 const StaffingViewTitle = (props) => (
-  <div>
-    <h1>{props.selectedYear}</h1>
+  <div style={{ textAlign: 'center' }}>
+    <h1>Alle</h1>
+    <h2>{props.selectedYear}</h2>
   </div>
 );
 
