@@ -12,7 +12,7 @@ const StaffingViewHeader = (props) => (
 );
 
 StaffingViewHeader.propTypes = {
-  weeks: React.PropTypes.array.isRequired,
+  weeks: React.PropTypes.object.isRequired,
 };
 
 export default StaffingViewHeader;

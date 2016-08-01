@@ -38,7 +38,7 @@ StaffingViewContainer.propTypes = {
   selectedWeek: React.PropTypes.number.isRequired,
 
   // mapStateToProps
-  weeks: React.PropTypes.array.isRequired,
+  weeks: React.PropTypes.object.isRequired,
   employees: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps

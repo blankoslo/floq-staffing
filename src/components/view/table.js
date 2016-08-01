@@ -13,7 +13,7 @@ const StaffingViewTable = (props) => (
 
 StaffingViewTable.propTypes = {
   employees: React.PropTypes.object.isRequired,
-  weeks: React.PropTypes.array.isRequired
+  weeks: React.PropTypes.object.isRequired
 };
 
 export default StaffingViewTable;
