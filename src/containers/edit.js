@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import employeeSelector from '../selectors/employeeSelector';
 import tableDataSelector from '../selectors/tableDataSelector';
-import { selectEmployee, selectYear, selectWeek,
-  addStaffing, removeStaffing } from '../actions/index';
+import { selectEmployee, addStaffing, removeStaffing } from '../actions/index';
 
 class Edit extends Component {
   constructor(props) {
     super(props);
     if (props.params.id !== undefined) {
-      const selectedId = props.params.id;
-      props.selectEmployee(selectedId);
-      props.selectYear(props.location.query.year);
-      props.selectWeek(props.location.query.week);
+      props.selectEmployee(props.params.id);
     }
   }
 
@@ -24,7 +20,7 @@ class Edit extends Component {
         in_project: projectId,
         in_week: week,
         in_days: days,
-        in_year: this.props.selected_year,
+        in_year: this.props.selectedYear,
       });
     } else if (days < 0 && days >= -7) {
       this.props.removeStaffing({
@@ -32,7 +28,7 @@ class Edit extends Component {
         in_project: projectId,
         in_week: week,
         in_days: Math.abs(days),
-        in_year: this.props.selected_year,
+        in_year: this.props.selectedYear,
       });
     }
   };
@@ -60,12 +56,8 @@ class Edit extends Component {
 
 Edit.propTypes = {
   params: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired,
   children: React.PropTypes.object,
-  projects: React.PropTypes.object.isRequired,
-  employees: React.PropTypes.object.isRequired,
-  staffing: React.PropTypes.object.isRequired,
-  selected_year: React.PropTypes.number.isRequired,
+  selectedYear: React.PropTypes.number.isRequired,
 
   // mapStateToProps
   employee: React.PropTypes.object.isRequired,
@@ -73,22 +65,17 @@ Edit.propTypes = {
 
   // mapDispatchToProps
   selectEmployee: React.PropTypes.func.isRequired,
-  selectYear: React.PropTypes.func.isRequired,
-  selectWeek: React.PropTypes.func.isRequired,
   addStaffing: React.PropTypes.func.isRequired,
   removeStaffing: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   employee: employeeSelector(state),
-  tableData: tableDataSelector(state),
-  selected_year: state.selected_year
+  tableData: tableDataSelector(state)
 });
 
 const mapDispatchToProps = {
   selectEmployee,
-  selectYear,
-  selectWeek,
   addStaffing,
   removeStaffing
 };

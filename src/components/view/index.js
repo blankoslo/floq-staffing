@@ -1,12 +1,18 @@
 import React from 'react';
+import StaffingViewTitle from './title';
+import StaffingViewTable from './table';
 
-const ProjectRow = () => (
+const StaffingView = (props) => (
   <div>
-    <h3>TODO: viewStaffing.js</h3>
+    <StaffingViewTitle selectedYear={props.selectedYear} />
+    <StaffingViewTable weeks={props.weeks} employees={props.employees} />
   </div>
 );
 
-ProjectRow.propTypes = {
+StaffingView.propTypes = {
+  employees: React.PropTypes.object.isRequired,
+  weeks: React.PropTypes.array.isRequired,
+  selectedYear: React.PropTypes.number.isRequired
 };
 
-export default ProjectRow;
+export default StaffingView;
