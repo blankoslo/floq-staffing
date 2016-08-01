@@ -32,7 +32,7 @@ export const getStaffing = () => fetch(`${baseURL}/staffing`, {
   headers
 }).then(response => response.json());
 
-export const getWorkedDaysPerWeek = body => fetch(`${baseURL}/rpc/worked_days_in_week`, {
+export const getWorkedDaysPerWeek = body => fetch(`${baseURL}/rpc/worked_days_per_week`, {
   method: 'POST',
   headers: dataHeaders,
   body: JSON.stringify(body)
