@@ -5,7 +5,7 @@ import Col from './headerCol';
 const StaffingViewHeader = (props) => (
   <thead>
     <tr>
-      <td>Ansatte</td>
+      <th className='mdl-data-table__cell--non-numeric'>Ansatte</th>
       {props.weeks.map(w => <Col week={w.week} totalPercent={99} key={w.week} />)}
     </tr>
   </thead>

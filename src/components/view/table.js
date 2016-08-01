@@ -4,7 +4,7 @@ import Body from './body';
 
 const StaffingViewTable = (props) => (
   <div>
-    <table>
+    <table className='mdl-data-table mdl-js-data-table mdl-shadow--2dp'>
       <Header id='staffing-view-table-header' weeks={props.weeks} />
       <Body id='staffing-view-table-body' employees={props.employees} />
     </table>

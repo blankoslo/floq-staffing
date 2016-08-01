@@ -4,7 +4,9 @@ import StaffingViewBodyCell from './bodyCell';
 
 const StaffingViewBodyRow = (props) => (
   <tr>
-    <td><Link to={`/staffing/edit/${props.employeeId}`}>{props.employeeName}</Link></td>
+    <td className='mdl-data-table__cell--non-numeric'>
+      <Link to={`/staffing/edit/${props.employeeId}`}>{props.employeeName}</Link>
+    </td>
     {props.weeks.map((w, index) =>
       <StaffingViewBodyCell value={w} key={index} />)}
   </tr>

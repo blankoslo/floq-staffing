@@ -1,9 +1,9 @@
 import React from 'react';
 
 const StaffingViewBodyRow = (props) => (
-  <td>
+  <th>
     Uke {props.week} ({props.totalPercent}%)
-  </td>
+  </th>
 );
 
 StaffingViewBodyRow.propTypes = {
