@@ -39,7 +39,7 @@ const getTableData = (weeks, selectedEmployee, staffing, projects) => {
       weeks: weeks.map((w, index) =>
         Object.assign({}, w, {
           total: projectsWithWeeks
-            .map(p => p.days[index])
+            .map(p => p.days.get(index))
             .reduce((pre, cur) => parseInt(pre) + parseInt(cur), 0)
         })),
       projects: projectsWithWeeks,

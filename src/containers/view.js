@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import employeesSelector from '../selectors/employeesSelector';
-import weeksSelector from '../selectors/weeksSelector';
+import weeksTotalSelector from '../selectors/weeksTotalSelector';
 import { getWorkedDaysPerWeek } from '../actions/index';
 
 import StaffingView from '../components/view/index';
@@ -38,7 +38,7 @@ StaffingViewContainer.propTypes = {
   selectedWeek: React.PropTypes.number.isRequired,
 
   // mapStateToProps
-  weeks: React.PropTypes.array.isRequired,
+  weeks: React.PropTypes.object.isRequired,
   employees: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps
@@ -46,7 +46,7 @@ StaffingViewContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  weeks: weeksSelector(state),
+  weeks: weeksTotalSelector(state),
   employees: employeesSelector(state)
 });
 

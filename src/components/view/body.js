@@ -6,6 +6,7 @@ const StaffingViewBody = (props) => (
     {props.employees.data.toIndexedSeq().map(e =>
       <Row
         employeeName={e.name}
+        employeeId={e.id}
         weeks={e.weeks}
         key={e.id}
       />)}

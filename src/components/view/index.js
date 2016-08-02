@@ -11,7 +11,7 @@ const StaffingView = (props) => (
 
 StaffingView.propTypes = {
   employees: React.PropTypes.object.isRequired,
-  weeks: React.PropTypes.array.isRequired,
+  weeks: React.PropTypes.object.isRequired,
   selectedYear: React.PropTypes.number.isRequired
 };
 

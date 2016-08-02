@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
 import EditStaffing from '../../../src/components/edit/index';
+import * as Immutable from 'immutable';
 
 // setup is a function, so that each test get its own state
 const setup = () => {
@@ -15,13 +16,13 @@ const setup = () => {
   const tableData = {
     loading: false,
     data: {
-      weeks: [
-        {
+      weeks: new Immutable.List(
+        [{
           week: 1,
           year: 2016,
           total: 5
-        }
-      ],
+        }]
+      ),
       projects: [
         {
           id: 'TEST1000',
