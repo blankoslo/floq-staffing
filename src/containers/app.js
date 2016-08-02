@@ -14,7 +14,7 @@ class App extends Component {
     props.selectWeek(props.location.query.week);
   }
 
-  componentWillRender(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.location.query.year !== this.props.location.query.year) {
       this.props.selectYear(nextProps.location.query.year);
     }
