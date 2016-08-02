@@ -1,4 +1,4 @@
-import { apiError } from '../actions';
+import { apiError } from '../actions/index';
 
 const isPromise = val => val && typeof val.then === 'function';
 
