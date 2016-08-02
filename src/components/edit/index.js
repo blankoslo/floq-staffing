@@ -9,6 +9,23 @@ const EditStaffing = props =>
     <div style={{ textAlign: 'center' }}>
       <h1>{props.employee.data.name}</h1>
       <h2>{props.tableData.data.weeks.first().year}</h2>
+      <span>
+        <button
+          className='mdl-button mdl-js-button mdl-button--fab  mdl-button--icon
+            mdl-js-ripple-effect mdl-button--colored'
+          onClick={props.onBackClick}
+        >
+          <i className='material-icons'>arrow_back</i>
+        </button>
+        <h2 style={{ display: 'inline-block' }}>Uke</h2>
+        <button
+          className='mdl-button mdl-js-button mdl-button--fab  mdl-button--icon
+            mdl-js-ripple-effect mdl-button--colored'
+          onClick={props.onForwardClick}
+        >
+          <i className='material-icons'>arrow_forward</i>
+        </button>
+      </span>
     </div>
     <div>
       <Table selectable={false}>
@@ -51,7 +68,9 @@ const EditStaffing = props =>
 EditStaffing.propTypes = {
   employee: React.PropTypes.object,
   tableData: React.PropTypes.object,
-  onChange: React.PropTypes.func
+  onChange: React.PropTypes.func,
+  onBackClick: React.PropTypes.func,
+  onForwardClick: React.PropTypes.func
 };
 
 export default EditStaffing;

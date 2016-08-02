@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import employeeSelector from '../selectors/employeeSelector';
 import tableDataSelector from '../selectors/tableDataSelector';
 import { selectEmployee, addStaffing, removeStaffing } from '../actions/index';
+import calculateNewYearWeek from '../utils/weekUtil';
+import { browserHistory } from 'react-router';
 
 class Edit extends Component {
   constructor(props) {
@@ -33,7 +35,19 @@ class Edit extends Component {
     }
   };
 
-  // TODO: componentwillrender ny params id
+  onBackClick = () => {
+    this.changeYearAndWeek(-5);
+  };
+
+  onForwardClick = () => {
+    this.changeYearAndWeek(5);
+  };
+
+  changeYearAndWeek(change) {
+    const { year, week } = calculateNewYearWeek(
+      this.props.selectedYear, this.props.selectedWeek, change);
+    browserHistory.push(`/staffing/edit/${this.props.employee.data.id}/?year=${year}&week=${week}`);
+  }
 
   render() {
     if (this.props.employee.loading || this.props.tableData.loading) {
@@ -43,7 +57,9 @@ class Edit extends Component {
       child => React.cloneElement(child, {
         employee: this.props.employee,
         tableData: this.props.tableData,
-        onChange: this.onChange
+        onChange: this.onChange,
+        onBackClick: this.onBackClick,
+        onForwardClick: this.onForwardClick,
       }));
 
     return (
@@ -58,6 +74,7 @@ Edit.propTypes = {
   params: React.PropTypes.object.isRequired,
   children: React.PropTypes.object,
   selectedYear: React.PropTypes.number.isRequired,
+  selectedWeek: React.PropTypes.number.isRequired,
 
   // mapStateToProps
   employee: React.PropTypes.object.isRequired,
