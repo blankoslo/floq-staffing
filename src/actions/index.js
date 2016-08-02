@@ -5,6 +5,7 @@ export const API_ERROR_CLEAR = 'API_ERROR_CLEAR';
 export const GET_EMPLOYEES = 'GET_EMPLOYEES';
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_STAFFING = 'GET_STAFFING';
+export const GET_WORKED_DAYS_PER_WEEK = 'GET_WORKED_DAYS_PER_WEEK';
 export const SELECT_EMPLOYEE = 'SELECT_EMPLOYEE';
 export const SELECT_YEAR = 'SELECT_YEAR';
 export const SELECT_WEEK = 'SELECT_WEEK';
@@ -33,6 +34,13 @@ export const getProjects = () => ({
 export const getStaffing = () => ({
   type: GET_STAFFING,
   payload: api.getStaffing()
+});
+
+export const getWorkedDaysPerWeek = (year, week) => ({
+  type: GET_WORKED_DAYS_PER_WEEK,
+  payload: api.getWorkedDaysPerWeek(
+    { in_year: year, in_week: week, in_number_of_weeks: 5 }
+  )
 });
 
 export const selectEmployee = (id) => ({
