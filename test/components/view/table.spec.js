@@ -8,7 +8,7 @@ const setup = () => {
   const wrapper = shallow(
     <StaffingViewTable
       employees={{}}
-      weeks={[]}
+      weeks={{}}
     />);
 
   return {
