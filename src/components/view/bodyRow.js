@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import StaffingViewBodyCell from './bodyCell';
 
 const textColor = (value, max) => {
-  if (value >= max) return '#white';
+  if (value >= max) return 'rgb(0,0,0)';
   return `rgb(${255 - (155 / max * value)},0,0)`;
 };
 
