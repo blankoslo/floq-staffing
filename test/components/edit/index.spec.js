@@ -50,7 +50,7 @@ const setup = () => {
 describe('<EditStaffing />-table', () => {
   it('contains name and year in headers', () => {
     const { wrapper } = setup();
-    expect(wrapper.find('h1').text()).toContain('test_employee_one');
-    expect(wrapper.find('h2').text()).toContain('2016');
+    expect(wrapper.text()).toContain('test_employee_one');
+    expect(wrapper.text()).toContain('2016');
   });
 });
