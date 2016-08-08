@@ -7,7 +7,7 @@ const getWeeks = (week, year) => {
   let weeks = new Immutable.List();
   const maxWeek = moment().year(year).isoWeeksInYear();
   const start = Math.min(Math.max(week, 1), maxWeek);
-  const elements = 5;
+  const elements = 8;
 
   for (let i = start, j = year; weeks.size < elements; i === maxWeek ? (i = 1, j++) : i++) {
     weeks = weeks.push({ week: i, year: j });

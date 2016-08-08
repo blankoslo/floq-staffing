@@ -21,11 +21,11 @@ class StaffingViewContainer extends Component {
   }
 
   onBackClick = () => {
-    this.changeYearAndWeek(-5);
+    this.changeYearAndWeek(-8);
   };
 
   onForwardClick = () => {
-    this.changeYearAndWeek(5);
+    this.changeYearAndWeek(8);
   };
 
   changeYearAndWeek(change) {
