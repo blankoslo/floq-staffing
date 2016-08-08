@@ -9,6 +9,7 @@ export const GET_WORKED_DAYS_PER_WEEK = 'GET_WORKED_DAYS_PER_WEEK';
 export const SELECT_EMPLOYEE = 'SELECT_EMPLOYEE';
 export const SELECT_YEAR = 'SELECT_YEAR';
 export const SELECT_WEEK = 'SELECT_WEEK';
+export const SELECT_WEEK_SPAN = 'SELECT_WEEK_SPAN';
 export const ADD_STAFFING = 'ADD_STAFFING';
 export const REMOVE_STAFFING = 'REMOVE_STAFFING';
 
@@ -36,10 +37,10 @@ export const getStaffing = () => ({
   payload: api.getStaffing()
 });
 
-export const getWorkedDaysPerWeek = (year, week) => ({
+export const getWorkedDaysPerWeek = (year, week, weekSpan) => ({
   type: GET_WORKED_DAYS_PER_WEEK,
   payload: api.getWorkedDaysPerWeek(
-    { in_year: year, in_week: week, in_number_of_weeks: 5 }
+    { in_year: year, in_week: week, in_number_of_weeks: weekSpan }
   )
 });
 
@@ -56,6 +57,11 @@ export const selectYear = (year) => ({
 export const selectWeek = (week) => ({
   type: SELECT_WEEK,
   payload: week
+});
+
+export const selectWeekSpan = (weekSpan) => ({
+  type: SELECT_WEEK_SPAN,
+  payload: weekSpan
 });
 
 export const addStaffing = (data) => ({

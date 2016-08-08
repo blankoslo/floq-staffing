@@ -8,6 +8,7 @@ import WorkedDaysPerWeekReducer from './workedDaysPerWeek';
 import SelectedEmployeeReducer from './selectedEmployee';
 import SelectedYearReducer from './selectedYear';
 import SelectedWeekReducer from './selectedWeek';
+import SelectedWeekSpanReducer from './selectedWeekSpan';
 
 const rootReducer = combineReducers({
   error: ErrorReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   worked_days_per_week: WorkedDaysPerWeekReducer,
   selected_employee: SelectedEmployeeReducer,
   selected_year: SelectedYearReducer,
-  selected_week: SelectedWeekReducer
+  selected_week: SelectedWeekReducer,
+  selected_week_span: SelectedWeekSpanReducer
 });
 
 export default rootReducer;

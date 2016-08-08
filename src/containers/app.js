@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getEmployees, getProjects, getStaffing, selectYear, selectWeek } from '../actions/index';
+import { getEmployees, getProjects, getStaffing,
+  selectYear, selectWeek, selectWeekSpan } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class App extends Component {
 
     props.selectYear(props.location.query.year);
     props.selectWeek(props.location.query.week);
+    props.selectWeekSpan(props.location.query.week_span);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,7 +35,8 @@ class App extends Component {
         projects: this.props.projects,
         staffing: this.props.staffing,
         selectedYear: this.props.selectedYear,
-        selectedWeek: this.props.selectedWeek
+        selectedWeek: this.props.selectedWeek,
+        selectedWeekSpan: this.props.selectedWeekSpan
       }));
 
     return (
@@ -55,13 +58,15 @@ App.propTypes = {
   staffing: React.PropTypes.object.isRequired,
   selectedYear: React.PropTypes.number.isRequired,
   selectedWeek: React.PropTypes.number.isRequired,
+  selectedWeekSpan: React.PropTypes.number.isRequired,
 
   // mapDispatchToProps
   getEmployees: React.PropTypes.func.isRequired,
   getProjects: React.PropTypes.func.isRequired,
   getStaffing: React.PropTypes.func.isRequired,
   selectYear: React.PropTypes.func.isRequired,
-  selectWeek: React.PropTypes.func.isRequired
+  selectWeek: React.PropTypes.func.isRequired,
+  selectWeekSpan: React.PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -69,7 +74,8 @@ const mapStateToProps = (state) => ({
   projects: state.projects,
   staffing: state.staffing,
   selectedYear: state.selected_year,
-  selectedWeek: state.selected_week
+  selectedWeek: state.selected_week,
+  selectedWeekSpan: state.selected_week_span,
 });
 
 const mapDispatchToProps = {
@@ -77,7 +83,8 @@ const mapDispatchToProps = {
   getProjects,
   getStaffing,
   selectYear,
-  selectWeek
+  selectWeek,
+  selectWeekSpan
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

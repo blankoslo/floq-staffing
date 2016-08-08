@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import employeesSelector from '../selectors/employeesSelector';
 import weeksTotalSelector from '../selectors/weeksTotalSelector';
-import { getWorkedDaysPerWeek, selectWeek } from '../actions/index';
+import { getWorkedDaysPerWeek } from '../actions/index';
 import StaffingView from '../components/view/index';
 import calculateNewYearWeek from '../utils/weekUtil';
 import { browserHistory } from 'react-router';
@@ -10,7 +10,7 @@ import { browserHistory } from 'react-router';
 class StaffingViewContainer extends Component {
   constructor(props) {
     super(props);
-    props.getWorkedDaysPerWeek(props.selectedYear, props.selectedWeek);
+    props.getWorkedDaysPerWeek(props.selectedYear, props.selectedWeek, props.selectedWeekSpan);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -21,11 +21,11 @@ class StaffingViewContainer extends Component {
   }
 
   onBackClick = () => {
-    this.changeYearAndWeek(-8);
+    this.changeYearAndWeek(this.props.selectedWeekSpan * -1);
   };
 
   onForwardClick = () => {
-    this.changeYearAndWeek(8);
+    this.changeYearAndWeek(this.props.selectedWeekSpan);
   };
 
   changeYearAndWeek(change) {
@@ -53,14 +53,14 @@ class StaffingViewContainer extends Component {
 StaffingViewContainer.propTypes = {
   selectedYear: React.PropTypes.number.isRequired,
   selectedWeek: React.PropTypes.number.isRequired,
+  selectedWeekSpan: React.PropTypes.number.isRequired,
 
   // mapStateToProps
   weeks: React.PropTypes.object.isRequired,
   employees: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps
-  getWorkedDaysPerWeek: React.PropTypes.func.isRequired,
-  selectWeek: React.PropTypes.func.isRequired
+  getWorkedDaysPerWeek: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -69,8 +69,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getWorkedDaysPerWeek,
-  selectWeek
+  getWorkedDaysPerWeek
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaffingViewContainer);

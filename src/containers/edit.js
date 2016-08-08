@@ -36,11 +36,11 @@ class Edit extends Component {
   };
 
   onBackClick = () => {
-    this.changeYearAndWeek(-5);
+    this.changeYearAndWeek(this.props.selectedWeekSpan * -1);
   };
 
   onForwardClick = () => {
-    this.changeYearAndWeek(5);
+    this.changeYearAndWeek(this.props.selectedWeekSpan);
   };
 
   changeYearAndWeek(change) {
@@ -75,6 +75,7 @@ Edit.propTypes = {
   children: React.PropTypes.object,
   selectedYear: React.PropTypes.number.isRequired,
   selectedWeek: React.PropTypes.number.isRequired,
+  selectedWeekSpan: React.PropTypes.number.isRequired,
 
   // mapStateToProps
   employee: React.PropTypes.object.isRequired,
