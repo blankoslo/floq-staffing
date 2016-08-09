@@ -5,7 +5,8 @@ const StaffingViewBodyCell = (props) => (
     style={{
       color: props.textColor,
       fontWeight: props.fontWeight,
-      backgroundColor: props.backgroundColor
+      backgroundColor: props.backgroundColor,
+      borderLeft: '1px solid rgba(0,0,0,.12)'
     }}
   >
     {props.value}%
