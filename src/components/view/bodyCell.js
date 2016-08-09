@@ -9,12 +9,12 @@ const StaffingViewBodyCell = (props) => (
       borderLeft: '1px solid rgba(0,0,0,.12)'
     }}
   >
-    {Math.round(props.value)}%
+    {props.value !== null ? `${Math.round(props.value)}%` : null}
   </td>
 );
 
 StaffingViewBodyCell.propTypes = {
-  value: React.PropTypes.number.isRequired,
+  value: React.PropTypes.number,
   textColor: React.PropTypes.string.isRequired,
   fontWeight: React.PropTypes.string.isRequired,
   backgroundColor: React.PropTypes.string.isRequired
