@@ -1,11 +1,24 @@
 import { createSelector } from 'reselect';
 import * as Immutable from 'immutable';
+import moment from 'moment';
 import weeksSelector from '../selectors/weeksSelector';
 
-const getWeeks = (employeeId, workedDaysPerWeek, weeks, projectMap) => (
+const getStaffable = (week, employee) => {
+  const firstDate = moment().startOf('isoweek')
+    .year(week.year)
+    .isoWeek(week.week);
+
+  const diff = moment(employee.date_of_employment).diff(firstDate, 'days');
+  // debugger;
+  if (diff >= 5) return 0;
+  if (diff <= 0) return 5;
+  return 5 - diff;
+};
+
+const getWeeks = (employee, workedDaysPerWeek, weeks, projectMap) => (
   weeks.map(w => {
     const { days, projects } = workedDaysPerWeek.data
-      .get(employeeId, new Immutable.Map())
+      .get(employee.id, new Immutable.Map())
       .get(w.week, { days: 0, projects: new Immutable.List() });
 
     const unavailable = projects.reduce((result, item) =>
@@ -17,7 +30,7 @@ const getWeeks = (employeeId, workedDaysPerWeek, weeks, projectMap) => (
     return {
       days,
       unavailable,
-      staffable: 5
+      staffable: getStaffable(w, employee)
     };
   })
 );
@@ -31,7 +44,9 @@ const getEmployees = (employees, workedDaysPerWeek, weeks, projectMap) => {
     data: employees.data.map(e => ({
       name: `${e.first_name} ${e.last_name}`,
       id: e.id,
-      weeks: getWeeks(e.id, workedDaysPerWeek, weeks, projectMap) }))
+      dateOfEmployment: e.date_of_employment,
+      terminationDate: e.termination_date,
+      weeks: getWeeks(e, workedDaysPerWeek, weeks, projectMap) }))
   };
 };
 
