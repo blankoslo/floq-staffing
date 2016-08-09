@@ -9,7 +9,7 @@ const StaffingViewBodyCell = (props) => (
       borderLeft: '1px solid rgba(0,0,0,.12)'
     }}
   >
-    {props.value}%
+    {Math.round(props.value)}%
   </td>
 );
 
