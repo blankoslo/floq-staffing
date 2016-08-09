@@ -3,7 +3,10 @@ import * as Immutable from 'immutable';
 import weeksSelector from '../selectors/weeksSelector';
 
 const getWeeks = (employeeId, workedDaysPerWeek, weeks) => (
-  weeks.map(w => workedDaysPerWeek.data.get(employeeId, new Immutable.Map()).get(w.week, 0))
+  weeks.map(w => ({
+    days: workedDaysPerWeek.data.get(employeeId, new Immutable.Map()).get(w.week, 0),
+    available: 5
+  }))
 );
 
 const getEmployees = (employees, workedDaysPerWeek, weeks) => {
