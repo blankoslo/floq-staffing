@@ -13,14 +13,14 @@ const StaffingViewBodyRow = (props) => (
       <Link to={`/staffing/edit/${props.employeeId}`}>{props.employeeName}</Link>
     </td>
     {props.weeks.map((week, index) => {
-      if (week.available === 0) {
+      if (week.unavailable >= week.staffable) {
         return <td style={{ backgroundColor: 'black' }} />;
       }
       return (<StaffingViewBodyCell
-        value={week.days * 100 / week.available}
-        textColor={textColor(week.days, week.available)}
-        fontWeight={week.days > week.available ? 'bold' : 'normal'}
-        backgroundColor={week.available < 5 ? 'grey' : 'white'}
+        value={week.days * 100 / week.staffable}
+        textColor={textColor(week.days, week.staffable)}
+        fontWeight={week.days > week.staffable ? 'bold' : 'normal'}
+        backgroundColor={week.unavailable > 0 ? 'grey' : 'white'}
         key={index}
       />);
     })}

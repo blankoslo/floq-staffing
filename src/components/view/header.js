@@ -6,7 +6,7 @@ const StaffingViewHeader = (props) => (
   <thead>
     <tr>
       <th className='mdl-data-table__cell--non-numeric'>Ansatte</th>
-      {props.weeks.map(w => <Col week={w.week} sum={w.sum} available={w.available} key={w.week} />)}
+      {props.weeks.map(w => <Col week={w.week} sum={w.sum} staffable={w.staffable} key={w.week} />)}
     </tr>
   </thead>
 );
