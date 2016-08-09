@@ -24,9 +24,15 @@ fetch(`${baseURL}/projects?select=id,name,billable&order=id.desc`, {
 }).then(response => response.json());
 
 export const getEmployees = () =>
-  fetch(`${baseURL}/employees?select=id,first_name,last_name&order=first_name.desc`, {
-    headers
-  }).then(response => response.json());
+  fetch(`${baseURL}/employees?select=
+    id,
+    first_name,
+    last_name,
+    date_of_employment,
+    termination_date
+    &order=first_name.desc`, {
+      headers
+    }).then(response => response.json());
 
 export const getStaffing = () => fetch(`${baseURL}/staffing`, {
   headers
