@@ -7,23 +7,26 @@ const textColor = (value, max) => {
   return `rgb(${255 - (155 / max * value)},0,0)`;
 };
 
+const backgroundColor = (week) => {
+  if (week.unavailable >= week.staffable) return 'grey';
+  if (week.unavailable > 0) return 'lightgrey';
+  return 'white';
+};
+
 const StaffingViewBodyRow = (props) => (
   <tr>
     <td className='mdl-data-table__cell--non-numeric'>
       <Link to={`/staffing/edit/${props.employeeId}`}>{props.employeeName}</Link>
     </td>
-    {props.weeks.map((week, index) => {
-      if (week.unavailable >= week.staffable) {
-        return <td style={{ backgroundColor: 'black' }} />;
-      }
-      return (<StaffingViewBodyCell
+    {props.weeks.map((week, index) =>
+      (<StaffingViewBodyCell
         value={week.days * 100 / week.staffable}
         textColor={textColor(week.days, week.staffable)}
         fontWeight={week.days > week.staffable ? 'bold' : 'normal'}
-        backgroundColor={week.unavailable > 0 ? 'grey' : 'white'}
+        backgroundColor={backgroundColor(week)}
         key={index}
-      />);
-    })}
+      />)
+    )}
   </tr>
 );
 
