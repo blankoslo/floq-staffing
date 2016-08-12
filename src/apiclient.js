@@ -34,6 +34,11 @@ export const getEmployees = () =>
       headers
     }).then(response => response.json());
 
+export const getHolidays = () =>
+  fetch(`${baseURL}/holidays?select=date`, {
+    headers
+  }).then(response => response.json());
+
 export const getStaffing = () => fetch(`${baseURL}/staffing`, {
   headers
 }).then(response => response.json());

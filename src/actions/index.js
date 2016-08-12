@@ -12,6 +12,7 @@ export const SELECT_START_OF_WEEK = 'SELECT_START_OF_WEEK';
 export const SELECT_WEEK_SPAN = 'SELECT_WEEK_SPAN';
 export const ADD_STAFFING = 'ADD_STAFFING';
 export const REMOVE_STAFFING = 'REMOVE_STAFFING';
+export const GET_HOLIDAYS = 'GET_HOLIDAYS';
 
 export const apiError = (message) => ({
   type: API_ERROR,
@@ -30,6 +31,11 @@ export const getEmployees = () => ({
 export const getProjects = () => ({
   type: GET_PROJECTS,
   payload: api.getProjects()
+});
+
+export const getHolidays = () => ({
+  type: GET_HOLIDAYS,
+  payload: api.getHolidays()
 });
 
 export const getStaffing = () => ({

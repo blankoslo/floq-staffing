@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getEmployees, getProjects, getStaffing,
+import { getEmployees, getProjects, getHolidays, getStaffing,
   selectStartOfWeek, selectWeekSpan } from '../actions/index';
 
 class App extends Component {
@@ -9,6 +9,7 @@ class App extends Component {
 
     props.getEmployees();
     props.getProjects();
+    props.getHolidays();
     props.getStaffing();
 
     props.selectStartOfWeek(props.location.query.start_of_week);
@@ -60,6 +61,7 @@ App.propTypes = {
   // mapDispatchToProps
   getEmployees: React.PropTypes.func.isRequired,
   getProjects: React.PropTypes.func.isRequired,
+  getHolidays: React.PropTypes.func.isRequired,
   getStaffing: React.PropTypes.func.isRequired,
   selectStartOfWeek: React.PropTypes.func.isRequired,
   selectWeekSpan: React.PropTypes.func.isRequired,
@@ -76,6 +78,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   getEmployees,
   getProjects,
+  getHolidays,
   getStaffing,
   selectStartOfWeek,
   selectWeekSpan
