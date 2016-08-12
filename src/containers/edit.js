@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import employeeSelector from '../selectors/employeeSelector';
 import tableDataSelector from '../selectors/tableDataSelector';
 import { selectEmployee, addStaffing, removeStaffing } from '../actions/index';
-import calculateNewYearWeek from '../utils/weekUtil';
+import { formatDate, calculateStartOfWeek } from '../utils/weekUtil';
 import { browserHistory } from 'react-router';
 
 class Edit extends Component {
@@ -14,39 +14,38 @@ class Edit extends Component {
     }
   }
 
-  onChange = (projectId, week, days) => {
+  onChange = (projectId, startOfWeek, days) => {
     // TODO: replace checks with validation?
     if (days > 0 && days <= 7) {
       this.props.addStaffing({
         in_employee: this.props.employee.data.id,
         in_project: projectId,
-        in_week: week,
+        in_start_of_week: startOfWeek,
         in_days: days,
-        in_year: this.props.selectedYear,
       });
     } else if (days < 0 && days >= -7) {
       this.props.removeStaffing({
         in_employee: this.props.employee.data.id,
         in_project: projectId,
-        in_week: week,
+        in_start_of_week: startOfWeek,
         in_days: Math.abs(days),
-        in_year: this.props.selectedYear,
       });
     }
   };
 
   onBackClick = () => {
-    this.changeYearAndWeek(this.props.selectedWeekSpan * -1);
+    this.changeStartOfWeek(-1);
   };
 
   onForwardClick = () => {
-    this.changeYearAndWeek(this.props.selectedWeekSpan);
+    this.changeStartOfWeek(1);
   };
 
-  changeYearAndWeek(change) {
-    const { year, week } = calculateNewYearWeek(
-      this.props.selectedYear, this.props.selectedWeek, change);
-    browserHistory.push(`/staffing/edit/${this.props.employee.data.id}/?year=${year}&week=${week}`);
+  changeStartOfWeek(change) {
+    const startOfWeek = calculateStartOfWeek(
+      this.props.selectedStartOfWeek, (change * this.props.selectedWeekSpan));
+    browserHistory.push(`/staffing/edit/${this.props.employee.data.id}/` +
+      `?start_of_week=${formatDate(startOfWeek)}`);
   }
 
   render() {
@@ -55,6 +54,7 @@ class Edit extends Component {
     }
     const children = React.Children.map(this.props.children,
       child => React.cloneElement(child, {
+        selectedYear: this.props.selectedStartOfWeek.get('year'),
         employee: this.props.employee,
         tableData: this.props.tableData,
         onChange: this.onChange,
@@ -73,8 +73,7 @@ class Edit extends Component {
 Edit.propTypes = {
   params: React.PropTypes.object.isRequired,
   children: React.PropTypes.object,
-  selectedYear: React.PropTypes.number.isRequired,
-  selectedWeek: React.PropTypes.number.isRequired,
+  selectedStartOfWeek: React.PropTypes.object.isRequired,
   selectedWeekSpan: React.PropTypes.number.isRequired,
 
   // mapStateToProps

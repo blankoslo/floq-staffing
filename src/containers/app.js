@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getEmployees, getProjects, getStaffing,
-  selectYear, selectWeek, selectWeekSpan } from '../actions/index';
+  selectStartOfWeek, selectWeekSpan } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
@@ -11,17 +11,16 @@ class App extends Component {
     props.getProjects();
     props.getStaffing();
 
-    props.selectYear(props.location.query.year);
-    props.selectWeek(props.location.query.week);
+    props.selectStartOfWeek(props.location.query.start_of_week);
     props.selectWeekSpan(props.location.query.week_span);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location.query.year !== this.props.location.query.year) {
-      this.props.selectYear(nextProps.location.query.year);
+    if (nextProps.location.query.start_of_week !== this.props.location.query.start_of_week) {
+      this.props.selectStartOfWeek(nextProps.location.query.start_of_week);
     }
-    if (nextProps.location.query.week !== this.props.location.query.week) {
-      this.props.selectWeek(nextProps.location.query.week);
+    if (nextProps.location.query.week_span !== this.props.location.query.week_span) {
+      this.props.selectWeekSpan(nextProps.location.query.week_span);
     }
   }
   render() {
@@ -34,8 +33,7 @@ class App extends Component {
       child => React.cloneElement(child, {
         projects: this.props.projects,
         staffing: this.props.staffing,
-        selectedYear: this.props.selectedYear,
-        selectedWeek: this.props.selectedWeek,
+        selectedStartOfWeek: this.props.selectedStartOfWeek,
         selectedWeekSpan: this.props.selectedWeekSpan
       }));
 
@@ -56,16 +54,14 @@ App.propTypes = {
   employees: React.PropTypes.object.isRequired,
   projects: React.PropTypes.object.isRequired,
   staffing: React.PropTypes.object.isRequired,
-  selectedYear: React.PropTypes.number.isRequired,
-  selectedWeek: React.PropTypes.number.isRequired,
+  selectedStartOfWeek: React.PropTypes.object.isRequired,
   selectedWeekSpan: React.PropTypes.number.isRequired,
 
   // mapDispatchToProps
   getEmployees: React.PropTypes.func.isRequired,
   getProjects: React.PropTypes.func.isRequired,
   getStaffing: React.PropTypes.func.isRequired,
-  selectYear: React.PropTypes.func.isRequired,
-  selectWeek: React.PropTypes.func.isRequired,
+  selectStartOfWeek: React.PropTypes.func.isRequired,
   selectWeekSpan: React.PropTypes.func.isRequired,
 };
 
@@ -73,8 +69,7 @@ const mapStateToProps = (state) => ({
   employees: state.employees,
   projects: state.projects,
   staffing: state.staffing,
-  selectedYear: state.selected_year,
-  selectedWeek: state.selected_week,
+  selectedStartOfWeek: state.selected_start_of_week,
   selectedWeekSpan: state.selected_week_span,
 });
 
@@ -82,8 +77,7 @@ const mapDispatchToProps = {
   getEmployees,
   getProjects,
   getStaffing,
-  selectYear,
-  selectWeek,
+  selectStartOfWeek,
   selectWeekSpan
 };
 

@@ -1,13 +1,14 @@
 import React from 'react';
+import { formatDate } from '../../utils/weekUtil';
 
 const StaffingViewBodyRow = (props) => (
   <th>
-    Uke {props.week} ({props.sum} / {props.staffable})
+    Uke {formatDate(props.startOfWeek)} ({props.sum} / {props.staffable})
   </th>
 );
 
 StaffingViewBodyRow.propTypes = {
-  week: React.PropTypes.number.isRequired,
+  startOfWeek: React.PropTypes.object.isRequired,
   sum: React.PropTypes.number.isRequired,
   staffable: React.PropTypes.number.isRequired,
 };

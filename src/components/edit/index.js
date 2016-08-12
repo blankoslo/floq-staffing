@@ -2,13 +2,14 @@ import React from 'react';
 import { Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn } from 'material-ui/Table';
 import EditStaffingCell from './cell';
+import { formatDate } from '../../utils/weekUtil';
 
 const EditStaffing = props =>
 (
   <div>
     <div style={{ textAlign: 'center' }}>
       <h1>{props.employee.data.name}</h1>
-      <h2>{props.tableData.data.weeks.first().year}</h2>
+      <h2>{props.selectedYear}</h2>
       <span>
         <button
           className='mdl-button mdl-js-button mdl-button--fab  mdl-button--icon
@@ -34,7 +35,7 @@ const EditStaffing = props =>
             <TableHeaderColumn>Prosjekter</TableHeaderColumn>
             {props.tableData.data.weeks.map((row, index) => (
               <TableHeaderColumn key={index}>
-                Uke {row.week} ({props.tableData.data.weeks.get(index).total})
+                Uke {formatDate(row.startOfWeek)} ({props.tableData.data.weeks.get(index).total})
               </TableHeaderColumn>
             ))}
           </TableRow>
@@ -48,7 +49,7 @@ const EditStaffing = props =>
                   <EditStaffingCell
                     value={col}
                     colIndex={colIndex}
-                    week={props.tableData.data.weeks.get(colIndex).week}
+                    startOfWeek={props.tableData.data.weeks.get(colIndex).startOfWeek}
                     total={props.tableData.data.weeks.get(colIndex).total}
                     projectId={project.id}
                     employee={props.employee}
@@ -66,6 +67,7 @@ const EditStaffing = props =>
 );
 
 EditStaffing.propTypes = {
+  selectedYear: React.PropTypes.number,
   employee: React.PropTypes.object,
   tableData: React.PropTypes.object,
   onChange: React.PropTypes.func,

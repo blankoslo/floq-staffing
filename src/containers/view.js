@@ -4,34 +4,33 @@ import employeesSelector from '../selectors/employeesSelector';
 import weeksTotalSelector from '../selectors/weeksTotalSelector';
 import { getWorkedDaysPerWeek } from '../actions/index';
 import StaffingView from '../components/view/index';
-import calculateNewYearWeek from '../utils/weekUtil';
+import { calculateStartOfWeek, formatDate } from '../utils/weekUtil';
 import { browserHistory } from 'react-router';
 
 class StaffingViewContainer extends Component {
   constructor(props) {
     super(props);
-    props.getWorkedDaysPerWeek(props.selectedYear, props.selectedWeek, props.selectedWeekSpan);
+    props.getWorkedDaysPerWeek(props.selectedStartOfWeek, props.selectedWeekSpan);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.selectedYear !== nextProps.selectedYear
-      || this.props.selectedWeek !== nextProps.selectedWeek) {
-      this.props.getWorkedDaysPerWeek(nextProps.selectedYear, nextProps.selectedWeek);
+    if (this.props.selectedStartOfWeek !== nextProps.selectedStartOfWeek) {
+      this.props.getWorkedDaysPerWeek(nextProps.selectedStartOfWeek, nextProps.selectedWeekSpan);
     }
   }
 
   onBackClick = () => {
-    this.changeYearAndWeek(this.props.selectedWeekSpan * -1);
+    this.changeStartOfWeek(-1);
   };
 
   onForwardClick = () => {
-    this.changeYearAndWeek(this.props.selectedWeekSpan);
+    this.changeStartOfWeek(1);
   };
 
-  changeYearAndWeek(change) {
-    const { year, week } = calculateNewYearWeek(
-      this.props.selectedYear, this.props.selectedWeek, change);
-    browserHistory.push(`/staffing/?year=${year}&week=${week}`);
+  changeStartOfWeek(change) {
+    const startOfWeek = calculateStartOfWeek(
+      this.props.selectedStartOfWeek, (change * this.props.selectedWeekSpan));
+    browserHistory.push(`/staffing/?start_of_week=${formatDate(startOfWeek)}`);
   }
 
   render() {
@@ -42,7 +41,7 @@ class StaffingViewContainer extends Component {
       <StaffingView
         employees={this.props.employees}
         weeks={this.props.weeks}
-        selectedYear={this.props.selectedYear}
+        selectedYear={this.props.selectedStartOfWeek.get('year')}
         onBackClick={this.onBackClick}
         onForwardClick={this.onForwardClick}
       />
@@ -51,8 +50,7 @@ class StaffingViewContainer extends Component {
 }
 
 StaffingViewContainer.propTypes = {
-  selectedYear: React.PropTypes.number.isRequired,
-  selectedWeek: React.PropTypes.number.isRequired,
+  selectedStartOfWeek: React.PropTypes.object.isRequired,
   selectedWeekSpan: React.PropTypes.number.isRequired,
 
   // mapStateToProps

@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
 import IconButton from 'material-ui/IconButton';
+import { formatDate } from '../../utils/weekUtil';
 
 class EditStaffingCell extends React.Component {
 
@@ -16,7 +17,7 @@ class EditStaffingCell extends React.Component {
   onChange = value => {
     this.props.onChange(
       this.props.projectId,
-      this.props.week,
+      this.props.startOfWeek,
       value);
   };
 
@@ -46,7 +47,7 @@ class EditStaffingCell extends React.Component {
     return (
       <div>
         <IconButton
-          id={`remove-${props.projectId}-${props.week}`}
+          id={`remove-${props.projectId}-${formatDate(props.startOfWeek)}`}
           disabled={props.total > 6
           && props.value === 0}
           onClick={this.onClickRemove}
@@ -56,11 +57,11 @@ class EditStaffingCell extends React.Component {
         <TextField
           value={props.value}
           style={{ width: 20 }}
-          id={`field-${props.projectId}-${props.week}`}
+          id={`field-${props.projectId}-${formatDate(props.startOfWeek)}`}
           onChange={this.onChangeText}
         />
         <IconButton
-          id={`add-${props.projectId}-${props.week}`}
+          id={`add-${props.projectId}-${formatDate(props.startOfWeek)}`}
           disabled={props.total > 6}
           onClick={this.onClickAdd}
         >
@@ -73,7 +74,7 @@ class EditStaffingCell extends React.Component {
 EditStaffingCell.propTypes = {
   value: React.PropTypes.number,
   colIndex: React.PropTypes.number,
-  week: React.PropTypes.number,
+  startOfWeek: React.PropTypes.object,
   total: React.PropTypes.number,
   projectId: React.PropTypes.string,
   onChange: React.PropTypes.func

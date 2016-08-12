@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import expect from 'expect';
 import EditStaffing from '../../../src/components/edit/index';
 import * as Immutable from 'immutable';
+import moment from 'moment';
 
 // setup is a function, so that each test get its own state
 const setup = () => {
@@ -18,8 +19,7 @@ const setup = () => {
     data: {
       weeks: new Immutable.List(
         [{
-          week: 1,
-          year: 2016,
+          startOfWeek: moment('2016-01-04'),
           total: 5
         }]
       ),
@@ -38,6 +38,7 @@ const setup = () => {
       employee={employee}
       tableData={tableData}
       onChange={() => {}}
+      selectedYear={2016}
     />);
 
   return {

@@ -1,26 +1,17 @@
 import { createSelector } from 'reselect';
 import * as Immutable from 'immutable';
-import moment from 'moment';
 import weeksSelector from '../selectors/weeksSelector';
+import { formatDate } from '../utils/weekUtil';
 
 const getProjectDays = (projectId, staffing, weeks, employeeId) =>
-  weeks.map(w => {
-    let sumWeek = 0;
-    // need to pick a date which week is always in the specified year :)
-    // startOf week overrides locale-settings. E.g. if locale is 'en' (american),the week
-    // starts on Sunday, and then isoWeek skips a day. https://en.wikipedia.org/wiki/Week
-    const firstDate = moment().startOf('isoweek').utc([w.year, 2, 1])
-      .isoWeek(w.week);
-
-    // moment().add(..) mutates
-    for (let i = 0; i < 7; (i++, firstDate.add(1, 'days'))) {
-      if (staffing.data
-        .contains(`${employeeId}${projectId}${firstDate.format('YYYY-MM-DD')}`)) {
-        sumWeek++;
-      }
-    }
-    return sumWeek;
-  });
+  weeks.map(startOfWeek =>
+    new Immutable.Range(0, 7).reduce((total, item) => {
+      const date = startOfWeek.clone();
+      date.add(item, 'days');
+      return total + (staffing.data
+          .contains(`${employeeId}${projectId}${formatDate(date)}`) ? 1 : 0);
+    }, 0)
+  );
 
 const showProjects = (weeks, employeeId, staffing, projects) =>
   projects.data.toList().map(p => {
@@ -36,12 +27,12 @@ const getTableData = (weeks, selectedEmployee, staffing, projects) => {
   const result = {
     loading: false,
     data: {
-      weeks: weeks.map((w, index) =>
-        Object.assign({}, w, {
-          total: projectsWithWeeks
-            .map(p => p.days.get(index))
-            .reduce((pre, cur) => parseInt(pre) + parseInt(cur), 0)
-        })),
+      weeks: weeks.map((startOfWeek, index) => ({
+        startOfWeek,
+        total: projectsWithWeeks
+          .map(p => p.days.get(index))
+          .reduce((total, item) => total + parseInt(item), 0)
+      })),
       projects: projectsWithWeeks,
     }
   };

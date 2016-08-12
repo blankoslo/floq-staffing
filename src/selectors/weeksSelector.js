@@ -1,22 +1,17 @@
 import { createSelector } from 'reselect';
-import moment from 'moment';
 import * as Immutable from 'immutable';
 
 // TODO: Needs heavy testing.
-const getWeeks = (week, year, selectedWeekSpan) => {
-  let weeks = new Immutable.List();
-  const maxWeek = moment().year(year).isoWeeksInYear();
-  const start = Math.min(Math.max(week, 1), maxWeek);
-
-  for (let i = start, j = year; weeks.size < selectedWeekSpan; i === maxWeek ? (i = 1, j++) : i++) {
-    weeks = weeks.push({ week: i, year: j });
-  }
-  return weeks;
-};
+const getWeeks = (selectedStartOfWeek, selectedWeekSpan) =>
+  new Immutable.Range(0, selectedWeekSpan).toList()
+    .map((index) => {
+      const result = selectedStartOfWeek.clone();
+      result.add(index * 7, 'days');
+      return result;
+    });
 
 export default createSelector(
-  state => state.selected_week,
-  state => state.selected_year,
+  state => state.selected_start_of_week,
   state => state.selected_week_span,
   getWeeks
 );

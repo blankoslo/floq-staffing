@@ -6,8 +6,7 @@ import ProjectsReducer from './projects';
 import StaffingReducer from './staffing';
 import WorkedDaysPerWeekReducer from './workedDaysPerWeek';
 import SelectedEmployeeReducer from './selectedEmployee';
-import SelectedYearReducer from './selectedYear';
-import SelectedWeekReducer from './selectedWeek';
+import SelectedStartOfWeekReducer from './selectedStartOfWeek';
 import SelectedWeekSpanReducer from './selectedWeekSpan';
 
 const rootReducer = combineReducers({
@@ -17,8 +16,7 @@ const rootReducer = combineReducers({
   staffing: StaffingReducer,
   worked_days_per_week: WorkedDaysPerWeekReducer,
   selected_employee: SelectedEmployeeReducer,
-  selected_year: SelectedYearReducer,
-  selected_week: SelectedWeekReducer,
+  selected_start_of_week: SelectedStartOfWeekReducer,
   selected_week_span: SelectedWeekSpanReducer
 });
 

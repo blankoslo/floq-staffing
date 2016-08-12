@@ -1,4 +1,5 @@
 import * as api from '../apiclient';
+import { formatDate } from '../utils/weekUtil';
 
 export const API_ERROR = 'API_ERROR';
 export const API_ERROR_CLEAR = 'API_ERROR_CLEAR';
@@ -7,8 +8,7 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_STAFFING = 'GET_STAFFING';
 export const GET_WORKED_DAYS_PER_WEEK = 'GET_WORKED_DAYS_PER_WEEK';
 export const SELECT_EMPLOYEE = 'SELECT_EMPLOYEE';
-export const SELECT_YEAR = 'SELECT_YEAR';
-export const SELECT_WEEK = 'SELECT_WEEK';
+export const SELECT_START_OF_WEEK = 'SELECT_START_OF_WEEK';
 export const SELECT_WEEK_SPAN = 'SELECT_WEEK_SPAN';
 export const ADD_STAFFING = 'ADD_STAFFING';
 export const REMOVE_STAFFING = 'REMOVE_STAFFING';
@@ -37,10 +37,10 @@ export const getStaffing = () => ({
   payload: api.getStaffing()
 });
 
-export const getWorkedDaysPerWeek = (year, week, weekSpan) => ({
+export const getWorkedDaysPerWeek = (startOfWeek, weekSpan) => ({
   type: GET_WORKED_DAYS_PER_WEEK,
   payload: api.getWorkedDaysPerWeek(
-    { in_year: year, in_week: week, in_number_of_weeks: weekSpan }
+    { in_start_of_week: formatDate(startOfWeek), in_number_of_weeks: weekSpan }
   )
 });
 
@@ -49,14 +49,9 @@ export const selectEmployee = (id) => ({
   payload: id
 });
 
-export const selectYear = (year) => ({
-  type: SELECT_YEAR,
-  payload: year
-});
-
-export const selectWeek = (week) => ({
-  type: SELECT_WEEK,
-  payload: week
+export const selectStartOfWeek = (startOfWeek) => ({
+  type: SELECT_START_OF_WEEK,
+  payload: startOfWeek
 });
 
 export const selectWeekSpan = (weekSpan) => ({

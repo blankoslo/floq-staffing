@@ -13,11 +13,14 @@ export default (state = { loading: true, data: new Immutable.Map() }, action) =>
               item.employee,
               result
                 .get(item.employee)
-                .set(item.week, { days: item.days, projects: new Immutable.List(item.projects) }));
+                .set(item.start_of_week, {
+                  days: item.days,
+                  projects: new Immutable.List(item.projects)
+                }));
           }
           return result.set(item.employee, new Immutable.Map(
             [[
-              item.week,
+              item.start_of_week,
               { days: item.days, projects: new Immutable.List(item.projects) }
             ]]
           ));
