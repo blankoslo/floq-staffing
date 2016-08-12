@@ -30,7 +30,7 @@ const getWeeks = (employee, workedDaysPerWeek, weeks, projectMap) => (
     return {
       days,
       unavailable,
-      staffable: getStaffable(startOfWeek, employee)
+      staffable: getStaffable(startOfWeek, employee.date_of_employment, employee.termination_date)
     };
   })
 );
@@ -44,8 +44,6 @@ const getEmployees = (employees, workedDaysPerWeek, weeks, projectMap) => {
     data: employees.data.map(e => ({
       name: `${e.first_name} ${e.last_name}`,
       id: e.id,
-      dateOfEmployment: e.date_of_employment,
-      terminationDate: e.termination_date,
       weeks: getWeeks(e, workedDaysPerWeek, weeks, projectMap) }))
   };
 };
