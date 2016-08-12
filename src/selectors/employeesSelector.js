@@ -1,15 +1,19 @@
 import { createSelector } from 'reselect';
 import * as Immutable from 'immutable';
-import moment from 'moment';
 import weeksSelector from '../selectors/weeksSelector';
 import { formatDate } from '../utils/weekUtil';
 
-const getStaffable = (startOfWeek, employee) => {
-  const diff = moment(employee.date_of_employment).diff(startOfWeek, 'days');
-  if (diff >= 5) return 0;
-  if (diff <= 0) return 5;
-  // TODO: staffable is 5 minus count(official holy days)
-  return 5 - diff;
+export const getStaffable = (startOfWeek, startDate, endDate) => {
+  if (startDate === undefined || startDate === null) {
+    return 0;
+  }
+  const safeEndDate = endDate === null ? '2099-01-01' : endDate;
+
+  return [0, 1, 2, 3, 4].reduce((total, item) => {
+    const date = startOfWeek.clone();
+    date.add(item, 'days');
+    return total + (date.isBetween(startDate, safeEndDate, 'days', '[]') ? 1 : 0);
+  }, 0);
 };
 
 const getWeeks = (employee, workedDaysPerWeek, weeks, projectMap) => (
