@@ -40,22 +40,4 @@ describe('<EditStaffingCell />-table', () => {
     expect(actions.onChange.calls.length).toEqual(1);
     expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', startOfWeek, 4]);
   });
-
-  it('contains remove-button which triggers onChange when clicked with expected arguments', () => {
-    const { wrapper, actions, startOfWeek } = setup();
-    wrapper
-      .find(`#remove-TEST1000-${startOfWeek.format('YYYY-MM-DD')}`)
-      .simulate('click');
-    expect(actions.onChange.calls.length).toEqual(1);
-    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', startOfWeek, -1]);
-  });
-
-  it('contains add-button which triggers onChange when clicked with expected arguments', () => {
-    const { wrapper, actions, startOfWeek } = setup();
-    wrapper
-      .find(`#add-TEST1000-${startOfWeek.format('YYYY-MM-DD')}`)
-      .simulate('click');
-    expect(actions.onChange.calls.length).toEqual(1);
-    expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', startOfWeek, 1]);
-  });
 });
