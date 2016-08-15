@@ -6,7 +6,7 @@ const StaffingViewHeader = (props) => (
   <thead>
     <tr>
       <th className='mdl-data-table__cell--non-numeric'>Ansatte</th>
-      {props.weeks.map((w, index) =>
+      {props.header.map((w, index) =>
         <Col
           startOfWeek={w.startOfWeek}
           sum={w.sum}
@@ -18,7 +18,7 @@ const StaffingViewHeader = (props) => (
 );
 
 StaffingViewHeader.propTypes = {
-  weeks: React.PropTypes.object.isRequired,
+  header: React.PropTypes.object.isRequired,
 };
 
 export default StaffingViewHeader;

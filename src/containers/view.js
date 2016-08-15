@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import employeesSelector from '../selectors/employeesSelector';
-import weeksTotalSelector from '../selectors/weeksTotalSelector';
+import viewHeaderSelector from '../selectors/viewHeaderSelector';
+import viewBodySelector from '../selectors/viewBodySelector';
 import { getWorkedDaysPerWeek } from '../actions/index';
 import StaffingView from '../components/view/index';
 import { calculateStartOfWeek, formatDate } from '../utils/weekUtil';
@@ -34,13 +34,13 @@ class StaffingViewContainer extends Component {
   }
 
   render() {
-    if (this.props.employees.loading) {
+    if (this.props.tableHeader.loading || this.props.tableBody.loading) {
       return null;
     }
     return (
       <StaffingView
-        employees={this.props.employees}
-        weeks={this.props.weeks}
+        tableHeader={this.props.tableHeader.data}
+        tableBody={this.props.tableBody.data}
         selectedYear={this.props.selectedStartOfWeek.get('year')}
         onBackClick={this.onBackClick}
         onForwardClick={this.onForwardClick}
@@ -54,16 +54,16 @@ StaffingViewContainer.propTypes = {
   selectedWeekSpan: React.PropTypes.number.isRequired,
 
   // mapStateToProps
-  weeks: React.PropTypes.object.isRequired,
-  employees: React.PropTypes.object.isRequired,
+  tableHeader: React.PropTypes.object.isRequired,
+  tableBody: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps
   getWorkedDaysPerWeek: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  weeks: weeksTotalSelector(state),
-  employees: employeesSelector(state)
+  tableHeader: viewHeaderSelector(state),
+  tableBody: viewBodySelector(state)
 });
 
 const mapDispatchToProps = {

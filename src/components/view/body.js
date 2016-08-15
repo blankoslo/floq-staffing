@@ -3,7 +3,7 @@ import Row from './bodyRow';
 
 const StaffingViewBody = (props) => (
   <tbody>
-    {props.employees.data.toIndexedSeq().map(e =>
+    {props.body.toIndexedSeq().map(e =>
       <Row
         employeeName={e.name}
         employeeId={e.id}
@@ -14,7 +14,7 @@ const StaffingViewBody = (props) => (
 );
 
 StaffingViewBody.propTypes = {
-  employees: React.PropTypes.object.isRequired
+  body: React.PropTypes.object.isRequired
 };
 
 export default StaffingViewBody;

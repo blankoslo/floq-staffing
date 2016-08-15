@@ -5,15 +5,15 @@ import Body from './body';
 const StaffingViewTable = (props) => (
   <div>
     <table className='mdl-data-table mdl-js-data-table mdl-shadow--2dp'>
-      <Header id='staffing-view-table-header' weeks={props.weeks} />
-      <Body id='staffing-view-table-body' employees={props.employees} />
+      <Header id='staffing-view-table-header' header={props.tableHeader} />
+      <Body id='staffing-view-table-body' body={props.tableBody} />
     </table>
   </div>
 );
 
 StaffingViewTable.propTypes = {
-  employees: React.PropTypes.object.isRequired,
-  weeks: React.PropTypes.object.isRequired
+  tableHeader: React.PropTypes.object.isRequired,
+  tableBody: React.PropTypes.object.isRequired
 };
 
 export default StaffingViewTable;

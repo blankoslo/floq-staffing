@@ -9,13 +9,13 @@ const StaffingView = (props) => (
       onBackClick={props.onBackClick}
       onForwardClick={props.onForwardClick}
     />
-    <StaffingViewTable weeks={props.weeks} employees={props.employees} />
+    <StaffingViewTable tableHeader={props.tableHeader} tableBody={props.tableBody} />
   </div>
 );
 
 StaffingView.propTypes = {
-  employees: React.PropTypes.object.isRequired,
-  weeks: React.PropTypes.object.isRequired,
+  tableHeader: React.PropTypes.object.isRequired,
+  tableBody: React.PropTypes.object.isRequired,
   selectedYear: React.PropTypes.number.isRequired,
   onBackClick: React.PropTypes.func.isRequired,
   onForwardClick: React.PropTypes.func.isRequired
