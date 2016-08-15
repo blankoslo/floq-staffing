@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getEmployees, getProjects, getHolidays, getStaffing,
+import { getEmployees, getProjects, getHolidays,
   selectStartOfWeek, selectWeekSpan } from '../actions/index';
 
 class App extends Component {
@@ -10,7 +10,6 @@ class App extends Component {
     props.getEmployees();
     props.getProjects();
     props.getHolidays();
-    props.getStaffing();
 
     props.selectStartOfWeek(props.location.query.start_of_week);
     props.selectWeekSpan(props.location.query.week_span);
@@ -26,14 +25,12 @@ class App extends Component {
   }
   render() {
     if (this.props.employees.loading ||
-        this.props.staffing.loading ||
         this.props.projects.loading) {
       return null;
     }
     const children = React.Children.map(this.props.children,
       child => React.cloneElement(child, {
         projects: this.props.projects,
-        staffing: this.props.staffing,
         selectedStartOfWeek: this.props.selectedStartOfWeek,
         selectedWeekSpan: this.props.selectedWeekSpan
       }));
@@ -54,7 +51,6 @@ App.propTypes = {
   // mapStateToProps
   employees: React.PropTypes.object.isRequired,
   projects: React.PropTypes.object.isRequired,
-  staffing: React.PropTypes.object.isRequired,
   selectedStartOfWeek: React.PropTypes.object.isRequired,
   selectedWeekSpan: React.PropTypes.number.isRequired,
 
@@ -62,7 +58,6 @@ App.propTypes = {
   getEmployees: React.PropTypes.func.isRequired,
   getProjects: React.PropTypes.func.isRequired,
   getHolidays: React.PropTypes.func.isRequired,
-  getStaffing: React.PropTypes.func.isRequired,
   selectStartOfWeek: React.PropTypes.func.isRequired,
   selectWeekSpan: React.PropTypes.func.isRequired,
 };
@@ -70,7 +65,6 @@ App.propTypes = {
 const mapStateToProps = (state) => ({
   employees: state.employees,
   projects: state.projects,
-  staffing: state.staffing,
   selectedStartOfWeek: state.selected_start_of_week,
   selectedWeekSpan: state.selected_week_span,
 });
@@ -79,7 +73,6 @@ const mapDispatchToProps = {
   getEmployees,
   getProjects,
   getHolidays,
-  getStaffing,
   selectStartOfWeek,
   selectWeekSpan
 };

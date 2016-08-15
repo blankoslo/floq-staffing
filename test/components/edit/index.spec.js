@@ -8,42 +8,32 @@ import moment from 'moment';
 // setup is a function, so that each test get its own state
 const setup = () => {
   const employee = {
-    loading: false,
-    data: {
-      name: 'test_employee_one'
-    }
+    name: 'test_employee_one'
   };
 
-  const tableData = {
-    loading: false,
-    data: {
-      weeks: new Immutable.List(
-        [{
-          startOfWeek: moment('2016-01-04'),
-          total: 5
-        }]
-      ),
-      projects: [
-        {
-          id: 'TEST1000',
-          name: 'test_project_one',
-          days: [0]
-        }
-      ]
-    }
-  };
+  const tableHeader = new Immutable.List(
+    [{
+      startOfWeek: moment('2016-01-04'),
+      sum: 5
+    }]);
+
+  const tableBody = new Immutable.List(
+    [{
+      projectid: 'TEST1000',
+      projectname: 'test_project_one',
+      daysPerWeek: new Immutable.List([1])
+    }]);
 
   const wrapper = shallow(
     <EditStaffing
-      employee={employee}
-      tableData={tableData}
-      onChange={() => {}}
       selectedYear={2016}
+      employee={employee}
+      tableHeader={tableHeader}
+      tableBody={tableBody}
+      onChange={() => {}}
     />);
 
   return {
-    employee,
-    tableData,
     wrapper
   };
 };

@@ -8,7 +8,7 @@ const EditStaffing = props =>
 (
   <div>
     <div style={{ textAlign: 'center' }}>
-      <h1>{props.employee.data.name}</h1>
+      <h1>{props.employee.name}</h1>
       <h2>{props.selectedYear}</h2>
       <span>
         <button
@@ -33,27 +33,25 @@ const EditStaffing = props =>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn>Prosjekter</TableHeaderColumn>
-            {props.tableData.data.weeks.map((row, index) => (
+            {props.tableHeader.map((row, index) => (
               <TableHeaderColumn key={index}>
-                Uke {formatDate(row.startOfWeek)} ({props.tableData.data.weeks.get(index).total})
+                Uke {formatDate(row.startOfWeek)} ({row.sum})
               </TableHeaderColumn>
             ))}
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-          {props.tableData.data.projects.map((project, index) => (
+          {props.tableBody.map((row, index) => (
             <TableRow key={index}>
-              <TableRowColumn>{project.name}</TableRowColumn>
-              {project.days.map((col, colIndex) => (
+              <TableRowColumn>{row.projectname}</TableRowColumn>
+              {row.daysPerWeek.map((col, colIndex) => (
                 <TableRowColumn key={colIndex}>
                   <EditStaffingCell
                     value={col}
                     colIndex={colIndex}
-                    startOfWeek={props.tableData.data.weeks.get(colIndex).startOfWeek}
-                    total={props.tableData.data.weeks.get(colIndex).total}
-                    projectId={project.id}
-                    employee={props.employee}
-                    tableData={props.tableData}
+                    startOfWeek={props.tableHeader.get(colIndex).startOfWeek}
+                    total={props.tableHeader.get(colIndex).sum}
+                    projectId={row.projectid}
                     onChange={props.onChange}
                   />
                 </TableRowColumn>
@@ -69,7 +67,8 @@ const EditStaffing = props =>
 EditStaffing.propTypes = {
   selectedYear: React.PropTypes.number,
   employee: React.PropTypes.object,
-  tableData: React.PropTypes.object,
+  tableHeader: React.PropTypes.object,
+  tableBody: React.PropTypes.object,
   onChange: React.PropTypes.func,
   onBackClick: React.PropTypes.func,
   onForwardClick: React.PropTypes.func

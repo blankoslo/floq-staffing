@@ -1,6 +1,6 @@
 import expect from 'expect';
 import moment from 'moment';
-import { getStaffable } from '../../src/selectors/employeesSelector';
+import { getStaffable } from '../../src/selectors/viewBodySelector';
 
 describe('getStaffable(startOfWeek, firstDayWorked, lastDayWorked)', () => {
   it('start date null. Expect 0 days', () => {
