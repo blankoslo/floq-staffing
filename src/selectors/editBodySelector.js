@@ -15,8 +15,16 @@ const getEmployee = (weeks, workedDaysPerWeek, projects) => {
       .map(projectid => ({
         projectid,
         projectname: projects.data.get(projectid).name,
-        daysPerWeek: weeks.map(week =>
-          workedDaysPerWeek.data.get(formatDate(week), new Immutable.Map()).get(projectid, 0))
+        weeks: weeks.map(startOfWeek => ({
+          start: startOfWeek,
+          days: workedDaysPerWeek.data
+            .get(formatDate(startOfWeek), new Immutable.Map()).get(projectid, 0),
+          sum: workedDaysPerWeek.data
+            .get(formatDate(startOfWeek), new Immutable.Map())
+            .reduce((total, item) =>
+            total + item
+            , 0)
+        }))
       }))
   };
 };

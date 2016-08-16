@@ -7,6 +7,7 @@ import { selectEmployee, addStaffing, removeStaffing,
   getEmployeeWorkedDaysPerWeek } from '../actions/index';
 import { formatDate, calculateStartOfWeek } from '../utils/weekUtil';
 import { browserHistory } from 'react-router';
+import StaffingEdit from '../components/edit/index';
 
 class Edit extends Component {
   constructor(props) {
@@ -35,22 +36,14 @@ class Edit extends Component {
   }
 
   onChange = (projectId, startOfWeek, days) => {
-    // TODO: replace checks with validation?
-    if (days > 0 && days <= 7) {
-      this.props.addStaffing({
-        in_employee: this.props.employee.data.id,
-        in_project: projectId,
-        in_start_of_week: formatDate(startOfWeek),
-        in_days: days,
-      });
-    } else if (days < 0 && days >= -7) {
-      this.props.removeStaffing({
-        in_employee: this.props.employee.data.id,
-        in_project: projectId,
-        in_start_of_week: formatDate(startOfWeek),
-        in_days: Math.abs(days),
-      });
-    }
+    const data = {
+      in_employee: this.props.employee.data.id,
+      in_project: projectId,
+      in_start_of_week: formatDate(startOfWeek),
+      in_days: Math.abs(days),
+    };
+    if (days > 0 && days <= 7) this.props.addStaffing(data);
+    else if (days < 0 && days >= -7) this.props.removeStaffing(data);
   };
 
   onBackClick = () => {
@@ -74,22 +67,15 @@ class Edit extends Component {
         this.props.tableBody.loading) {
       return null;
     }
-    const children = React.Children.map(this.props.children,
-      child => React.cloneElement(child, {
-        selectedYear: this.props.selectedStartOfWeek.get('year'),
-        employee: this.props.employee.data,
-        tableHeader: this.props.tableHeader.data,
-        tableBody: this.props.tableBody.data,
-        onChange: this.onChange,
-        onBackClick: this.onBackClick,
-        onForwardClick: this.onForwardClick,
-      }));
-
-    return (
-      <div>
-        {children}
-      </div>
-    );
+    return (<StaffingEdit
+      selectedYear={this.props.selectedStartOfWeek.get('year')}
+      employeeName={this.props.employee.data.name}
+      tableHeader={this.props.tableHeader.data}
+      tableBody={this.props.tableBody.data}
+      onChange={this.onChange}
+      onBackClick={this.onBackClick}
+      onForwardClick={this.onForwardClick}
+    />);
   }
 }
 

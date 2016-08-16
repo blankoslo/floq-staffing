@@ -7,8 +7,8 @@ import StaffingViewTable from '../../../src/components/view/table';
 const setup = () => {
   const wrapper = shallow(
     <StaffingViewTable
-      employees={{}}
-      weeks={{}}
+      header={{}}
+      body={{}}
     />);
 
   return {

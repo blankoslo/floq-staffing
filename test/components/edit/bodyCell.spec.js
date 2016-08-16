@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import EditStaffingCell from '../../../src/components/edit/cell';
+import EditStaffingCell from '../../../src/components/edit/bodyCell';
 import moment from 'moment';
 
 // setup is a function, so that each test get its own state
@@ -15,10 +15,9 @@ const setup = () => {
   const wrapper = shallow(
     <EditStaffingCell
       value={2}
-      colIndex={0}
+      weekSum={3}
+      projectid={'TEST1000'}
       startOfWeek={startOfWeek}
-      total={3}
-      projectId={'TEST1000'}
       onChange={actions.onChange}
     />);
 
@@ -29,13 +28,13 @@ const setup = () => {
   };
 };
 
-describe('<EditStaffingCell />-table', () => {
+describe('<StaffingEditBodyCell />', () => {
   it('contains input-field which triggers onChange with expected arguments', () => {
     const { wrapper, actions, startOfWeek } = setup();
     const valueUnderTest = 6;
     // The input-field's are on the form 'project.id-week.number'
     wrapper
-      .find(`#field-TEST1000-${startOfWeek.format('YYYY-MM-DD')}`)
+      .find('input')
       .simulate('change', { target: { value: valueUnderTest } });
     expect(actions.onChange.calls.length).toEqual(1);
     expect(actions.onChange.calls[0].arguments).toEqual(['TEST1000', startOfWeek, 4]);

@@ -9,7 +9,7 @@ const StaffingView = (props) => (
       onBackClick={props.onBackClick}
       onForwardClick={props.onForwardClick}
     />
-    <StaffingViewTable tableHeader={props.tableHeader} tableBody={props.tableBody} />
+    <StaffingViewTable header={props.tableHeader} body={props.tableBody} />
   </div>
 );
 
