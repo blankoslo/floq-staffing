@@ -6,14 +6,14 @@ const StaffingEditBodyRow = (props) => (
     <td className='mdl-data-table__cell--non-numeric'>
       {props.projectname}
     </td>
-    {props.weeks.map((week, index) =>
+    {props.weeks.map(week =>
       (<Cell
         value={week.days}
         projectid={props.projectid}
         startOfWeek={week.start}
         weekSum={week.sum}
         onChange={props.onChange}
-        key={`${props.projectid}-${index}`}
+        key={`cell-${week.start}-${props.projectid}`}
       />)
     )}
   </tr>

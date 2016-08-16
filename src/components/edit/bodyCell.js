@@ -19,19 +19,21 @@ class StaffingEditBodyCell extends Component {
   };
 
   render() {
-    return (<td>
-      <div className={'mdl-textfield mdl-js-textfield'}>
+    return (
+      <td
+        style={{ borderLeft: '1px solid rgba(0,0,0,.12)', textAlign: 'center' }}
+      >
         <input
           type='text'
           value={this.props.value}
           onChange={this.onChangeText}
-          style={{ width: 20 }}
-          className={'mdl-textfield__input'}
+          style={{ width: 20, textAlign: 'center', display: 'inline' }}
+          className={'mdl-textfield mdl-js-textfield mdl-textfield__input'}
           ref={'input'}
           onFocus={() => { this.refs.input.select(); }}
         />
-      </div>
-    </td>);
+      </td>
+    );
   }
 }
 
