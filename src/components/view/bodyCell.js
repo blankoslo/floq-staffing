@@ -6,7 +6,8 @@ const StaffingViewBodyCell = (props) => (
       color: props.textColor,
       fontWeight: props.fontWeight,
       backgroundColor: props.backgroundColor,
-      borderLeft: '1px solid rgba(0,0,0,.12)'
+      borderLeft: '1px solid rgba(0,0,0,.12)',
+      textAlign: 'center'
     }}
   >
     {props.value !== null ? `${Math.round(props.value)}%` : null}

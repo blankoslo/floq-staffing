@@ -2,8 +2,10 @@ import React from 'react';
 import { formatDate } from '../../utils/weekUtil';
 
 const StaffingViewBodyRow = (props) => (
-  <th style={{ textAlign: 'center' }}>
-    Uke {formatDate(props.startOfWeek)} ({props.sum})
+  <th style={{ textAlign: 'center', whiteSpace: 'normal' }}>
+    <span>Uke </span>
+    <span style={{ whiteSpace: 'nowrap' }}>{formatDate(props.startOfWeek)}</span>
+    <span> (&nbsp;{props.sum}&nbsp;)</span>
   </th>
 );
 
