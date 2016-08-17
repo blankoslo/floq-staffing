@@ -1,6 +1,7 @@
 import React from 'react';
 import Title from './title';
 import Table from './table';
+import AddProjectDialog from './addProjectDialog';
 
 const StaffingEdit = (props) => (
   <div>
@@ -12,6 +13,10 @@ const StaffingEdit = (props) => (
       onChange={props.onChange}
     />
     <Table header={props.tableHeader} body={props.tableBody} onChange={props.onChange} />
+    <div style={{ textAlign: 'center' }}>
+      <br />
+      <AddProjectDialog />
+    </div>
   </div>
 );
 

@@ -13,6 +13,7 @@ export const SELECT_WEEK_SPAN = 'SELECT_WEEK_SPAN';
 export const ADD_STAFFING = 'ADD_STAFFING';
 export const REMOVE_STAFFING = 'REMOVE_STAFFING';
 export const GET_HOLIDAYS = 'GET_HOLIDAYS';
+export const ADD_PROJECT = 'ADD_PROJECT';
 
 export const apiError = (message) => ({
   type: API_ERROR,
@@ -84,4 +85,9 @@ export const removeStaffing = (data) => ({
   employee: data.in_employee,
   project: data.in_project,
   startOfWeek: data.in_start_of_week
+});
+
+export const addProject = projectid => ({
+  type: ADD_PROJECT,
+  projectid
 });
