@@ -4,7 +4,7 @@ import Cell from './bodyCell';
 const StaffingEditBodyRow = (props) => (
   <tr>
     <td className='mdl-data-table__cell--non-numeric'>
-      {props.projectname}
+      <b>{props.projectid}</b>: {props.projectname}
     </td>
     {props.weeks.map(week =>
       (<Cell
