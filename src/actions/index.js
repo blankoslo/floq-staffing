@@ -87,7 +87,8 @@ export const removeStaffing = (data) => ({
   startOfWeek: data.in_start_of_week
 });
 
-export const addProject = projectid => ({
+export const addProject = (projectid, startOfWeek) => ({
   type: ADD_PROJECT,
-  projectid
+  projectid,
+  startOfWeek
 });

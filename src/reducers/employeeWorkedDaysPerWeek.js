@@ -1,4 +1,5 @@
 import * as Immutable from 'immutable';
+import { formatDate } from '../utils/weekUtil';
 
 import { GET_EMPLOYEE_WORKED_DAYS_PER_WEEK, ADD_STAFFING,
   REMOVE_STAFFING, ADD_PROJECT } from '../actions/index';
@@ -40,9 +41,16 @@ export default (state = { loading: true, data: new Immutable.Map() }, action) =>
     case ADD_PROJECT:
       return {
         loading: false,
-        data: state.data.reduce((weeksMap, value, key) =>
-          weeksMap.set(key, value.set(action.projectid, 0))
-          , new Immutable.OrderedMap()
+        data: state.data.isEmpty()
+          ? new Immutable.OrderedMap(
+            [[
+              formatDate(action.startOfWeek),
+              new Immutable.OrderedMap([[action.projectid, 0]])
+            ]]
+          )
+          : state.data.reduce((weeksMap, value, key) =>
+                weeksMap.set(key, value.set(action.projectid, 0))
+                , new Immutable.OrderedMap()
         )
       };
     default:

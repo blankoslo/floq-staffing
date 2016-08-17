@@ -11,7 +11,7 @@ class AddProjectDialog extends Component {
   };
 
   addProject = (projectId) => {
-    this.props.addProject(projectId);
+    this.props.addProject(projectId, this.props.selectedStartOfWeek);
     this.handleClose();
   };
 
@@ -62,12 +62,14 @@ class AddProjectDialog extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  projects: state.projects
+  projects: state.projects,
+  selectedStartOfWeek: state.selected_start_of_week
 });
 
 AddProjectDialog.propTypes = {
   addProject: React.PropTypes.func.isRequired,
-  projects: React.PropTypes.object.isRequired
+  projects: React.PropTypes.object.isRequired,
+  selectedStartOfWeek: React.PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, { addProject })(AddProjectDialog);
