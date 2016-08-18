@@ -1,10 +1,21 @@
 import { createSelector } from 'reselect';
 import * as Immutable from 'immutable';
 import weeksSelector from '../selectors/weeksSelector';
+import staffableSelector from '../selectors/staffableSelector';
+import employedWeeksSelector from '../selectors/employedWeeksSelector';
 import { formatDate } from '../utils/weekUtil';
 
-const getEmployee = (weeks, workedDaysPerWeek, projects) => {
-  if (workedDaysPerWeek.loading || projects.loading) {
+const getEmployee = (
+  weeks,
+  workedDaysPerWeek,
+  projects,
+  staffableMap,
+  employeeId,
+  employedWeeks) => {
+  if (workedDaysPerWeek.loading
+    || projects.loading
+    || staffableMap.loading
+    || employedWeeks.loading) {
     return { loading: true, data: null };
   }
   return {
@@ -23,7 +34,9 @@ const getEmployee = (weeks, workedDaysPerWeek, projects) => {
             .get(formatDate(startOfWeek), new Immutable.Map())
             .reduce((total, item) =>
             total + item
-            , 0)
+            , 0),
+          staffable: staffableMap.data.get(employeeId).get(formatDate(startOfWeek)),
+          employedWeek: employedWeeks.data.has(formatDate(startOfWeek))
         }))
       }))
   };
@@ -33,5 +46,8 @@ export default createSelector(
   weeksSelector,
   state => state.employee_worked_days_per_week,
   state => state.projects,
+  staffableSelector,
+  state => state.selected_employee,
+  employedWeeksSelector,
   getEmployee,
 );

@@ -25,7 +25,9 @@ const getEmployee = (selectedEmployee, employees) => {
     loading: false,
     data: {
       id: employee.id,
-      name: `${employee.first_name} ${employee.last_name}`
+      name: `${employee.first_name} ${employee.last_name}`,
+      date_of_employment: employee.date_of_employment,
+      termination_date: employee.termination_date
     }
   };
 };
