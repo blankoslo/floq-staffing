@@ -1,23 +1,21 @@
 import React from 'react';
 
-const StaffingViewBodyCell = (props) => (
-  <td
+const StaffingViewBodyCell = (props) => {
+  if (props.staffedDays < 1 && props.staffableDays < 1) return null;
+  return (<td
     colSpan={7}
-    style={{
-      color: props.textColor,
-      fontWeight: props.fontWeight,
-      borderLeft: '1px solid rgba(0,0,0,.12)',
-      textAlign: 'center'
-    }}
+    className={
+        (props.staffedDays > props.staffableDays ? 'bold' : '')
+      + (props.staffedDays < props.staffableDays ? ' medium-color' : '')
+    }
   >
-    {props.value !== null ? `${Math.round(props.value)}%` : null}
-  </td>
-);
+    {`${Math.round(props.staffedDays / props.staffableDays * 100)}%`}
+  </td>);
+};
 
 StaffingViewBodyCell.propTypes = {
-  value: React.PropTypes.number,
-  textColor: React.PropTypes.string.isRequired,
-  fontWeight: React.PropTypes.string.isRequired,
+  staffedDays: React.PropTypes.number.isRequired,
+  staffableDays: React.PropTypes.number.isRequired,
 };
 
 export default StaffingViewBodyCell;
