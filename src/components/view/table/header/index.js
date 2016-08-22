@@ -11,7 +11,7 @@ const StaffingViewHeader = (props) => (
     <tr>
       <Filters rowspan={5} />
       <Navigation
-        colspan={13 * 7}
+        colspan={props.header.days.size}
         onBackClick={props.header.onBackClick}
         onForwardClick={props.header.onForwardClick}
       />
