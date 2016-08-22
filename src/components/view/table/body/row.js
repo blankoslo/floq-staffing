@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import StaffingViewBodyCell from './bodyCell';
+import StaffingViewBodyCell from './cell';
 
 const textColor = (days, staffable) => {
   if (days >= staffable || staffable < 1) return 'black';

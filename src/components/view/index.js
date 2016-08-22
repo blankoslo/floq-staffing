@@ -1,5 +1,5 @@
 import React from 'react';
-import StaffingViewTable from './table';
+import StaffingViewTable from './table/index';
 
 const StaffingView = (props) => (
   <div className='mdl-layout mdl-js-layout'>

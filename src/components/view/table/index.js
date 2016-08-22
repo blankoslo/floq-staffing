@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './table/header/index';
-import Body from './body';
+import Header from './header/index';
+import Body from './body/index';
 
 const StaffingViewTable = (props) => (
   <table className='mdl-data-table mdl-js-data-table mdl-shadow--2dp staffing-view-table'>
