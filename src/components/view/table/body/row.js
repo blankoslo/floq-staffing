@@ -6,7 +6,10 @@ const title = (start, end) => `started: ${start}${end === null ? '' : `\nended: 
 
 const StaffingViewBodyRow = (props) => (
   <tr>
-    <td className='mdl-data-table__cell--non-numeric' title={title(props.startDate, props.endDate)}>
+    <td
+      className='mdl-data-table__cell--non-numeric first-col'
+      title={title(props.startDate, props.endDate)}
+    >
       <Link to={`/staffing/edit/${props.employeeId}`}>{props.employeeName}</Link>
     </td>
     {props.weeks.map((week, index) =>

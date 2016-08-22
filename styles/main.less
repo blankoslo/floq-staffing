@@ -2,12 +2,10 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,700);
 
-@errorColor: red;
 @backgroundPanelColor: #c3c3c3;
 @inputColor: #EEE;
 
-@purple: #414cb7;
-@gray: #9b9b9b;
+@gray: #e6e6e6;
 @dark-gray: #646464;
 
 body {
@@ -42,23 +40,6 @@ hr {
     border-bottom: 1px solid #eee;
 }
 
-div.icon-row {
-    display: flex;
-    flex-flow: row;
-}
-
-div.icon-row-icon {
-    width: 34px;
-}
-
-div.vert-spacer {
-    margin: 34px 0 34px 0;
-}
-
-hr.icon-margin {
-    margin-left: 34px;
-}
-
 label {
   width: 15rem;
   display: inline-block;
@@ -80,23 +61,6 @@ input, select {
   background-color: @inputColor;
 }
 
-div.container {
-  width: 1024px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.errorMessage {
-  input {
-    border-color: @errorColor;
-  }
-}
-
-.error {
-  color: red;
-
-}
-
 table.staffing-view-table {
   border-spacing: 0;
   border: 1px solid @backgroundPanelColor;
@@ -107,6 +71,10 @@ table.staffing-view-table {
       text-align: center;
       vertical-align: middle;
       border: 1px solid @backgroundPanelColor;
+    }
+
+    td.first-col, th.first-col {
+      background-color: @gray
     }
 
     td {
@@ -133,10 +101,6 @@ table.staffing-view-table {
       font-weight: bold;
     }
 
-    td.low-color {
-      color: black;
-    }
-
     td.medium-color {
       color: black;
     }
@@ -147,24 +111,8 @@ table.staffing-view-table {
   overflow-x: auto;
 }
 
-.main-color {
-    color: @purple;
-}
-
-.gray {
-    color: @gray;
-}
-
-.dark-gray {
-    color: @dark-gray;
-}
-
-div.center-text {
-    text-align: center
-}
-
-div.pull-right {
-    text-align: right;
+a {
+  color: black;
 }
 
 li.project-list:hover {
