@@ -5,8 +5,7 @@ const StaffingViewHeaderNavigation = (props) => (
     <div className='mdl-grid'>
       <div className='mdl-cell mdl-cell--1-col'>
         <button
-          className='mdl-button mdl-js-button mdl-button--fab  mdl-button--icon
-            mdl-js-ripple-effect mdl-button--colored'
+          className='mdl-button mdl-js-button'
           onClick={props.onBackClick}
         >
           <i className='material-icons'>arrow_back</i>
@@ -17,8 +16,7 @@ const StaffingViewHeaderNavigation = (props) => (
       </div>
       <div className='mdl-cell mdl-cell--1-col'>
         <button
-          className='mdl-button mdl-js-button mdl-button--fab  mdl-button--icon
-            mdl-js-ripple-effect mdl-button--colored'
+          className='mdl-button mdl-js-button'
           onClick={props.onForwardClick}
         >
           <i className='material-icons'>arrow_forward</i>
