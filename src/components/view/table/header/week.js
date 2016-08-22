@@ -1,0 +1,19 @@
+import React from 'react';
+
+const StaffingViewTableHeaderWeek = (props) => (
+  <th
+    colSpan={7}
+    className={'half-height no-bottom-border'}
+    title={`${props.first} - ${props.last}`}
+  >
+    {props.weeknumber}
+  </th>
+);
+
+StaffingViewTableHeaderWeek.propTypes = {
+  first: React.PropTypes.string.isRequired,
+  last: React.PropTypes.string.isRequired,
+  weeknumber: React.PropTypes.string.isRequired,
+};
+
+export default StaffingViewTableHeaderWeek;

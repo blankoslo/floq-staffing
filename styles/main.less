@@ -68,19 +68,6 @@ form {
   display: table;
 }
 
-div.formContainer {
-  background-color: @backgroundPanelColor;
-  padding: 0.5rem 1rem;
-}
-
-div.form-group {
-  display: table-cell;
-}
-
-div.form-row {
-  display: table-row;
-}
-
 input, select {
   position: relative;
   font-size: 16px;
@@ -110,32 +97,38 @@ div.container {
 
 }
 
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 0.5rem;
+table.staffing-view-table {
+  border-spacing: 0;
+  border: 1px solid @backgroundPanelColor;
   tr {
-    th {
-      padding: 0.5rem 1rem;
+    th, td{
+      // TODO: Get rid of !important
+      padding: 0.4em !important;
       text-align: center;
       vertical-align: middle;
+      border: 1px solid @backgroundPanelColor;
     }
-    td {
-      padding: 0.5rem 1rem;
-      text-align: center;
-      vertical-align: middle;
+
+    th.no-bottom-border {
+      border-bottom: 0;
+    }
+
+    th.no-top-border {
+      border-top: 0 !important;
+    }
+
+    th.half-height {
+      height: 24px;
+    }
+
+    th.small-text {
+      font-size: 9px;
     }
   }
 }
 
-div.detail-view {
-    /*
-    @media (min-width: 480px) {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-    }
-    */
+.mdl-layout__content--horizontal-scroll {
+  overflow-x: auto;
 }
 
 .main-color {
@@ -148,17 +141,6 @@ div.detail-view {
 
 .dark-gray {
     color: @dark-gray;
-}
-
-p.emergency-contact {
-    font-size: 16px;
-    margin-bottom: 8px;
-}
-
-img.profile-pic {
-    width: 128px;
-    height: 128px;
-    border-radius: 64px;
 }
 
 div.center-text {

@@ -39,11 +39,12 @@ class StaffingViewContainer extends Component {
     }
     return (
       <StaffingView
-        tableHeader={this.props.tableHeader.data}
+        tableHeader={
+          Object.assign({},
+          this.props.tableHeader.data,
+          { onBackClick: this.onBackClick, onForwardClick: this.onForwardClick })
+        }
         tableBody={this.props.tableBody.data}
-        selectedYear={this.props.selectedStartOfWeek.get('year')}
-        onBackClick={this.onBackClick}
-        onForwardClick={this.onForwardClick}
       />
     );
   }

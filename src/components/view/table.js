@@ -1,14 +1,12 @@
 import React from 'react';
-import Header from './header';
+import Header from './table/header/index';
 import Body from './body';
 
 const StaffingViewTable = (props) => (
-  <div>
-    <table className='mdl-data-table mdl-js-data-table mdl-shadow--2dp'>
-      <Header id='staffing-view-table-header' header={props.header} />
-      <Body id='staffing-view-table-body' body={props.body} />
-    </table>
-  </div>
+  <table className='mdl-data-table mdl-js-data-table mdl-shadow--2dp staffing-view-table'>
+    <Header id='staffing-view-table-header' header={props.header} />
+    <Body id='staffing-view-table-body' body={props.body} />
+  </table>
 );
 
 StaffingViewTable.propTypes = {

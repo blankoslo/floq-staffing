@@ -1,7 +1,7 @@
 import React from 'react';
 
-const StaffingViewTitle = (props) => (
-  <div style={{ textAlign: 'center' }}>
+const StaffingViewHeaderNavigation = (props) => (
+  <td style={{ textAlign: 'center' }} colSpan={props.colspan}>
     <div className='mdl-grid'>
       <div className='mdl-cell mdl-cell--1-col'>
         <button
@@ -13,7 +13,7 @@ const StaffingViewTitle = (props) => (
         </button>
       </div>
       <div className='mdl-cell mdl-cell--10-col'>
-        <h2>{props.selectedYear}</h2>
+
       </div>
       <div className='mdl-cell mdl-cell--1-col'>
         <button
@@ -25,13 +25,13 @@ const StaffingViewTitle = (props) => (
         </button>
       </div>
     </div>
-  </div>
+  </td>
 );
 
-StaffingViewTitle.propTypes = {
-  selectedYear: React.PropTypes.number.isRequired,
+StaffingViewHeaderNavigation.propTypes = {
   onBackClick: React.PropTypes.func.isRequired,
-  onForwardClick: React.PropTypes.func.isRequired
+  onForwardClick: React.PropTypes.func.isRequired,
+  colspan: React.PropTypes.number.isRequired
 };
 
-export default StaffingViewTitle;
+export default StaffingViewHeaderNavigation;
