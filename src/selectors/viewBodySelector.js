@@ -35,6 +35,9 @@ const getEmployees = (employees, workedDaysPerWeek, weeks, projectMap, staffable
     data: employees.data.map(e => ({
       name: `${e.first_name} ${e.last_name}`,
       id: e.id,
+      startDate: e.date_of_employment,
+      endDate: (e.termination_date !== 'udefined' && e.termination_date !== null
+        ? e.termination_date : null),
       weeks: getWeeks(e.id, workedDaysPerWeek.data, weeks, projectMap.data, staffableMap.data) }))
   };
 };

@@ -7,9 +7,11 @@ const textColor = (days, staffable) => {
   return `rgb(${255 - (155 / staffable * days)},0,0)`;
 };
 
+const title = (start, end) => `started: ${start}${end === null ? '' : `\nended: ${end}`}`;
+
 const StaffingViewBodyRow = (props) => (
   <tr>
-    <td className='mdl-data-table__cell--non-numeric'>
+    <td className='mdl-data-table__cell--non-numeric' title={title(props.startDate, props.endDate)}>
       <Link to={`/staffing/edit/${props.employeeId}`}>{props.employeeName}</Link>
     </td>
     {props.weeks.map((week, index) =>
@@ -26,6 +28,8 @@ const StaffingViewBodyRow = (props) => (
 StaffingViewBodyRow.propTypes = {
   employeeName: React.PropTypes.string.isRequired,
   employeeId: React.PropTypes.number.isRequired,
+  startDate: React.PropTypes.object.isRequired,
+  endDate: React.PropTypes.object.isRequired,
   weeks: React.PropTypes.object.isRequired,
 };
 

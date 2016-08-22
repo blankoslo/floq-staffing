@@ -3,12 +3,14 @@ import Row from './row';
 
 const StaffingViewBody = (props) => (
   <tbody>
-    {props.body.toIndexedSeq().map(e =>
+    {props.body.toIndexedSeq().map((e, index) =>
       <Row
         employeeName={e.name}
         employeeId={e.id}
         weeks={e.weeks}
-        key={e.id}
+        startDate={e.startDate}
+        endDate={e.endDate}
+        key={index}
       />)}
   </tbody>
 );
