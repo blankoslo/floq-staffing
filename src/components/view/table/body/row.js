@@ -4,10 +4,14 @@ import StaffingViewBodyCell from './cell';
 
 const title = (start, end) => `started: ${start}${end === null ? '' : `\nended: ${end}`}`;
 
+const defaultClassName = 'mdl-data-table__cell--non-numeric first-col';
+
+const selected = 'mdl-data-table__cell--non-numeric view-selected';
+
 const StaffingViewBodyRow = (props) => (
   <tr>
     <td
-      className='mdl-data-table__cell--non-numeric first-col'
+      className={props.selected === true ? selected : defaultClassName}
       title={title(props.startDate, props.endDate)}
     >
       <Link
@@ -19,6 +23,7 @@ const StaffingViewBodyRow = (props) => (
     </td>
     {props.weeks.map((week, index) =>
       (<StaffingViewBodyCell
+        selected={props.selected}
         staffedDays={week.days}
         staffableDays={week.staffable}
         key={index}

@@ -17,8 +17,12 @@ const TableBodyFirstPart = (props) => (
   <tbody>
     {props.employees.takeWhile(e => e.id !== props.selectedEmployee).map(e =>
         row(e, e.id, props.selectedStartOfWeek))}
-    {row(props.employees.find(e =>
-        e.id === props.selectedEmployee), props.selectedEmployee, props.selectedStartOfWeek, true)}
+    {row(
+      props.employees.find(e => e.id === props.selectedEmployee),
+      props.selectedEmployee,
+      props.selectedStartOfWeek,
+      true)
+    }
   </tbody>
 );
 
