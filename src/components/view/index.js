@@ -12,7 +12,7 @@ const StaffingView = (props) => (
 StaffingView.propTypes = {
   tableHeader: React.PropTypes.object.isRequired,
   tableBody: React.PropTypes.object.isRequired,
-  edit: React.PropTypes.object.isRequired,
+  edit: React.PropTypes.object,
 };
 
 export default StaffingView;
