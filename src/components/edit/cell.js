@@ -1,7 +1,7 @@
 import React from 'react';
 
 const EditProjectCell = (props) => (
-  <td colSpan={7}>
+  <td colSpan={7} className='edit'>
     {props.value}
   </td>
 );
