@@ -1,34 +1,35 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const StaffingViewHeaderNavigation = (props) => (
   <td style={{ textAlign: 'center' }} colSpan={props.colspan}>
     <div className='mdl-grid'>
       <div className='mdl-cell mdl-cell--1-col'>
-        <button
+        <Link
           className='mdl-button mdl-js-button'
-          onClick={props.onBackClick}
+          to={props.previousPathname}
         >
           <i className='material-icons'>arrow_back</i>
-        </button>
+        </Link>
       </div>
       <div className='mdl-cell mdl-cell--10-col'>
 
       </div>
       <div className='mdl-cell mdl-cell--1-col'>
-        <button
+        <Link
           className='mdl-button mdl-js-button'
-          onClick={props.onForwardClick}
+          to={props.nextPathname}
         >
           <i className='material-icons'>arrow_forward</i>
-        </button>
+        </Link>
       </div>
     </div>
   </td>
 );
 
 StaffingViewHeaderNavigation.propTypes = {
-  onBackClick: React.PropTypes.func.isRequired,
-  onForwardClick: React.PropTypes.func.isRequired,
+  nextPathname: React.PropTypes.string.isRequired,
+  previousPathname: React.PropTypes.string.isRequired,
   colspan: React.PropTypes.number.isRequired
 };
 

@@ -10,7 +10,12 @@ const StaffingViewBodyRow = (props) => (
       className='mdl-data-table__cell--non-numeric first-col'
       title={title(props.startDate, props.endDate)}
     >
-      <Link to={`/staffing/edit/${props.employeeId}`}>{props.employeeName}</Link>
+      <Link
+        to={`/staffing/${props.selected ? '' :
+          `${props.employeeId}/`}?start_of_week=${props.selectedStartOfWeek}`}
+      >
+        {props.employeeName}
+      </Link>
     </td>
     {props.weeks.map((week, index) =>
       (<StaffingViewBodyCell
@@ -28,6 +33,8 @@ StaffingViewBodyRow.propTypes = {
   startDate: React.PropTypes.string.isRequired,
   endDate: React.PropTypes.string,
   weeks: React.PropTypes.object.isRequired,
+  selected: React.PropTypes.bool.isRequired,
+  selectedStartOfWeek: React.PropTypes.string.isRequired,
 };
 
 export default StaffingViewBodyRow;

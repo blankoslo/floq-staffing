@@ -1,43 +1,49 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getEmployees, getProjects, getHolidays,
-  selectStartOfWeek, selectWeekSpan } from '../actions/index';
+  selectStartOfWeek, selectWeekSpan, selectEmployee } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
+    // Selects from database
     props.getEmployees();
     props.getProjects();
     props.getHolidays();
 
+    // Selects from URL
     props.selectStartOfWeek(props.location.query.start_of_week);
     props.selectWeekSpan(props.location.query.week_span);
+
+    if (props.params.id !== undefined) {
+      props.selectEmployee(props.params.id);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.location.query.start_of_week !== this.props.location.query.start_of_week) {
-      this.props.selectStartOfWeek(nextProps.location.query.start_of_week);
+      nextProps.selectStartOfWeek(nextProps.location.query.start_of_week);
     }
     if (nextProps.location.query.week_span !== this.props.location.query.week_span) {
-      this.props.selectWeekSpan(nextProps.location.query.week_span);
+      nextProps.selectWeekSpan(nextProps.location.query.week_span);
+    }
+    if (nextProps.params.id !== this.props.params.id) {
+      nextProps.selectEmployee(nextProps.params.id);
     }
   }
   render() {
     if (this.props.employees.loading ||
-        this.props.projects.loading) {
+        this.props.projects.loading ||
+        this.props.holidays.loading ||
+        this.props.selectedStartOfWeek === null ||
+        this.props.selectedWeekSpan === null) {
       return null;
     }
-    const children = React.Children.map(this.props.children,
-      child => React.cloneElement(child, {
-        projects: this.props.projects,
-        selectedStartOfWeek: this.props.selectedStartOfWeek,
-        selectedWeekSpan: this.props.selectedWeekSpan
-      }));
 
     return (
       <div>
-        {children}
+        {this.props.children}
       </div>
     );
   }
@@ -48,9 +54,10 @@ App.propTypes = {
   params: React.PropTypes.object.isRequired,
   children: React.PropTypes.object,
 
-  // mapStateToProps
+  // mapStateToProps (So that we can force that these are loaded before rendering tree)
   employees: React.PropTypes.object.isRequired,
   projects: React.PropTypes.object.isRequired,
+  holidays: React.PropTypes.object.isRequired,
   selectedStartOfWeek: React.PropTypes.object.isRequired,
   selectedWeekSpan: React.PropTypes.number.isRequired,
 
@@ -60,11 +67,13 @@ App.propTypes = {
   getHolidays: React.PropTypes.func.isRequired,
   selectStartOfWeek: React.PropTypes.func.isRequired,
   selectWeekSpan: React.PropTypes.func.isRequired,
+  selectEmployee: React.PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   employees: state.employees,
   projects: state.projects,
+  holidays: state.holidays,
   selectedStartOfWeek: state.selected_start_of_week,
   selectedWeekSpan: state.selected_week_span,
 });
@@ -74,7 +83,8 @@ const mapDispatchToProps = {
   getProjects,
   getHolidays,
   selectStartOfWeek,
-  selectWeekSpan
+  selectWeekSpan,
+  selectEmployee
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

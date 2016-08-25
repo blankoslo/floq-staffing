@@ -1,33 +1,16 @@
 import React from 'react';
-import Title from './title';
-import Table from './table';
-import AddProjectDialog from './addProjectDialog';
+import AddProjectRow from './add/index';
+import EditRow from './row';
 
-const StaffingEdit = (props) => (
-  <div>
-    <Title
-      employeeName={props.employeeName}
-      selectedYear={props.selectedYear}
-      onBackClick={props.onBackClick}
-      onForwardClick={props.onForwardClick}
-      onChange={props.onChange}
-    />
-    <Table header={props.tableHeader} body={props.tableBody} onChange={props.onChange} />
-    <div style={{ textAlign: 'center' }}>
-      <br />
-      <AddProjectDialog />
-    </div>
-  </div>
+const EditBody = (props) => (
+  <tbody>
+    {props.data.map(p => <EditRow project={p} key={`edit-row-${p.id}`} />)}
+    <AddProjectRow />
+  </tbody>
 );
 
-StaffingEdit.propTypes = {
-  tableHeader: React.PropTypes.object.isRequired,
-  tableBody: React.PropTypes.object.isRequired,
-  selectedYear: React.PropTypes.number.isRequired,
-  employeeName: React.PropTypes.string.isRequired,
-  onBackClick: React.PropTypes.func.isRequired,
-  onForwardClick: React.PropTypes.func.isRequired,
-  onChange: React.PropTypes.func.isRequired
+EditBody.propTypes = {
+  data: React.PropTypes.object.isRequired
 };
 
-export default StaffingEdit;
+export default EditBody;
