@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import AddProjectListItem from './addProjectListItem';
 
-import { addProject } from '../../actions/index';
+import { addProject } from '../../../actions/index';
 
 class AddProjectDialog extends Component {
   state = {
@@ -27,10 +27,10 @@ class AddProjectDialog extends Component {
     return (
       <div>
         <button
-          className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored'
+          className='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab'
           onClick={this.handleOpen}
         >
-          Legg til prosjekt
+          <i className='material-icons'>add</i>
         </button>
         <Dialog
           title='Legg til prosjekt'
