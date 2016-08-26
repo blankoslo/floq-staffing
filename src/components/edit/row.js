@@ -12,6 +12,7 @@ const EditProjectRow = (props) => (
         value={week.days}
         selected={week.selected}
         onClick={props.onClick}
+        onChange={props.onChange}
         projectId={props.project.id}
         startOfWeek={formatDate(week.start)}
         key={index}
@@ -22,6 +23,7 @@ const EditProjectRow = (props) => (
 EditProjectRow.propTypes = {
   project: React.PropTypes.object.isRequired,
   onClick: React.PropTypes.func.isRequired,
+  onChange: React.PropTypes.func.isRequired,
 };
 
 export default EditProjectRow;

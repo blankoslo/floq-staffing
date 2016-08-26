@@ -4,7 +4,6 @@ import employeeSelector from '../selectors/employeeSelector';
 import editBodySelector from '../selectors/editBodySelector';
 import { addStaffing, removeStaffing, selectCell,
   getEmployeeWorkedDaysPerWeek } from '../actions/index';
-import { formatDate } from '../utils/weekUtil';
 import StaffingEdit from '../components/edit/index';
 
 class Edit extends Component {
@@ -36,7 +35,7 @@ class Edit extends Component {
     const data = {
       in_employee: this.props.employee.data.id,
       in_project: projectId,
-      in_start_of_week: formatDate(startOfWeek),
+      in_start_of_week: startOfWeek,
       in_days: Math.abs(days),
     };
     if (days > 0 && days <= 7) this.props.addStaffing(data);
@@ -54,7 +53,7 @@ class Edit extends Component {
       return null;
     }
     return (<StaffingEdit
-      data={{ projects: this.props.tableBody.data, onClick: this.onClick }}
+      data={{ projects: this.props.tableBody.data, onClick: this.onClick, onChange: this.onChange }}
     />);
   }
 }

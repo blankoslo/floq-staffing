@@ -5,7 +5,13 @@ import EditRow from './row';
 const EditBody = (props) => (
   <tbody>
     {props.data.projects.map(p =>
-      <EditRow project={p} onClick={props.data.onClick} key={`edit-row-${p.id}`} />)}
+      <EditRow
+        project={p}
+        onClick={props.data.onClick}
+        onChange={props.data.onChange}
+        key={`edit-row-${p.id}`}
+      />)
+    }
     <AddProjectRow />
   </tbody>
 );
