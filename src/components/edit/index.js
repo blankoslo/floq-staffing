@@ -4,14 +4,14 @@ import EditRow from './row';
 
 const EditBody = (props) => (
   <tbody>
-    {props.data.projects.map(p =>
+    {props.data.projects.map(project =>
       <EditRow
-        project={p}
+        project={project}
         onClick={props.data.onClick}
         onChange={props.data.onChange}
-        key={`edit-row-${p.id}`}
-      />)
-    }
+        key={`edit-row-${project.id}`}
+      />
+    )}
     <AddProjectRow />
   </tbody>
 );
