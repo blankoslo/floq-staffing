@@ -1,21 +1,24 @@
 import React from 'react';
 
-const selected = 'edit-selected';
-
-const onClick = (func, projectId, startOfWeek) =>
-  () => func(projectId, startOfWeek);
-
-const EditProjectCell = (props) => (
-  <td
+const EditProjectCell = (props) => {
+  let div;
+  return (<td
     colSpan={7}
     className='edit'
-    onClick={onClick(props.onClick, props.projectId, props.startOfWeek)}
+    onClick={() => {
+      div.focus();
+      props.onClick(props.projectId, props.startOfWeek);
+    }}
   >
-    <div className={props.selected ? selected : ''}>
+    <div
+      className={'edit-selected'}
+      tabIndex={0}
+      ref={element => (div = element)}
+    >
       {props.value}
     </div>
-  </td>
-);
+  </td>);
+};
 
 EditProjectCell.propTypes = {
   value: React.PropTypes.number.isRequired,
