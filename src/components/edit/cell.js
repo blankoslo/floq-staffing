@@ -1,10 +1,10 @@
 import React from 'react';
 
-const onChange = (key, oldValue, func, projectId, startOfWeek) => {
+const onChange = (key, sum, oldValue, func, projectId, startOfWeek) => {
   const number = parseInt(key);
   if (isNaN(number) || number < 0 || number > 7) return;
   const diff = number - oldValue;
-  if (diff === 0) return;
+  if (diff === 0 || diff + sum > 7) return;
   func(projectId, startOfWeek, diff);
 };
 
@@ -21,7 +21,7 @@ const EditProjectCell = (props) => {
       ref={element => (div = element)}
       onFocus={() => { props.onClick(props.projectId, props.startOfWeek); }}
       onKeyUp={e =>
-        onChange(e.key, props.value, props.onChange, props.projectId, props.startOfWeek)}
+        onChange(e.key, props.sum, props.value, props.onChange, props.projectId, props.startOfWeek)}
     >
       {props.value}
     </div>
@@ -30,6 +30,7 @@ const EditProjectCell = (props) => {
 
 EditProjectCell.propTypes = {
   value: React.PropTypes.number.isRequired,
+  sum: React.PropTypes.number.isRequired,
   selected: React.PropTypes.bool.isRequired,
   onClick: React.PropTypes.func.isRequired,
   onChange: React.PropTypes.func.isRequired,

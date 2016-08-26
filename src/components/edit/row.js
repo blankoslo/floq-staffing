@@ -10,6 +10,7 @@ const EditProjectRow = (props) => (
     {props.project.weeks.map((week, index) =>
       <Cell
         value={week.days}
+        sum={week.sum}
         selected={week.selected}
         onClick={props.onClick}
         onChange={props.onChange}
