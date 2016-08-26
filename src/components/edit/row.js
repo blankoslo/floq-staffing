@@ -11,8 +11,6 @@ const EditProjectRow = (props) => (
       <Cell
         value={week.days}
         sum={week.sum}
-        selected={week.selected}
-        onClick={props.onClick}
         onChange={props.onChange}
         projectId={props.project.id}
         startOfWeek={formatDate(week.start)}
@@ -23,7 +21,6 @@ const EditProjectRow = (props) => (
 
 EditProjectRow.propTypes = {
   project: React.PropTypes.object.isRequired,
-  onClick: React.PropTypes.func.isRequired,
   onChange: React.PropTypes.func.isRequired,
 };
 

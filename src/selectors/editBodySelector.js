@@ -11,8 +11,7 @@ const getEmployee = (
   projects,
   staffableMap,
   employeeId,
-  employedWeeks,
-  selected) => {
+  employedWeeks) => {
   if (workedDaysPerWeek.loading
     || projects.loading
     || staffableMap.loading
@@ -36,10 +35,7 @@ const getEmployee = (
             total + item
             , 0),
           staffable: staffableMap.data.get(employeeId).get(formatDate(startOfWeek)),
-          employedWeek: employedWeeks.data.has(formatDate(startOfWeek)),
-          selected: selected !== null &&
-            selected.project === id &&
-            selected.startOfWeek === formatDate(startOfWeek)
+          employedWeek: employedWeeks.data.has(formatDate(startOfWeek))
         }))
       }))
   };
@@ -52,6 +48,5 @@ export default createSelector(
   staffableSelector,
   state => state.selected_employee,
   employedWeeksSelector,
-  state => state.selected_cell,
   getEmployee,
 );

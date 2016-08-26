@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import employeeSelector from '../selectors/employeeSelector';
 import editBodySelector from '../selectors/editBodySelector';
-import { addStaffing, removeStaffing, selectCell,
+import { addStaffing, removeStaffing,
   getEmployeeWorkedDaysPerWeek } from '../actions/index';
 import StaffingEdit from '../components/edit/index';
 
@@ -42,10 +42,6 @@ class Edit extends Component {
     else if (days < 0 && days >= -7) this.props.removeStaffing(data);
   };
 
-  onClick = (projectId, startOfWeek) => {
-    this.props.selectCell(projectId, startOfWeek);
-  }
-
   render() {
     if (this.props.employee.loading ||
         this.props.tableBody.loading ||
@@ -70,7 +66,6 @@ Edit.propTypes = {
   // mapDispatchToProps
   addStaffing: React.PropTypes.func.isRequired,
   removeStaffing: React.PropTypes.func.isRequired,
-  selectCell: React.PropTypes.func.isRequired,
   getEmployeeWorkedDaysPerWeek: React.PropTypes.func.isRequired,
 };
 
@@ -86,7 +81,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addStaffing,
   removeStaffing,
-  selectCell,
   getEmployeeWorkedDaysPerWeek
 };
 

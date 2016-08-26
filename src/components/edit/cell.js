@@ -19,7 +19,6 @@ const EditProjectCell = (props) => {
       className={'edit-selected'}
       tabIndex={0}
       ref={element => (div = element)}
-      onFocus={() => { props.onClick(props.projectId, props.startOfWeek); }}
       onKeyUp={e =>
         onChange(e.key, props.sum, props.value, props.onChange, props.projectId, props.startOfWeek)}
     >
@@ -31,8 +30,6 @@ const EditProjectCell = (props) => {
 EditProjectCell.propTypes = {
   value: React.PropTypes.number.isRequired,
   sum: React.PropTypes.number.isRequired,
-  selected: React.PropTypes.bool.isRequired,
-  onClick: React.PropTypes.func.isRequired,
   onChange: React.PropTypes.func.isRequired,
   projectId: React.PropTypes.string.isRequired,
   startOfWeek: React.PropTypes.string.isRequired,

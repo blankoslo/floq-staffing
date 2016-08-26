@@ -7,7 +7,6 @@ const EditBody = (props) => (
     {props.data.projects.map(project =>
       <EditRow
         project={project}
-        onClick={props.data.onClick}
         onChange={props.data.onChange}
         key={`edit-row-${project.id}`}
       />

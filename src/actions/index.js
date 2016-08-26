@@ -14,7 +14,6 @@ export const ADD_STAFFING = 'ADD_STAFFING';
 export const REMOVE_STAFFING = 'REMOVE_STAFFING';
 export const GET_HOLIDAYS = 'GET_HOLIDAYS';
 export const ADD_PROJECT = 'ADD_PROJECT';
-export const SELECT_CELL = 'SELECT_CELL';
 
 export const apiError = (message) => ({
   type: API_ERROR,
@@ -91,11 +90,5 @@ export const removeStaffing = (data) => ({
 export const addProject = (projectid, startOfWeek) => ({
   type: ADD_PROJECT,
   projectid,
-  startOfWeek
-});
-
-export const selectCell = (project, startOfWeek) => ({
-  type: SELECT_CELL,
-  project,
   startOfWeek
 });
