@@ -7,7 +7,6 @@ export const GET_EMPLOYEES = 'GET_EMPLOYEES';
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_WORKED_DAYS_PER_WEEK = 'GET_WORKED_DAYS_PER_WEEK';
 export const GET_EMPLOYEE_WORKED_DAYS_PER_WEEK = 'GET_EMPLOYEE_WORKED_DAYS_PER_WEEK';
-export const SELECT_EMPLOYEE = 'SELECT_EMPLOYEE';
 export const SELECT_START_OF_WEEK = 'SELECT_START_OF_WEEK';
 export const SELECT_WEEK_SPAN = 'SELECT_WEEK_SPAN';
 export const ADD_STAFFING = 'ADD_STAFFING';
@@ -54,11 +53,6 @@ export const getEmployeeWorkedDaysPerWeek = (employeeId, startOfWeek, weekSpan) 
       in_number_of_weeks: weekSpan
     }
   )
-});
-
-export const selectEmployee = (id) => ({
-  type: SELECT_EMPLOYEE,
-  payload: id
 });
 
 export const selectStartOfWeek = (startOfWeek) => ({
