@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 const getEmployee = (employeeId, employees) => {
-  if (employees.loading || employeeId === null) {
+  if (employees.loading || employeeId === null || isNaN(employeeId)) {
     return { loading: true, data: null };
   }
 

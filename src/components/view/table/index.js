@@ -36,7 +36,7 @@ const StaffingViewTable = (props) => {
   const selectedStartOfWeek = props.body.selectedStartOfWeek;
   const header = props.header;
   const employees = props.body.employees;
-  const employeeId = props.body.selectedEmployee.id;
+  const employeeId = props.body.selectedEmployee === null ? null : props.body.selectedEmployee.id;
   return props.edit === null ? viewOnly(header, employees, selectedStartOfWeek) :
     viewAndEdit(header, employees, employeeId, selectedStartOfWeek, props.edit);
 };
