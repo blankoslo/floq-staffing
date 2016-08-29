@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 
-const getEmployee = (employeeId, employees) => {
+export const getEmployee = (employeeId, employees) => {
   if (employees.loading || employeeId === null || isNaN(employeeId)) {
     return { loading: true, data: null };
   }
 
   const employee = employees.data.find(e => e.id === employeeId);
 
-  if (employee === null) {
+  if (employee === undefined || employee === null) {
     return { loading: true, data: null };
   }
 
