@@ -71,6 +71,10 @@ table.staffing-view-table {
       text-align: center;
       vertical-align: middle;
       border: 1px solid @backgroundPanelColor;
+
+      div.edit-selected:focus {
+        background-color: @gray;
+      }
     }
 
     &:hover {
@@ -78,7 +82,18 @@ table.staffing-view-table {
     }
 
     td.first-col, th.first-col {
-      background-color: @gray
+      background-color: @gray;
+      color: black;
+    }
+
+    td.view-selected, th.view-selected {
+      background-color: @dark-gray;
+      color: white;
+    }
+
+    td.edit, th.edit {
+      background-color: white;
+      color: black;
     }
 
     td {

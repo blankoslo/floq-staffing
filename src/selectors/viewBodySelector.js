@@ -23,22 +23,30 @@ const getWeeks = (employeeId, workedDaysPerWeek, weeks, projectMap, staffableMap
   })
 );
 
-const getEmployees = (employees, workedDaysPerWeek, weeks, projectMap, staffableMap) => {
+const getEmployees = (employees, workedDaysPerWeek, weeks, projectMap,
+  staffableMap, selectedEmployee, selectedStartOfWeek) => {
   if (employees.loading
     || workedDaysPerWeek.loading
     || projectMap.loading
-    || staffableMap.loading) {
+    || staffableMap.loading
+    || selectedStartOfWeek === null
+    || selectedStartOfWeek === 'undefined') {
     return { loading: true, data: null };
   }
   return {
     loading: false,
-    data: employees.data.map(e => ({
-      name: `${e.first_name} ${e.last_name}`,
-      id: e.id,
-      startDate: e.date_of_employment,
-      endDate: (e.termination_date !== 'udefined' && e.termination_date !== null
-        ? e.termination_date : null),
-      weeks: getWeeks(e.id, workedDaysPerWeek.data, weeks, projectMap.data, staffableMap.data) }))
+    data: {
+      employees: employees.data.reduce((result, e) => (result.push({
+        name: `${e.first_name} ${e.last_name}`,
+        id: e.id,
+        startDate: e.date_of_employment,
+        endDate: (e.termination_date !== 'undefined' && e.termination_date !== null
+          ? e.termination_date : null),
+        weeks: getWeeks(e.id, workedDaysPerWeek.data, weeks, projectMap.data, staffableMap.data),
+      })), new Immutable.List()),
+      selectedEmployee: selectedEmployee === 'undefined' ? null : selectedEmployee,
+      selectedStartOfWeek: formatDate(selectedStartOfWeek),
+    }
   };
 };
 
@@ -48,5 +56,7 @@ export default createSelector(
   weeksSelector,
   state => state.projects,
   staffableSelector,
+  state => state.selected_employee,
+  state => state.selected_start_of_week,
   getEmployees,
 );

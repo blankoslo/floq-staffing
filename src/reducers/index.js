@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   worked_days_per_week: WorkedDaysPerWeekReducer,
   selected_employee: SelectedEmployeeReducer,
   selected_start_of_week: SelectedStartOfWeekReducer,
-  selected_week_span: SelectedWeekSpanReducer
+  selected_week_span: SelectedWeekSpanReducer,
 });
 
 export default rootReducer;

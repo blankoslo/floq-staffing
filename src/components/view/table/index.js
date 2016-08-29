@@ -1,17 +1,49 @@
 import React from 'react';
 import Header from './header/index';
-import Body from './body/index';
+import ViewOnly from './body/viewOnly';
+import FirstPart from './body/firstPart';
+import LastPart from './body/lastPart';
 
-const StaffingViewTable = (props) => (
-  <table className='mdl-data-table mdl-js-data-table mdl-shadow--2dp staffing-view-table'>
-    <Header id='staffing-view-table-header' header={props.header} />
-    <Body id='staffing-view-table-body' body={props.body} />
+const classes = 'mdl-data-table mdl-js-data-table mdl-shadow--2dp staffing-view-table';
+const viewOnly = (header, employees, selectedStartOfWeek) => (
+  <table className={classes}>
+    <Header header={header} />
+    <ViewOnly
+      employees={employees}
+      selectedStartOfWeek={selectedStartOfWeek}
+    />
   </table>
 );
 
+const viewAndEdit = (header, employees, selectedEmployee, selectedStartOfWeek, edit) => (
+  <table className={classes}>
+    <Header header={header} />
+    <FirstPart
+      employees={employees}
+      selectedEmployee={selectedEmployee}
+      selectedStartOfWeek={selectedStartOfWeek}
+    />
+    {edit}
+    <LastPart
+      employees={employees}
+      selectedEmployee={selectedEmployee}
+      selectedStartOfWeek={selectedStartOfWeek}
+    />
+  </table>
+);
+
+const StaffingViewTable = (props) => {
+  const selectedStartOfWeek = props.body.selectedStartOfWeek;
+  const header = props.header;
+  const employees = props.body.employees;
+  return props.edit === null ? viewOnly(header, employees, selectedStartOfWeek) :
+    viewAndEdit(header, employees, props.body.selectedEmployee, selectedStartOfWeek, props.edit);
+};
+
 StaffingViewTable.propTypes = {
   header: React.PropTypes.object.isRequired,
-  body: React.PropTypes.object.isRequired
+  body: React.PropTypes.object.isRequired,
+  edit: React.PropTypes.object,
 };
 
 export default StaffingViewTable;

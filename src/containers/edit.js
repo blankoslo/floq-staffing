@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import employeeSelector from '../selectors/employeeSelector';
-import editHeaderSelector from '../selectors/editHeaderSelector';
 import editBodySelector from '../selectors/editBodySelector';
-import { selectEmployee, addStaffing, removeStaffing,
+import { addStaffing, removeStaffing,
   getEmployeeWorkedDaysPerWeek } from '../actions/index';
-import { formatDate, calculateStartOfWeek } from '../utils/weekUtil';
-import { browserHistory } from 'react-router';
 import StaffingEdit from '../components/edit/index';
 
 class Edit extends Component {
   constructor(props) {
     super(props);
-    if (props.params.id !== undefined) {
-      props.selectEmployee(props.params.id);
+    if (props.selectedEmployee !== null) {
       props.getEmployeeWorkedDaysPerWeek(
-        props.params.id,
+        props.selectedEmployee,
         props.selectedStartOfWeek,
         props.selectedWeekSpan
       );
@@ -39,72 +35,50 @@ class Edit extends Component {
     const data = {
       in_employee: this.props.employee.data.id,
       in_project: projectId,
-      in_start_of_week: formatDate(startOfWeek),
+      in_start_of_week: startOfWeek,
       in_days: Math.abs(days),
     };
     if (days > 0 && days <= 7) this.props.addStaffing(data);
     else if (days < 0 && days >= -7) this.props.removeStaffing(data);
   };
 
-  onBackClick = () => {
-    this.changeStartOfWeek(-1);
-  };
-
-  onForwardClick = () => {
-    this.changeStartOfWeek(1);
-  };
-
-  changeStartOfWeek(change) {
-    const startOfWeek = calculateStartOfWeek(
-      this.props.selectedStartOfWeek, (change * this.props.selectedWeekSpan));
-    browserHistory.push(`/staffing/edit/${this.props.employee.data.id}/` +
-      `?start_of_week=${formatDate(startOfWeek)}`);
-  }
-
   render() {
     if (this.props.employee.loading ||
-        this.props.tableHeader.loading ||
-        this.props.tableBody.loading) {
+        this.props.tableBody.loading ||
+        this.props.selectedEmployee === null) {
       return null;
     }
     return (<StaffingEdit
-      selectedYear={this.props.selectedStartOfWeek.get('year')}
-      employeeName={this.props.employee.data.name}
-      tableHeader={this.props.tableHeader.data}
-      tableBody={this.props.tableBody.data}
-      onChange={this.onChange}
-      onBackClick={this.onBackClick}
-      onForwardClick={this.onForwardClick}
+      data={{ projects: this.props.tableBody.data, onClick: this.onClick, onChange: this.onChange }}
     />);
   }
 }
 
 Edit.propTypes = {
-  params: React.PropTypes.object.isRequired,
-  children: React.PropTypes.object,
-  selectedStartOfWeek: React.PropTypes.object.isRequired,
-  selectedWeekSpan: React.PropTypes.number.isRequired,
+  selectedEmployee: React.PropTypes.number,
+  selectedStartOfWeek: React.PropTypes.object,
+  selectedWeekSpan: React.PropTypes.number,
 
   // mapStateToProps
   employee: React.PropTypes.object.isRequired,
-  tableHeader: React.PropTypes.object.isRequired,
   tableBody: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps
-  selectEmployee: React.PropTypes.func.isRequired,
   addStaffing: React.PropTypes.func.isRequired,
   removeStaffing: React.PropTypes.func.isRequired,
-  getEmployeeWorkedDaysPerWeek: React.PropTypes.func.isRequired
+  getEmployeeWorkedDaysPerWeek: React.PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  selectedStartOfWeek: state.selected_start_of_week,
+  selectedWeekSpan: state.selected_week_span,
+  selectedEmployee: state.selected_employee,
+
   employee: employeeSelector(state),
-  tableHeader: editHeaderSelector(state),
   tableBody: editBodySelector(state)
 });
 
 const mapDispatchToProps = {
-  selectEmployee,
   addStaffing,
   removeStaffing,
   getEmployeeWorkedDaysPerWeek

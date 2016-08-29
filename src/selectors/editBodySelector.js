@@ -21,15 +21,14 @@ const getEmployee = (
   return {
     loading: false,
     data: workedDaysPerWeek.data
-      .toIndexedSeq()
-      .reduce((total, item) => total.merge(item.keySeq()), new Immutable.OrderedSet())
-      .map(projectid => ({
-        projectid,
-        projectname: projects.data.get(projectid).name,
+      .reduce((total, value) => total.merge(value.keySeq()), new Immutable.OrderedSet())
+      .map(id => ({
+        id,
+        name: projects.data.get(id).name,
         weeks: weeks.map(startOfWeek => ({
           start: startOfWeek,
           days: workedDaysPerWeek.data
-            .get(formatDate(startOfWeek), new Immutable.Map()).get(projectid, 0),
+            .get(formatDate(startOfWeek), new Immutable.Map()).get(id, 0),
           sum: workedDaysPerWeek.data
             .get(formatDate(startOfWeek), new Immutable.Map())
             .reduce((total, item) =>

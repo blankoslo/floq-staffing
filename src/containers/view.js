@@ -5,7 +5,6 @@ import viewBodySelector from '../selectors/viewBodySelector';
 import { getWorkedDaysPerWeek } from '../actions/index';
 import StaffingView from '../components/view/index';
 import { calculateStartOfWeek, formatDate } from '../utils/weekUtil';
-import { browserHistory } from 'react-router';
 
 class StaffingViewContainer extends Component {
   constructor(props) {
@@ -19,18 +18,16 @@ class StaffingViewContainer extends Component {
     }
   }
 
-  onBackClick = () => {
-    this.changeStartOfWeek(-1);
-  };
+  getPreviousStartOfWeek = () =>
+    this.getStartOfWeek(-1);
 
-  onForwardClick = () => {
-    this.changeStartOfWeek(1);
-  };
+  getNextStartOfWeek = () =>
+    this.getStartOfWeek(1);
 
-  changeStartOfWeek(change) {
+  getStartOfWeek(change) {
     const startOfWeek = calculateStartOfWeek(
       this.props.selectedStartOfWeek, (change * this.props.selectedWeekSpan));
-    browserHistory.push(`/staffing/?start_of_week=${formatDate(startOfWeek)}`);
+    return `${this.props.location.pathname}?start_of_week=${formatDate(startOfWeek)}`;
   }
 
   render() {
@@ -42,15 +39,22 @@ class StaffingViewContainer extends Component {
         tableHeader={
           Object.assign({},
           this.props.tableHeader.data,
-          { onBackClick: this.onBackClick, onForwardClick: this.onForwardClick })
+            {
+              previousStartOfWeek: this.getPreviousStartOfWeek(),
+              nextStartOfWeek: this.getNextStartOfWeek()
+            }
+          )
         }
         tableBody={this.props.tableBody.data}
+        edit={this.props.children}
       />
     );
   }
 }
 
 StaffingViewContainer.propTypes = {
+  children: React.PropTypes.object,
+  location: React.PropTypes.object.isRequired,
   selectedStartOfWeek: React.PropTypes.object.isRequired,
   selectedWeekSpan: React.PropTypes.number.isRequired,
 
@@ -59,16 +63,19 @@ StaffingViewContainer.propTypes = {
   tableBody: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps
-  getWorkedDaysPerWeek: React.PropTypes.func.isRequired
+  getWorkedDaysPerWeek: React.PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  selectedStartOfWeek: state.selected_start_of_week,
+  selectedWeekSpan: state.selected_week_span,
+
   tableHeader: viewHeaderSelector(state),
-  tableBody: viewBodySelector(state)
+  tableBody: viewBodySelector(state),
 });
 
 const mapDispatchToProps = {
-  getWorkedDaysPerWeek
+  getWorkedDaysPerWeek,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaffingViewContainer);
