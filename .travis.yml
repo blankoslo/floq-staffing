@@ -7,6 +7,10 @@ script:
   - npm run lint
   - npm test
 
+notifications:
+  slack:
+    secure: HOO505oWSo9wT0TGh0ZsY1mD9JF4VDHtgPjHgKu39TgGYtSIibKSA+FEq9/echq0m2tl++G2l9H2kp/xGjOUYpE9B2JBRF7Ut//d3fluNzCjt2NNI++2TGtTmO6ALWPRqQaq2KQDH77LB9vyggrN8tp7l/RNQjfZLDMlnEh+q1TxFqoyxMZVhzIh/npKLNr2IchoCfZZu0Ti5nLL/56DeUVJ0d0g5/ussYYs6Gfi4JBQqwMHvhq4lkCAg8JaxPmpJyswz3fF/6TLN6R13/XULdJRVGij7UC11Y3LIHVZYlKImpu6VGUnOQ9AlyXW2aMJsaRwpA/iWXFYXfwJFHAlvdY9xtCLBGeEsZKBx1Xs3WyO3zI0TK68jajmxZoODFYNUrj652cqFceiWSZIEZkogq/Qnz8YuA/qtIrxwxW0c52981NB1rzJxUt4eJnDzUNjy1o4jGNJ24wgsEcXfyX3NZ/HzZ46qnOgm69J/9BqrCzL154pbJ3eMnC+0UbZkzTQALin88zNB0hI4sy3U4YAZvaPHcTVAjXoDLe6+2JcS3rQP/X7gv+NCYmcmQQ88Jsrt+ZdC0lh0m8+vtIavOfW5ssdIAXfn6AlZ2moY47neDWZ3KQpBagAXp8m9njHKVRLaPZcpU0Om7Tp6K9Xi7EX055jVIc7Wu1Nkdi7DubTY8s=
+
 before_deploy: npm run dist
 deploy:
   - provider: gcs
