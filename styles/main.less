@@ -2,12 +2,10 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,700);
 
-@errorColor: red;
 @backgroundPanelColor: #c3c3c3;
 @inputColor: #EEE;
 
-@purple: #414cb7;
-@gray: #9b9b9b;
+@gray: #e6e6e6;
 @dark-gray: #646464;
 
 body {
@@ -42,23 +40,6 @@ hr {
     border-bottom: 1px solid #eee;
 }
 
-div.icon-row {
-    display: flex;
-    flex-flow: row;
-}
-
-div.icon-row-icon {
-    width: 34px;
-}
-
-div.vert-spacer {
-    margin: 34px 0 34px 0;
-}
-
-hr.icon-margin {
-    margin-left: 34px;
-}
-
 label {
   width: 15rem;
   display: inline-block;
@@ -66,19 +47,6 @@ label {
 
 form {
   display: table;
-}
-
-div.formContainer {
-  background-color: @backgroundPanelColor;
-  padding: 0.5rem 1rem;
-}
-
-div.form-group {
-  display: table-cell;
-}
-
-div.form-row {
-  display: table-row;
 }
 
 input, select {
@@ -93,81 +61,80 @@ input, select {
   background-color: @inputColor;
 }
 
-div.container {
-  width: 1024px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.errorMessage {
-  input {
-    border-color: @errorColor;
-  }
-}
-
-.error {
-  color: red;
-
-}
-
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 0.5rem;
+table.staffing-view-table {
+  border-spacing: 0;
+  border: 1px solid @backgroundPanelColor;
   tr {
+    th, td{
+      // TODO: Get rid of !important
+      padding: 0.4em !important;
+      text-align: center;
+      vertical-align: middle;
+      border: 1px solid @backgroundPanelColor;
 
-    th {
-      // background-color: #0088cc;
-      padding: 0.5rem 1rem;
+      div.edit-selected:focus {
+        background-color: @gray;
+      }
+    }
+
+    &:hover {
+      background-color: inherit;
+    }
+
+    td.first-col, th.first-col {
+      background-color: @gray;
+      color: black;
+    }
+
+    td.view-selected, th.view-selected {
+      background-color: @dark-gray;
+      color: white;
+    }
+
+    td.edit, th.edit {
+      background-color: white;
+      color: black;
     }
 
     td {
-      padding: 0.5rem 1rem;
-      // background-color: #6699cc;
+      color: @backgroundPanelColor;
     }
 
+    th.no-bottom-border {
+      border-bottom: 0;
+    }
 
+    th.no-top-border {
+      border-top: 0 !important;
+    }
+
+    th.half-height {
+      height: 24px;
+    }
+
+    th.small-text {
+      font-size: 9px;
+    }
+
+    td.bold {
+      font-weight: bold;
+    }
+
+    td.medium-color {
+      color: black;
+    }
   }
-
 }
 
-div.detail-view {
-    /*
-    @media (min-width: 480px) {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-    }
-    */
+.mdl-layout__content--horizontal-scroll {
+  overflow-x: auto;
 }
 
-.main-color {
-    color: @purple;
+a {
+  color: black;
 }
 
-.gray {
-    color: @gray;
-}
-
-.dark-gray {
-    color: @dark-gray;
-}
-
-p.emergency-contact {
-    font-size: 16px;
-    margin-bottom: 8px;
-}
-
-img.profile-pic {
-    width: 128px;
-    height: 128px;
-    border-radius: 64px;
-}
-
-div.center-text {
-    text-align: center
-}
-
-div.pull-right {
-    text-align: right;
+li.project-list:hover {
+  background-color: rgba(158,158,158,.2);
+  cursor: pointer;
 }

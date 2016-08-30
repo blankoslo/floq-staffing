@@ -19,24 +19,38 @@ const dataHeaders = Object.assign({}, headers, {
 });
 
 export const getProjects = () =>
-fetch(`${baseURL}/projects?select=id,name&order=id.desc`, {
+fetch(`${baseURL}/projects?select=id,name,billable&order=id.desc`, {
   headers
 }).then(response => response.json());
 
 export const getEmployees = () =>
-  fetch(`${baseURL}/employees?select=id,first_name,last_name&order=first_name.desc`, {
+  fetch(`${baseURL}/employees?select=
+    id,
+    first_name,
+    last_name,
+    date_of_employment,
+    termination_date
+    &order=first_name.desc`, {
+      headers
+    }).then(response => response.json());
+
+export const getHolidays = () =>
+  fetch(`${baseURL}/holidays?select=date`, {
     headers
   }).then(response => response.json());
-
-export const getStaffing = () => fetch(`${baseURL}/staffing`, {
-  headers
-}).then(response => response.json());
 
 export const getWorkedDaysPerWeek = body => fetch(`${baseURL}/rpc/worked_days_per_week`, {
   method: 'POST',
   headers: dataHeaders,
   body: JSON.stringify(body)
 }).then(response => response.json());
+
+export const getEmployeeWorkedDaysPerWeek = body =>
+  fetch(`${baseURL}/rpc/employee_worked_days_per_week`, {
+    method: 'POST',
+    headers: dataHeaders,
+    body: JSON.stringify(body)
+  }).then(response => response.json());
 
 export const addStaffing = body => fetch(`${baseURL}/rpc/add_days_to_week`, {
   method: 'POST',

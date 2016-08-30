@@ -1,10 +1,10 @@
-import moment from 'moment';
-
-const calculateNewYearWeek = (year, week, change) => {
-  const newDate = moment().year(year).isoWeek(week)
-    .add(change, 'weeks');
-
-  return { year: newDate.year(), week: newDate.isoWeek() };
+export const calculateStartOfWeek = (startOfWeek, change) => {
+  const newDate = startOfWeek.clone();
+  if (change !== 0) {
+    newDate.add(change * 7, 'days');
+  }
+  return newDate;
 };
 
-export default calculateNewYearWeek;
+export const formatDate = momentDate =>
+ momentDate.format('YYYY-MM-DD');

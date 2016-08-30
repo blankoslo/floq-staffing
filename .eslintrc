@@ -1,6 +1,10 @@
 {
   "extends": "airbnb",
   "globals": {
+    "document",
+    "window",
+    "global",
+    "fetch",
     "apiToken",
     "config",
     "describe",
@@ -15,5 +19,6 @@
     "jsx-quotes": [2, "prefer-single"],
     "no-extra-parens": 0,
     "radix": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
   }
 }

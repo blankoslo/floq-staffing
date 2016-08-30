@@ -1,83 +1,86 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import employeeSelector from '../selectors/employeeSelector';
-import tableDataSelector from '../selectors/tableDataSelector';
-import { selectEmployee, addStaffing, removeStaffing } from '../actions/index';
+import editBodySelector from '../selectors/editBodySelector';
+import { addStaffing, removeStaffing,
+  getEmployeeWorkedDaysPerWeek } from '../actions/index';
+import StaffingEdit from '../components/edit/index';
 
 class Edit extends Component {
   constructor(props) {
     super(props);
-    if (props.params.id !== undefined) {
-      props.selectEmployee(props.params.id);
+    if (!props.employee.loading) {
+      props.getEmployeeWorkedDaysPerWeek(
+        props.employee.data.id,
+        props.selectedStartOfWeek,
+        props.selectedWeekSpan
+      );
     }
   }
 
-  onChange = (projectId, week, days) => {
-    // TODO: replace checks with validation?
-    if (days > 0 && days <= 7) {
-      this.props.addStaffing({
-        in_employee: this.props.employee.data.id,
-        in_project: projectId,
-        in_week: week,
-        in_days: days,
-        in_year: this.props.selectedYear,
-      });
-    } else if (days < 0 && days >= -7) {
-      this.props.removeStaffing({
-        in_employee: this.props.employee.data.id,
-        in_project: projectId,
-        in_week: week,
-        in_days: Math.abs(days),
-        in_year: this.props.selectedYear,
-      });
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.employee.loading && !this.props.employee.loading &&
+        (nextProps.employee.data.id !== this.props.employee.data.id ||
+        nextProps.selectedStartOfWeek !== this.props.selectedStartOfWeek ||
+        nextProps.selectedWeekSpan !== this.props.selectedWeekSpan)) {
+      this.props.getEmployeeWorkedDaysPerWeek(
+        nextProps.employee.data.id,
+        nextProps.selectedStartOfWeek,
+        nextProps.selectedWeekSpan
+      );
     }
+  }
+
+  onChange = (projectId, startOfWeek, days) => {
+    const data = {
+      in_employee: this.props.employee.data.id,
+      in_project: projectId,
+      in_start_of_week: startOfWeek,
+      in_days: Math.abs(days),
+    };
+    if (days > 0 && days <= 7) this.props.addStaffing(data);
+    else if (days < 0 && days >= -7) this.props.removeStaffing(data);
   };
 
-  // TODO: componentwillrender ny params id
-
   render() {
-    if (this.props.employee.loading || this.props.tableData.loading) {
+    if (this.props.employee.loading ||
+        this.props.tableBody.loading ||
+        this.props.employee.loading) {
       return null;
     }
-    const children = React.Children.map(this.props.children,
-      child => React.cloneElement(child, {
-        employee: this.props.employee,
-        tableData: this.props.tableData,
-        onChange: this.onChange
-      }));
-
-    return (
-      <div>
-        {children}
-      </div>
-    );
+    return (<StaffingEdit
+      data={{ projects: this.props.tableBody.data, onClick: this.onClick, onChange: this.onChange }}
+    />);
   }
 }
 
 Edit.propTypes = {
   params: React.PropTypes.object.isRequired,
-  children: React.PropTypes.object,
-  selectedYear: React.PropTypes.number.isRequired,
+  selectedStartOfWeek: React.PropTypes.object,
+  selectedWeekSpan: React.PropTypes.number,
 
   // mapStateToProps
   employee: React.PropTypes.object.isRequired,
-  tableData: React.PropTypes.object.isRequired,
+  tableBody: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps
-  selectEmployee: React.PropTypes.func.isRequired,
   addStaffing: React.PropTypes.func.isRequired,
-  removeStaffing: React.PropTypes.func.isRequired
+  removeStaffing: React.PropTypes.func.isRequired,
+  getEmployeeWorkedDaysPerWeek: React.PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  employee: employeeSelector(state),
-  tableData: tableDataSelector(state)
+const mapStateToProps = (state, ownProps) => ({
+  selectedStartOfWeek: state.selected_start_of_week,
+  selectedWeekSpan: state.selected_week_span,
+
+  employee: employeeSelector(state, ownProps),
+  tableBody: editBodySelector(state, ownProps)
 });
 
 const mapDispatchToProps = {
-  selectEmployee,
   addStaffing,
-  removeStaffing
+  removeStaffing,
+  getEmployeeWorkedDaysPerWeek
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Edit);
