@@ -12,9 +12,7 @@ const StaffingViewHeaderNavigation = (props) => (
           <i className='material-icons'>arrow_back</i>
         </Link>
       </div>
-      <div className='mdl-cell mdl-cell--10-col'>
-
-      </div>
+      <div className='mdl-cell mdl-cell--10-col' />
       <div className='mdl-cell mdl-cell--1-col'>
         <Link
           className='mdl-button mdl-js-button'

@@ -1,7 +1,7 @@
+import * as Immutable from 'immutable';
 import { createSelector } from 'reselect';
 import weeksSelector from '../selectors/weeksSelector';
 import employeesSelector from '../selectors/viewBodySelector';
-import * as Immutable from 'immutable';
 import { formatDate } from '../utils/weekUtil';
 
 const getWeeksTotal = (weeks, employees, weekSpan, startOfWeek) => {
