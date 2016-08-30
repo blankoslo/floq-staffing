@@ -17,13 +17,22 @@ module.exports = {
   ],
   devtool: 'source-map',
   module: {
-    preLoaders: [{ test: /\.js?$/, loaders: ['eslint'] }],
+    preLoaders: [{
+      test: /\.js?$/,
+      loaders: ['eslint-loader'],
+      exclude: /node_modules/,
+      include: __dirname
+    }],
     loaders: [
         { test: /\.less$/, loader: 'style!css!less' },
         { test: /\.js$/,
-          loaders: ['react-hot', 'babel'],
+          loader: 'react-hot!babel',
           exclude: /node_modules/,
           include: __dirname }
-    ]
+    ],
+    eslint: {
+      configFile: './.eslintrc',
+      emitWarning: true
+    }
   }
 };
