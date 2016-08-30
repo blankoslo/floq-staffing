@@ -28,7 +28,7 @@ export default (state = { loading: true, data: new Immutable.Map() }, action) =>
       };
     }
     case ADD_STAFFING: {
-      const employee = state.data.get(action.employee);
+      const employee = state.data.get(action.employee, new Immutable.OrderedMap());
       const week = employee
         .get(action.startOfWeek, { days: 0, projects: new Immutable.OrderedSet() });
 
