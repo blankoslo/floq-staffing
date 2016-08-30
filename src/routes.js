@@ -9,7 +9,7 @@ export default (
   <Route path='/staffing' component={AppContainer}>
     <IndexRoute component={ViewContainer} />
     <Route path='' component={ViewContainer}>
-      <Route path=':id' component={EditContainer} />
+      <Route path=':employeeId' component={EditContainer} />
     </Route>
   </Route>
 );

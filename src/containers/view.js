@@ -55,6 +55,7 @@ class StaffingViewContainer extends Component {
 StaffingViewContainer.propTypes = {
   children: React.PropTypes.object,
   location: React.PropTypes.object.isRequired,
+  params: React.PropTypes.object.isRequired,
   selectedStartOfWeek: React.PropTypes.object.isRequired,
   selectedWeekSpan: React.PropTypes.number.isRequired,
 
@@ -66,12 +67,12 @@ StaffingViewContainer.propTypes = {
   getWorkedDaysPerWeek: React.PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   selectedStartOfWeek: state.selected_start_of_week,
   selectedWeekSpan: state.selected_week_span,
 
-  tableHeader: viewHeaderSelector(state),
-  tableBody: viewBodySelector(state),
+  tableHeader: viewHeaderSelector(state, ownProps),
+  tableBody: viewBodySelector(state, ownProps),
 });
 
 const mapDispatchToProps = {

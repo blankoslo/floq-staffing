@@ -9,9 +9,9 @@ import StaffingEdit from '../components/edit/index';
 class Edit extends Component {
   constructor(props) {
     super(props);
-    if (props.selectedEmployee !== null) {
+    if (!props.employee.loading) {
       props.getEmployeeWorkedDaysPerWeek(
-        props.selectedEmployee,
+        props.employee.data.id,
         props.selectedStartOfWeek,
         props.selectedWeekSpan
       );
@@ -45,7 +45,7 @@ class Edit extends Component {
   render() {
     if (this.props.employee.loading ||
         this.props.tableBody.loading ||
-        this.props.selectedEmployee === null) {
+        this.props.employee.loading) {
       return null;
     }
     return (<StaffingEdit
@@ -55,7 +55,7 @@ class Edit extends Component {
 }
 
 Edit.propTypes = {
-  selectedEmployee: React.PropTypes.number,
+  params: React.PropTypes.object.isRequired,
   selectedStartOfWeek: React.PropTypes.object,
   selectedWeekSpan: React.PropTypes.number,
 
@@ -69,13 +69,12 @@ Edit.propTypes = {
   getEmployeeWorkedDaysPerWeek: React.PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   selectedStartOfWeek: state.selected_start_of_week,
   selectedWeekSpan: state.selected_week_span,
-  selectedEmployee: state.selected_employee,
 
-  employee: employeeSelector(state),
-  tableBody: editBodySelector(state)
+  employee: employeeSelector(state, ownProps),
+  tableBody: editBodySelector(state, ownProps)
 });
 
 const mapDispatchToProps = {

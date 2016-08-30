@@ -1,24 +1,14 @@
 import { createSelector } from 'reselect';
 
-const getEmployee = (selectedEmployee, employees) => {
-  if (employees.loading) {
+export const getEmployee = (employeeId, employees) => {
+  if (employees.loading || employeeId === null || isNaN(employeeId)) {
     return { loading: true, data: null };
   }
 
-  if (selectedEmployee === null) {
-    return {
-      loading: true,
-      data: null
-    };
-  }
+  const employee = employees.data.find(e => e.id === employeeId);
 
-  const employee = employees.data.find(e => e.id === parseInt(selectedEmployee));
-
-  if (employee === null) {
-    return {
-      loading: true,
-      data: null
-    };
+  if (employee === undefined || employee === null) {
+    return { loading: true, data: null };
   }
 
   return {
@@ -33,7 +23,7 @@ const getEmployee = (selectedEmployee, employees) => {
 };
 
 export default createSelector(
-  state => state.selected_employee,
+  (_, props) => parseInt(props.params.employeeId),
   state => state.employees,
   getEmployee,
 );

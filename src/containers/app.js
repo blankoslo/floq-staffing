@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getEmployees, getProjects, getHolidays,
-  selectStartOfWeek, selectWeekSpan, selectEmployee } from '../actions/index';
+  selectStartOfWeek, selectWeekSpan } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
@@ -15,10 +15,6 @@ class App extends Component {
     // Selects from URL
     props.selectStartOfWeek(props.location.query.start_of_week);
     props.selectWeekSpan(props.location.query.week_span);
-
-    if (props.params.id !== undefined) {
-      props.selectEmployee(props.params.id);
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,9 +23,6 @@ class App extends Component {
     }
     if (nextProps.location.query.week_span !== this.props.location.query.week_span) {
       nextProps.selectWeekSpan(nextProps.location.query.week_span);
-    }
-    if (nextProps.params.id !== this.props.params.id) {
-      nextProps.selectEmployee(nextProps.params.id);
     }
   }
   render() {
@@ -67,7 +60,6 @@ App.propTypes = {
   getHolidays: React.PropTypes.func.isRequired,
   selectStartOfWeek: React.PropTypes.func.isRequired,
   selectWeekSpan: React.PropTypes.func.isRequired,
-  selectEmployee: React.PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -84,7 +76,6 @@ const mapDispatchToProps = {
   getHolidays,
   selectStartOfWeek,
   selectWeekSpan,
-  selectEmployee
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
