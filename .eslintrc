@@ -1,6 +1,10 @@
 {
   "extends": "airbnb",
   "globals": {
+    "document",
+    "window",
+    "global",
+    "fetch",
     "apiToken",
     "config",
     "describe",
