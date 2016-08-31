@@ -26,7 +26,7 @@ class StaffingViewContainer extends Component {
 
   getStartOfWeek(change) {
     const startOfWeek = calculateStartOfWeek(
-      this.props.selectedStartOfWeek, (change * this.props.selectedWeekSpan));
+      this.props.selectedStartOfWeek, (change * this.props.selectedWeekSpan) / 2);
     return `${this.props.location.pathname}?start_of_week=${formatDate(startOfWeek)}`;
   }
 
