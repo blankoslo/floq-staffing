@@ -2,17 +2,18 @@ import React from 'react';
 
 const TableFooterCell = (props) => (
   <td
-    colSpan={props.colspan}
+    colSpan={7}
     className='mdl-data-table__cell--non-numeric'
     style={{ color: 'black' }}
+    title={`${props.staffed} / ${props.staffable}`}
   >
-    {props.value}
+    {Math.round((props.staffed / props.staffable) * 100)}%
   </td>
 );
 
 TableFooterCell.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  colspan: React.PropTypes.number.isRequired,
+  staffed: React.PropTypes.number.isRequired,
+  staffable: React.PropTypes.number.isRequired,
 };
 
 export default TableFooterCell;

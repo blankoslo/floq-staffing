@@ -1,11 +1,9 @@
 import * as Immutable from 'immutable';
 import { createSelector } from 'reselect';
-import weeksSelector from '../selectors/weeksSelector';
-import employeesSelector from '../selectors/viewBodySelector';
 import { formatDate } from '../utils/weekUtil';
 
-const getWeeksTotal = (weeks, employees, weekSpan, startOfWeek) => {
-  if (employees.loading) {
+const getWeeksTotal = (weekSpan, startOfWeek) => {
+  if (weekSpan === null || startOfWeek === null) {
     return { loading: true, data: null };
   }
   return ({
@@ -58,8 +56,6 @@ const getWeeksTotal = (weeks, employees, weekSpan, startOfWeek) => {
 };
 
 export default createSelector(
-  weeksSelector,
-  employeesSelector,
   state => state.selected_week_span,
   state => state.selected_start_of_week,
   getWeeksTotal

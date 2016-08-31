@@ -1,13 +1,14 @@
 import React from 'react';
 import Cell from './cell';
 
-const TableFooter = () => (
+const TableFooter = (props) => (
   <tfoot>
     <tr>
       <td className='mdl-data-table__cell--non-numeric first-col'>
-        Sammendrag
+        Faktureringsgrad
       </td>
-      <Cell value={'0 / 0'} colspan={7} />
+      {props.data.map((w, index) =>
+        <Cell staffed={w.staffed} staffable={w.staffable} key={index} />)}
     </tr>
   </tfoot>
 );

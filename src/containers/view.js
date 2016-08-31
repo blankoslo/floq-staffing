@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import viewHeaderSelector from '../selectors/viewHeaderSelector';
 import viewBodySelector from '../selectors/viewBodySelector';
+import summarySelector from '../selectors/summarySelector';
 import { getWorkedDaysPerWeek } from '../actions/index';
 import StaffingView from '../components/view/index';
 import { calculateStartOfWeek, formatDate } from '../utils/weekUtil';
@@ -31,7 +32,9 @@ class StaffingViewContainer extends Component {
   }
 
   render() {
-    if (this.props.tableHeader.loading || this.props.tableBody.loading) {
+    if (this.props.tableHeader.loading ||
+        this.props.tableBody.loading ||
+        this.props.tableFooter.loading) {
       return null;
     }
     return (
@@ -46,6 +49,7 @@ class StaffingViewContainer extends Component {
           )
         }
         tableBody={this.props.tableBody.data}
+        tableFooter={this.props.tableFooter.data}
         edit={this.props.children}
       />
     );
@@ -62,6 +66,7 @@ StaffingViewContainer.propTypes = {
   // mapStateToProps
   tableHeader: React.PropTypes.object.isRequired,
   tableBody: React.PropTypes.object.isRequired,
+  tableFooter: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps
   getWorkedDaysPerWeek: React.PropTypes.func.isRequired,
@@ -73,6 +78,7 @@ const mapStateToProps = (state, ownProps) => ({
 
   tableHeader: viewHeaderSelector(state, ownProps),
   tableBody: viewBodySelector(state, ownProps),
+  tableFooter: summarySelector(state, ownProps),
 });
 
 const mapDispatchToProps = {
