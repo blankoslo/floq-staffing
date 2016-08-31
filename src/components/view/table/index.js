@@ -1,8 +1,9 @@
 import React from 'react';
-import Header from './header/index';
+import Header from './header';
 import ViewOnly from './body/viewOnly';
 import FirstPart from './body/firstPart';
 import LastPart from './body/lastPart';
+import Footer from './footer';
 
 const classes = 'mdl-data-table mdl-js-data-table mdl-shadow--2dp staffing-view-table';
 const viewOnly = (header, employees, selectedStartOfWeek) => (
@@ -12,6 +13,7 @@ const viewOnly = (header, employees, selectedStartOfWeek) => (
       employees={employees}
       selectedStartOfWeek={selectedStartOfWeek}
     />
+    <Footer />
   </table>
 );
 
@@ -29,6 +31,7 @@ const viewAndEdit = (header, employees, selectedEmployee, selectedStartOfWeek, e
       selectedEmployee={selectedEmployee}
       selectedStartOfWeek={selectedStartOfWeek}
     />
+    <Footer />
   </table>
 );
 
