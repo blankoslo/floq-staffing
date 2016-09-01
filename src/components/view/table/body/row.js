@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { browserHistory } from 'react-router';
 import StaffingViewBodyCell from './cell';
@@ -13,7 +14,7 @@ const onclick = (props) =>
     browserHistory.push(`/staffing/${props.selected ? '' :
       `${props.employeeId}/`}?start_of_week=${props.selectedStartOfWeek}`);
 
-const StaffingViewBodyRow = (props) => (
+const StaffingViewBodyRow = (props : Object) => (
   <tr>
     <td
       className={props.selected ? selected : defaultClassName}

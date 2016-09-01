@@ -1,7 +1,7 @@
 import React from 'react';
 
 const StaffingViewTableHeaderMonth = (props) => (
-  <th colSpan={props.colspan} style={{ textAlign: 'center' }}>
+  <th colSpan={props.colspan}>
     {props.month}
   </th>
 );

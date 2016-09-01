@@ -2,6 +2,21 @@ import * as Immutable from 'immutable';
 
 import { GET_WORKED_DAYS_PER_WEEK, ADD_STAFFING, REMOVE_STAFFING } from '../actions/index';
 
+const createProjectMap = projects =>
+  projects.reduce((result, project) =>
+    result.update(project, 0, n => n + 1)
+  , new Immutable.OrderedMap());
+
+const changeProjectMap = (map, project, change) => {
+  if (map.has(project) && change < 0) {
+    return map.delete(project);
+  }
+  if (change > 0) {
+    return map.update(project, 0, n => n + 1);
+  }
+  return map;
+};
+
 export default (state = { loading: true, data: new Immutable.Map() }, action) => {
   switch (action.type) {
     case GET_WORKED_DAYS_PER_WEEK: {
@@ -15,13 +30,13 @@ export default (state = { loading: true, data: new Immutable.Map() }, action) =>
                 .get(item.employee)
                 .set(item.start_of_week, {
                   days: item.days,
-                  projects: new Immutable.OrderedSet(item.projects)
+                  projects: createProjectMap(item.projects)
                 }));
           }
           return result.set(item.employee, new Immutable.OrderedMap(
             [[
               item.start_of_week,
-              { days: item.days, projects: new Immutable.OrderedSet(item.projects) }
+              { days: item.days, projects: createProjectMap(item.projects) }
             ]]
           ));
         }, new Immutable.OrderedMap())
@@ -40,7 +55,7 @@ export default (state = { loading: true, data: new Immutable.Map() }, action) =>
             action.startOfWeek,
             {
               days: week.days + action.payload.length,
-              projects: week.projects.add(action.project)
+              projects: changeProjectMap(week.projects, action.project, 1)
             }
           )
         )
@@ -57,7 +72,7 @@ export default (state = { loading: true, data: new Immutable.Map() }, action) =>
             action.startOfWeek,
             {
               days: week.days - action.payload.length,
-              projects: week.projects.delete(action.project)
+              projects: changeProjectMap(week.projects, action.project, -1)
             }
           )
         )

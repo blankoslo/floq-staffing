@@ -9,17 +9,22 @@ const getWeeks = (employeeId, workedDaysPerWeek, weeks, projectMap, staffableMap
   weeks.map(startOfWeek => {
     const { days, projects } = workedDaysPerWeek
       .get(employeeId, new Immutable.Map())
-      .get(formatDate(startOfWeek), { days: 0, projects: new Immutable.List() });
+      .get(formatDate(startOfWeek), { days: 0, projects: new Immutable.Map() });
 
-    const unavailable = projects.reduce((result, item) =>
+    const unavailable = projects.reduce((result, amount, project) =>
       result + (projectMap
-      .get(item)
-      .billable === 'unavailable' ? 1 : 0)
+      .get(project)
+      .billable === 'unavailable' ? amount : 0)
+    , 0);
+    const daysBillable = projects.reduce((result, amount, project) =>
+      result + (projectMap
+      .get(project)
+      .billable === 'billable' ? amount : 0)
     , 0);
     return {
-      days,
-      unavailable,
-      staffable: staffableMap.get(employeeId).get(formatDate(startOfWeek))
+      days: days - unavailable,
+      daysBillable,
+      staffable: staffableMap.get(employeeId).get(formatDate(startOfWeek)) - unavailable
     };
   })
 );

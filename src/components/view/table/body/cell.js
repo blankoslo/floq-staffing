@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { browserHistory } from 'react-router';
 
@@ -7,18 +8,18 @@ const defaultClassName = (props) =>
 
 const selected = 'view-selected';
 
-const onclick = (props) =>
+const onclick = (props : Object) =>
   () =>
     browserHistory.push(`/staffing/${props.selected ? '' :
       `${props.employeeId}/`}?start_of_week=${props.selectedStartOfWeek}`);
 
-const StaffingViewBodyCell = (props) =>
+const StaffingViewBodyCell = (props : Object) =>
   (<td
     colSpan={7}
     className={props.selected === true ? selected : defaultClassName(props)}
     onClick={onclick(props)}
   >
-    {(props.staffedDays < 1 && props.staffableDays < 1) ? '' :
+    {(props.staffedDays < 1 && props.staffableDays < 1) ? '¯\\_(ツ)_/¯' :
       `${Math.round((props.staffedDays / props.staffableDays) * 100)}%`
     }
   </td>);
