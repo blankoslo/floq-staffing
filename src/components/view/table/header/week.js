@@ -1,6 +1,7 @@
+// @flow
 import React from 'react';
 
-const StaffingViewTableHeaderWeek = (props) => (
+const StaffingViewTableHeaderWeek = (props : Object) => (
   <th
     colSpan={7}
     className={'half-height no-bottom-border'}

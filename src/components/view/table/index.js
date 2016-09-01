@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import Header from './header';
 import ViewOnly from './body/viewOnly';
@@ -6,7 +7,11 @@ import LastPart from './body/lastPart';
 import Footer from './footer';
 
 const classes = 'mdl-data-table mdl-js-data-table mdl-shadow--2dp staffing-view-table';
-const viewOnly = (header, footer, employees, selectedStartOfWeek) => (
+const viewOnly = (
+  header : Object,
+  footer : Object,
+  employees : Object,
+  selectedStartOfWeek : string) => (
   <table className={classes}>
     <Header header={header} />
     <ViewOnly
@@ -17,7 +22,14 @@ const viewOnly = (header, footer, employees, selectedStartOfWeek) => (
   </table>
 );
 
-const viewAndEdit = (header, footer, employees, selectedEmployee, selectedStartOfWeek, edit) => (
+const viewAndEdit = (
+  header : Object,
+  footer : Object,
+  employees : Object,
+  selectedEmployee : number|null,
+  selectedStartOfWeek : Object,
+  edit : Object) => (
+
   <table className={classes}>
     <Header header={header} />
     <FirstPart
@@ -35,7 +47,7 @@ const viewAndEdit = (header, footer, employees, selectedEmployee, selectedStartO
   </table>
 );
 
-const StaffingViewTable = (props) => {
+const StaffingViewTable = (props : Object) => {
   const selectedStartOfWeek = props.body.selectedStartOfWeek;
   const header = props.header;
   const footer = props.footer;

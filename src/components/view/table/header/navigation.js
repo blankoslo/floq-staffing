@@ -1,7 +1,8 @@
+// @flow
 import React from 'react';
 import { Link } from 'react-router';
 
-const StaffingViewHeaderNavigation = (props) => (
+const StaffingViewHeaderNavigation = (props : Object) => (
   <td style={{ textAlign: 'center' }} colSpan={props.colspan}>
     <div className='mdl-grid'>
       <div className='mdl-cell mdl-cell--1-col'>

@@ -1,6 +1,7 @@
+// @flow
 import React from 'react';
 
-const StaffingViewTableHeaderMonth = (props) => (
+const StaffingViewTableHeaderMonth = (props : Object) => (
   <th colSpan={props.colspan}>
     {props.month}
   </th>
