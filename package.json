@@ -7,7 +7,8 @@
     "dist": "webpack --config ./webpack-prod.config.js",
     "lint": "eslint src test",
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2"
   },
   "author": "",
   "repository": "https://github.com/blankoslo/floq-staffing",
@@ -30,6 +31,7 @@
     "eslint-plugin-react": "^6.2.0",
     "expect": "^1.20.2",
     "fetch-mock": "^5.1.1",
+    "flow-bin": "^0.31.1",
     "jsdom": "^9.4.2",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
