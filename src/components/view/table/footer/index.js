@@ -3,7 +3,7 @@ import Cell from './cell';
 
 const TableFooter = (props) => (
   <tfoot>
-    <tr>
+    <tr className='summary-info'>
       <td className='mdl-data-table__cell--non-numeric first-col'>
         Faktureringsgrad
       </td>

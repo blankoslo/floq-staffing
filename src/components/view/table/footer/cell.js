@@ -1,15 +1,19 @@
 import React from 'react';
 
-const TableFooterCell = (props) => (
-  <td
-    colSpan={7}
-    className='mdl-data-table__cell--non-numeric'
-    style={{ color: 'black' }}
-    title={`${props.staffed} / ${props.staffable}`}
-  >
-    {Math.round((props.staffed / props.staffable) * 100)}%
-  </td>
-);
+const TableFooterCell = (props) => {
+  const pct = Math.round((props.staffed / props.staffable) * 100);
+  const bg = `rgb(${100 - pct}%, ${pct}%, 0%)`;
+  return (
+    <td
+      colSpan={7}
+      className='mdl-data-table__cell--non-numeric'
+      style={{ color: 'black', backgroundColor: `${bg}` }}
+      title={`${props.staffed} / ${props.staffable}`}
+    >
+      {pct}%
+    </td>
+  );
+};
 
 TableFooterCell.propTypes = {
   staffed: React.PropTypes.number.isRequired,
