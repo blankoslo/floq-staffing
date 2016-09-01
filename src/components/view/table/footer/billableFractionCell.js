@@ -1,16 +1,14 @@
 import React from 'react';
 
 const TableFooterCell = (props) => {
-  const pct = Math.round((props.staffed / props.staffable) * 100);
-  const bg = `rgb(${100 - pct}%, ${pct}%, 0%)`;
+  const fraction = `${props.staffed} / ${props.staffable}`;
   return (
     <td
       colSpan={7}
-      className='mdl-data-table__cell--non-numeric'
-      style={{ color: 'black', backgroundColor: `${bg}` }}
+      style={{ color: 'black' }}
       title={`${props.staffed} / ${props.staffable}`}
     >
-      {pct}%
+      {fraction}
     </td>
   );
 };
