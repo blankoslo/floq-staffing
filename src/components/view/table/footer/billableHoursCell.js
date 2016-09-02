@@ -14,8 +14,7 @@ const TableFooterCell = (props) => {
 };
 
 TableFooterCell.propTypes = {
-  staffed: React.PropTypes.number.isRequired,
-  staffable: React.PropTypes.number.isRequired,
+  staffed: React.PropTypes.number.isRequired
 };
 
 export default TableFooterCell;
