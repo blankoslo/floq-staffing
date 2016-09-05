@@ -11,6 +11,7 @@ const summarySelector = (weeks, tableBody) => {
     data: weeks
       .map((startOfWeek, index) => (
         {
+          week: startOfWeek.format('W'),
           staffed: tableBody.data.employees.reduce((result, employee) =>
             result + employee.weeks.get(index).daysBillable
           , 0),
