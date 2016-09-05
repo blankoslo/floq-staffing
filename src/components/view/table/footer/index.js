@@ -10,7 +10,7 @@ const TableFooter = (props) => {
     <tfoot
       id='summary-info'
       className='summary-info'
-      ref={(c) => (width = c.style.offsetWidth)}
+      ref={(c) => (width = c ? c.style.offsetWidth : 0)}
     >
       <tr>
         <td colSpan={(props.data.size * 7) + 1}>
