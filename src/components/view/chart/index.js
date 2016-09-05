@@ -37,7 +37,7 @@ const BillablePercentageChart = (props) => (
 );
 
 BillablePercentageChart.propTypes = {
-  width: React.PropTypes.number.isRequired
+  width: React.PropTypes.number
 };
 
 export default BillablePercentageChart;
