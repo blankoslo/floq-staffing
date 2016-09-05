@@ -64,6 +64,7 @@ input, select {
 table.staffing-view-table {
   border-spacing: 0;
   border: 1px solid @backgroundPanelColor;
+  table-layout: fixed;
   
   tfoot.summary-info {
     td.first-col {
@@ -76,10 +77,14 @@ table.staffing-view-table {
   tr {
     th, td{
       // TODO: Get rid of !important
-      padding: 0.4em !important;
+      padding: 4px !important;
       text-align: center;
       vertical-align: middle;
       border: 1px solid @backgroundPanelColor;
+      overflow: hidden;
+      min-width: 2px;
+      width: 2px;
+      max-width: 2px;
 
       div.edit-selected:focus {
         background-color: @gray;
@@ -93,6 +98,7 @@ table.staffing-view-table {
     td.first-col, th.first-col {
       background-color: @gray;
       color: black;
+      max-width: 30em;
     }
 
     td.view-selected, th.view-selected {
