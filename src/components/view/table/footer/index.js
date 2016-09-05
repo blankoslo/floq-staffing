@@ -13,8 +13,11 @@ const TableFooter = (props) => {
       ref={(c) => (width = c ? c.style.offsetWidth : 0)}
     >
       <tr>
-        <td colSpan={(props.data.size * 7) + 1}>
-          <BillablePercentageChart width={width} />
+        <td className='mdl-data-table__cell--non-numeric first-col'>
+          &nbsp;
+        </td>
+        <td colSpan={(props.data.size * 7)}>
+          <BillablePercentageChart data={props.data} width={width} />
         </td>
       </tr>
       <tr>
