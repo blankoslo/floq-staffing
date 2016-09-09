@@ -4,7 +4,7 @@ import React from 'react';
 const StaffingViewTableHeaderWeek = (props : Object) => (
   <th
     colSpan={7}
-    className={'half-height no-bottom-border'}
+    className={'week-header-col half-height no-bottom-border'}
     title={`${props.first} - ${props.last}`}
   >
     {props.weeknumber}
