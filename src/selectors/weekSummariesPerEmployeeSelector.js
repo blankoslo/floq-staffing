@@ -37,10 +37,8 @@ const getWeekSummariesPerEmployeeSelector =
     }
     return {
       loading: false,
-      data: employees.data.reduce((result, e) =>
-        (result.set(e.id, getWeekSummaries(e.id, workedDaysPerWeek.data,
-          weeks, projectMap.data, staffableMap.data))
-      ), new Immutable.Map())
+      data: employees.data.map(e =>
+        getWeekSummaries(e.id, workedDaysPerWeek.data, weeks, projectMap.data, staffableMap.data))
     };
   };
 

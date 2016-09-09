@@ -13,20 +13,18 @@ const getEmployees = (employees, workedDaysPerWeek, weeks, projectMap,
     || projectMap.loading
     || staffableMap.loading
     || selectedStartOfWeek === null
-    || selectedStartOfWeek === 'undefined'
     || weekSummariesPerEmployee.loading) {
     return { loading: true, data: null };
   }
   return {
     loading: false,
     data: {
-      employees: employees.data.reduce((result, e, index) => (result.push({
-        name: `${e.first_name} ${e.last_name}`,
-        id: e.id,
-        startDate: e.date_of_employment,
-        endDate: (e.termination_date !== 'undefined' && e.termination_date !== null
-          ? e.termination_date : null),
-        weeks: weekSummariesPerEmployee.data.get(index),
+      employees: employees.data.reduce((result, value, key) => (result.push({
+        name: `${value.first_name} ${value.last_name}`,
+        id: value.id,
+        startDate: value.date_of_employment,
+        endDate: value.termination_date,
+        weeks: weekSummariesPerEmployee.data.get(key),
       })), new Immutable.List()),
       selectedEmployee: employee.data,
       selectedStartOfWeek: formatDate(selectedStartOfWeek),
