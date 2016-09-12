@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
-import viewBodySelector from './viewBodySelector';
 import weeksSelector from './weeksSelector';
+import weekSummariesPerEmployeeSelector from './weekSummariesPerEmployeeSelector';
 
-const summarySelector = (weeks, tableBody) => {
-  if (tableBody.loading || weeks === null) {
+const summarySelector = (weeks, weekSummariesPerEmployee) => {
+  if (weekSummariesPerEmployee.loading || weeks === null) {
     return { loading: true, data: null };
   }
   return {
@@ -12,11 +12,11 @@ const summarySelector = (weeks, tableBody) => {
       .map((startOfWeek, index) => (
         {
           week: startOfWeek.format('W'),
-          staffed: tableBody.data.employees.reduce((result, employee) =>
-            result + employee.weeks.get(index).daysBillable
+          staffed: weekSummariesPerEmployee.data.reduce((result, weekSummaries) =>
+            result + weekSummaries.get(index).daysBillable
           , 0),
-          staffable: tableBody.data.employees.reduce((result, employee) =>
-            result + employee.weeks.get(index).staffable
+          staffable: weekSummariesPerEmployee.data.reduce((result, weekSummaries) =>
+            result + weekSummaries.get(index).staffable
           , 0)
         }
       )
@@ -26,6 +26,6 @@ const summarySelector = (weeks, tableBody) => {
 
 export default createSelector(
   weeksSelector,
-  viewBodySelector,
+  weekSummariesPerEmployeeSelector,
   summarySelector,
 );
