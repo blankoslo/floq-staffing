@@ -2,18 +2,14 @@
 import React from 'react';
 
 const StaffingViewTableHeaderDay = (props : Object) => {
-  // Check if weekend or holiday. Weekend is checked here on client side.
-  const isWeekend = props.dayOfWeek === 'Sat' || props.dayOfWeek === 'Sun';
-  let eventName = isWeekend ? 'HELG' : '';
-  eventName = props.holiday ? props.holiday : eventName;
-
-  // Holiday takes priority over weekend.
-  const weekendOrHoliday = props.holiday ? 'holiday' : 'weekend';
-  const holiday = eventName ? ` (${eventName})` : '';
+  const eventName = props.holiday ? props.holiday : 'HELG';
+  const weekendOrHolidayClassName = props.holiday ? 'holiday' : 'weekend';
+  const eventNameText = props.weekend || props.holiday ? ` (${eventName})` : '';
+  const eventNameClassName = eventNameText ? weekendOrHolidayClassName : '';
   return (
     <th
-      className={`small-text half-height no-top-border ${holiday ? weekendOrHoliday : ''}`}
-      title={`${props.dayOfWeek} ${props.date}${holiday}`}
+      className={`small-text half-height no-top-border ${eventNameClassName}`}
+      title={`${props.dayOfWeek} ${props.date}${eventNameText}`}
     />
   );
 };
@@ -21,7 +17,8 @@ const StaffingViewTableHeaderDay = (props : Object) => {
 StaffingViewTableHeaderDay.propTypes = {
   date: React.PropTypes.string.isRequired,
   dayOfWeek: React.PropTypes.string.isRequired,
-  holiday: React.PropTypes.string.isRequired,
+  weekend: React.PropTypes.bool.isRequired,
+  holiday: React.PropTypes.string,
 };
 
 export default StaffingViewTableHeaderDay;

@@ -6,9 +6,11 @@ const getDays = (weekSpan, startOfWeek, holidays) =>
   new Immutable.Range(0, weekSpan * 7).map(d => {
     const date = startOfWeek.clone();
     date.add(d, 'days');
+    const day = date.format('ddd');
     return {
       date: formatDate(date),
-      dayOfWeek: date.format('ddd'),
+      dayOfWeek: day,
+      weekend: day === 'Sat' || day === 'Sun',
       holiday: holidays.reduce((name, x) =>
         (x.date === formatDate(date) ? x.name : name), '')
     };
