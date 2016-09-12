@@ -5,7 +5,13 @@ import Day from './day';
 const StaffingViewTableHeaderDays = (props : Object) => (
   <tr>
     {props.days.map((d) =>
-      <Day key={d.date} date={d.date} dayOfWeek={d.dayOfWeek} weekend={d.weekend} holiday={d.holiday} />)}
+      <Day
+        key={d.date}
+        date={d.date}
+        dayOfWeek={d.dayOfWeek}
+        weekend={d.weekend}
+        holiday={d.holiday}
+      />)}
   </tr>
 );
 
