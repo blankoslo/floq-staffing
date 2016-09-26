@@ -19,7 +19,7 @@ const StaffingViewBodyCell = (props : Object) =>
     className={props.selected === true ? selected : defaultClassName(props)}
     onClick={onclick(props)}
   >
-    {(props.staffedDays < 1 && props.staffableDays < 1) ? '¯\\_(ツ)_/¯' :
+    {(props.staffedDays < 1 && props.staffableDays < 1) ? '' :
       `${Math.round((props.staffedDays / props.staffableDays) * 100)}%`
     }
   </td>);
