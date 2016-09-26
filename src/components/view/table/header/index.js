@@ -18,9 +18,9 @@ const StaffingViewHeader = (props : Object) => (
       />
     </tr>
     <tr>
-    {props.header.years.map((y, index) =>
-      <Year colspan={y.colspan} year={y.year} key={index} />
-    )}
+      {props.header.years.map((y, index) =>
+        <Year colspan={y.colspan} year={y.year} key={index} />
+      )}
     </tr>
     <Months months={props.header.months} />
     <Weeks weeks={props.header.weeks} />
