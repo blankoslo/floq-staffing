@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import Row from './row';
 
@@ -13,7 +14,7 @@ const row = (employee, index, selectedStartOfWeek) =>
     key={index}
   />;
 
-const StaffingViewBody = (props) => (
+const StaffingViewBody = (props : Object) => (
   <tbody>
     {props.employees.map((e, index) => row(e, index, props.selectedStartOfWeek))}
   </tbody>

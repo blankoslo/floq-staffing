@@ -1,7 +1,8 @@
+// @flow
 import React from 'react';
 import Year from './year';
 
-const StaffingViewTableHeaderYears = (props) => (
+const StaffingViewTableHeaderYears = (props : Object) => (
   `${props.years.map((y, index) =>
     <Year colspan={y.colspan} year={y.year} key={index} />
   )}`

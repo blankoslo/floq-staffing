@@ -1,6 +1,7 @@
+// @flow
 import React from 'react';
 
-const StaffingViewTableHeaderFilters = (props) => (
+const StaffingViewTableHeaderFilters = (props : Object) => (
   <th rowSpan={props.rowspan} className={'first-col'}>
     <ul className='mdl-list'>
       <li className='mdl-list__item'>

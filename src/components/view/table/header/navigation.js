@@ -1,10 +1,11 @@
+// @flow
 import React from 'react';
 import { Link } from 'react-router';
 
-const StaffingViewHeaderNavigation = (props) => (
+const StaffingViewHeaderNavigation = (props : Object) => (
   <td style={{ textAlign: 'center' }} colSpan={props.colspan}>
     <div className='mdl-grid'>
-      <div className='mdl-cell mdl-cell--1-col'>
+      <div className='mdl-cell mdl-cell--6-col' style={{ textAlign: 'left' }}>
         <Link
           className='mdl-button mdl-js-button'
           to={props.previousPathname}
@@ -12,8 +13,7 @@ const StaffingViewHeaderNavigation = (props) => (
           <i className='material-icons'>arrow_back</i>
         </Link>
       </div>
-      <div className='mdl-cell mdl-cell--10-col' />
-      <div className='mdl-cell mdl-cell--1-col'>
+      <div className='mdl-cell mdl-cell--6-col' style={{ textAlign: 'right' }}>
         <Link
           className='mdl-button mdl-js-button'
           to={props.nextPathname}

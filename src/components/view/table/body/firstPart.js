@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import Row from './row';
 
@@ -13,7 +14,7 @@ const row = (employee, index, selectedStartOfWeek, selected = false) =>
     key={`view-row-first-${index}`}
   />;
 
-const TableBodyFirstPart = (props) => (
+const TableBodyFirstPart = (props : Object) => (
   <tbody>
     {props.employees.takeWhile(e => e.id !== props.selectedEmployee).map(e =>
         row(e, e.id, props.selectedStartOfWeek))}

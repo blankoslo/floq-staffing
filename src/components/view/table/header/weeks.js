@@ -1,7 +1,8 @@
+// @flow
 import React from 'react';
 import Week from './week';
 
-const StaffingViewTableHeaderWeeks = (props) => (
+const StaffingViewTableHeaderWeeks = (props : Object) => (
   <tr>
     {props.weeks.map((w, index) =>
       <Week weeknumber={w.weeknumber} key={index} first={w.first} last={w.last} />)}

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import viewHeaderSelector from '../selectors/viewHeaderSelector';
 import viewBodySelector from '../selectors/viewBodySelector';
-import { getWorkedDaysPerWeek } from '../actions/index';
+import summarySelector from '../selectors/summarySelector';
+import { getWorkedDaysPerWeek, selectWeekSpan } from '../actions/index';
 import StaffingView from '../components/view/index';
 import { calculateStartOfWeek, formatDate } from '../utils/weekUtil';
 
@@ -12,10 +13,18 @@ class StaffingViewContainer extends Component {
     props.getWorkedDaysPerWeek(props.selectedStartOfWeek, props.selectedWeekSpan);
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', () => this.handleResize(this.props));
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedStartOfWeek !== nextProps.selectedStartOfWeek) {
       this.props.getWorkedDaysPerWeek(nextProps.selectedStartOfWeek, nextProps.selectedWeekSpan);
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.handleResize(this.props));
   }
 
   getPreviousStartOfWeek = () =>
@@ -30,12 +39,25 @@ class StaffingViewContainer extends Component {
     return `${this.props.location.pathname}?start_of_week=${formatDate(startOfWeek)}`;
   }
 
+  handleResize(props) {
+    const appWidth = document.getElementById('app').offsetWidth;
+    const firstColWidth = document.getElementsByClassName('first-col')[0].offsetWidth;
+    const cellWidth = document.getElementsByClassName('week-header-col')[0].offsetWidth;
+    const weekSpanFromWindowWidth = (appWidth - firstColWidth) / cellWidth;
+    if (weekSpanFromWindowWidth > 0) {
+      props.selectWeekSpan(Math.round(weekSpanFromWindowWidth));
+    }
+  }
+
   render() {
-    if (this.props.tableHeader.loading || this.props.tableBody.loading) {
+    if (this.props.tableHeader.loading ||
+        this.props.tableBody.loading ||
+        this.props.tableFooter.loading) {
       return null;
     }
     return (
       <StaffingView
+        ref={() => this.handleResize(this.props)}
         tableHeader={
           Object.assign({},
           this.props.tableHeader.data,
@@ -46,6 +68,7 @@ class StaffingViewContainer extends Component {
           )
         }
         tableBody={this.props.tableBody.data}
+        tableFooter={this.props.tableFooter.data}
         edit={this.props.children}
       />
     );
@@ -62,9 +85,11 @@ StaffingViewContainer.propTypes = {
   // mapStateToProps
   tableHeader: React.PropTypes.object.isRequired,
   tableBody: React.PropTypes.object.isRequired,
+  tableFooter: React.PropTypes.object.isRequired,
 
   // mapDispatchToProps
   getWorkedDaysPerWeek: React.PropTypes.func.isRequired,
+  selectWeekSpan: React.PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -73,10 +98,12 @@ const mapStateToProps = (state, ownProps) => ({
 
   tableHeader: viewHeaderSelector(state, ownProps),
   tableBody: viewBodySelector(state, ownProps),
+  tableFooter: summarySelector(state, ownProps),
 });
 
 const mapDispatchToProps = {
   getWorkedDaysPerWeek,
+  selectWeekSpan,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaffingViewContainer);

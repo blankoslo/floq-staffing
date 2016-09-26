@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import Navigation from './navigation';
 import Filters from './filters';
@@ -6,7 +7,7 @@ import Months from './months';
 import Weeks from './weeks';
 import Days from './days';
 
-const StaffingViewHeader = (props) => (
+const StaffingViewHeader = (props : Object) => (
   <thead>
     <tr>
       <Filters rowspan={5} />
@@ -17,9 +18,9 @@ const StaffingViewHeader = (props) => (
       />
     </tr>
     <tr>
-    {props.header.years.map((y, index) =>
-      <Year colspan={y.colspan} year={y.year} key={index} />
-    )}
+      {props.header.years.map((y, index) =>
+        <Year colspan={y.colspan} year={y.year} key={index} />
+      )}
     </tr>
     <Months months={props.header.months} />
     <Weeks weeks={props.header.weeks} />

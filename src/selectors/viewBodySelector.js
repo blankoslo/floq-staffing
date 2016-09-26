@@ -4,46 +4,27 @@ import weeksSelector from '../selectors/weeksSelector';
 import { formatDate } from '../utils/weekUtil';
 import staffableSelector from './staffableSelector';
 import employeeSelector from './employeeSelector';
-
-const getWeeks = (employeeId, workedDaysPerWeek, weeks, projectMap, staffableMap) => (
-  weeks.map(startOfWeek => {
-    const { days, projects } = workedDaysPerWeek
-      .get(employeeId, new Immutable.Map())
-      .get(formatDate(startOfWeek), { days: 0, projects: new Immutable.List() });
-
-    const unavailable = projects.reduce((result, item) =>
-      result + (projectMap
-      .get(item)
-      .billable === 'unavailable' ? 1 : 0)
-    , 0);
-    return {
-      days,
-      unavailable,
-      staffable: staffableMap.get(employeeId).get(formatDate(startOfWeek))
-    };
-  })
-);
+import weekSummariesPerEmployeeSelector from './weekSummariesPerEmployeeSelector';
 
 const getEmployees = (employees, workedDaysPerWeek, weeks, projectMap,
-  staffableMap, employee, selectedStartOfWeek) => {
+  staffableMap, selectedStartOfWeek, weekSummariesPerEmployee, employee) => {
   if (employees.loading
     || workedDaysPerWeek.loading
     || projectMap.loading
     || staffableMap.loading
     || selectedStartOfWeek === null
-    || selectedStartOfWeek === 'undefined') {
+    || weekSummariesPerEmployee.loading) {
     return { loading: true, data: null };
   }
   return {
     loading: false,
     data: {
-      employees: employees.data.reduce((result, e) => (result.push({
-        name: `${e.first_name} ${e.last_name}`,
-        id: e.id,
-        startDate: e.date_of_employment,
-        endDate: (e.termination_date !== 'undefined' && e.termination_date !== null
-          ? e.termination_date : null),
-        weeks: getWeeks(e.id, workedDaysPerWeek.data, weeks, projectMap.data, staffableMap.data),
+      employees: employees.data.reduce((result, value, key) => (result.push({
+        name: `${value.first_name} ${value.last_name}`,
+        id: value.id,
+        startDate: value.date_of_employment,
+        endDate: value.termination_date,
+        weeks: weekSummariesPerEmployee.data.get(key),
       })), new Immutable.List()),
       selectedEmployee: employee.data,
       selectedStartOfWeek: formatDate(selectedStartOfWeek),
@@ -57,7 +38,8 @@ export default createSelector(
   weeksSelector,
   state => state.projects,
   staffableSelector,
-  employeeSelector,
   state => state.selected_start_of_week,
+  weekSummariesPerEmployeeSelector,
+  employeeSelector,
   getEmployees,
 );

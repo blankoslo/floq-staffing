@@ -1,7 +1,8 @@
+// @flow
 import React from 'react';
 
-const StaffingViewTableHeaderYear = (props) => (
-  <th colSpan={props.colspan} style={{ textAlign: 'center' }}>
+const StaffingViewTableHeaderYear = (props : Object) => (
+  <th colSpan={props.colspan}>
     {props.year}
   </th>
 );
