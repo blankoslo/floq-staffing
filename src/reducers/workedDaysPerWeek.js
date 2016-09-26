@@ -1,3 +1,4 @@
+// @flow
 import * as Immutable from 'immutable';
 
 import { GET_WORKED_DAYS_PER_WEEK, ADD_STAFFING, REMOVE_STAFFING } from '../actions/index';
@@ -17,7 +18,7 @@ const changeProjectMap = (map, project, change) => {
   return map;
 };
 
-export default (state = { loading: true, data: new Immutable.Map() }, action) => {
+export default (state : Object = { loading: true, data: new Immutable.Map() }, action : Object) => {
   switch (action.type) {
     case GET_WORKED_DAYS_PER_WEEK: {
       return {
