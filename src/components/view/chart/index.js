@@ -27,7 +27,7 @@ const options = {
 
 const BillablePercentageChart = (props) => {
   const chartData = makeChartData(props.data);
-  return <Line data={chartData} options={options} width={props.width} height={200} />;
+  return <Line data={chartData} options={options} width={props.width} height={200} redraw />;
 };
 
 BillablePercentageChart.propTypes = {
