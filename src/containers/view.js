@@ -45,7 +45,7 @@ class StaffingViewContainer extends Component {
     const cellWidth = document.getElementsByClassName('week-header-col')[0].offsetWidth;
     const weekSpanFromWindowWidth = (appWidth - firstColWidth) / cellWidth;
     if (weekSpanFromWindowWidth > 0) {
-      props.selectWeekSpan(Math.round(weekSpanFromWindowWidth));
+      props.selectWeekSpan(Math.floor(weekSpanFromWindowWidth));
     }
   }
 
