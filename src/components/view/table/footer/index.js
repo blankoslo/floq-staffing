@@ -28,18 +28,18 @@ const TableFooter = (props) => {
       </tr>
       <tr>
         <td className='mdl-data-table__cell--non-numeric first-col'>
+          Faktureringsgrad
+        </td>
+        {props.data.map((w, index) =>
+          <BillablePercentageCell staffed={w.staffed} staffable={w.staffable} key={index} />)}
+      </tr>
+      <tr>
+        <td className='mdl-data-table__cell--non-numeric first-col'>
           &nbsp;
         </td>
         <td colSpan={(props.data.size * 7)}>
           <BillablePercentageChart data={props.data} width={width} />
         </td>
-      </tr>
-      <tr>
-        <td className='mdl-data-table__cell--non-numeric first-col'>
-          Faktureringsgrad
-        </td>
-        {props.data.map((w, index) =>
-          <BillablePercentageCell staffed={w.staffed} staffable={w.staffable} key={index} />)}
       </tr>
     </tfoot>
   );
