@@ -1,20 +1,19 @@
 import React from 'react';
 
-const TableFooterCell = (props) => {
+const BillableHoursCell = (props) => {
   const staffedHours = props.staffed * 7.5;
   return (
     <td
       colSpan={7}
       style={{ color: 'black' }}
-      title={`${staffedHours}`}
     >
       {staffedHours}
     </td>
   );
 };
 
-TableFooterCell.propTypes = {
+BillableHoursCell.propTypes = {
   staffed: React.PropTypes.number.isRequired
 };
 
-export default TableFooterCell;
+export default BillableHoursCell;
