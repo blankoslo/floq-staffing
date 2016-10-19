@@ -12,14 +12,14 @@ const viewOnly = (
   footer : Object,
   employees : Object,
   selectedStartOfWeek : string) => (
-  <table className={classes}>
-    <Header header={header} />
-    <ViewOnly
-      employees={employees}
-      selectedStartOfWeek={selectedStartOfWeek}
-    />
-    <Footer data={footer} />
-  </table>
+    <table className={classes}>
+      <Header header={header} />
+      <ViewOnly
+        employees={employees}
+        selectedStartOfWeek={selectedStartOfWeek}
+      />
+      <Footer data={footer} />
+    </table>
 );
 
 const viewAndEdit = (
@@ -29,22 +29,21 @@ const viewAndEdit = (
   selectedEmployee : number|null,
   selectedStartOfWeek : Object,
   edit : Object) => (
-
-  <table className={classes}>
-    <Header header={header} />
-    <FirstPart
-      employees={employees}
-      selectedEmployee={selectedEmployee}
-      selectedStartOfWeek={selectedStartOfWeek}
-    />
-    {edit}
-    <LastPart
-      employees={employees}
-      selectedEmployee={selectedEmployee}
-      selectedStartOfWeek={selectedStartOfWeek}
-    />
-    <Footer data={footer} />
-  </table>
+    <table className={classes}>
+      <Header header={header} />
+      <FirstPart
+        employees={employees}
+        selectedEmployee={selectedEmployee}
+        selectedStartOfWeek={selectedStartOfWeek}
+      />
+      {edit}
+      <LastPart
+        employees={employees}
+        selectedEmployee={selectedEmployee}
+        selectedStartOfWeek={selectedStartOfWeek}
+      />
+      <Footer data={footer} />
+    </table>
 );
 
 const StaffingViewTable = (props : Object) => {
