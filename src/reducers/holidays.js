@@ -1,13 +1,19 @@
-import * as Immutable from 'immutable';
+import { OrderedMap, List } from 'immutable';
 
-import { GET_HOLIDAYS } from '../actions/index';
+import { FETCH_HOLIDAYS } from '../actions/index';
 
-export default (state = { loading: true, data: new Immutable.Map() }, action) => {
+const initialState = {
+  loading: true,
+  data: new OrderedMap()
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_HOLIDAYS:
+    case FETCH_HOLIDAYS:
       return {
         loading: false,
-        data: new Immutable.Map(action.payload.map(x => [x.date, x]))
+        data: new OrderedMap(action.payload
+                             .map((x) => [x.date, new List([x])]))
       };
     default:
       return state;
