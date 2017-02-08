@@ -71,8 +71,10 @@ class Staffing extends React.PureComponent {
           const currentWeek = this.props.selectedWeeks.first();
           if (currentWeek) {
             const nextWeek = currentWeek + deltaWeeks;
-            this.props.staffingToolDeselectWeeks(new Set([currentWeek]));
-            this.props.staffingToolSelectWeeks(new Set([nextWeek]));
+            if (this.props.currentWeeks.has(nextWeek)) {
+              this.props.staffingToolDeselectWeeks(new Set([currentWeek]));
+              this.props.staffingToolSelectWeeks(new Set([nextWeek]));
+            }
           }
         }
       }
