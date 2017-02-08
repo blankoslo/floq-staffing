@@ -142,7 +142,11 @@ class Staffing extends React.PureComponent {
             .get(x.employeeId, new Map())
             .get(x.projectId, new Map())
             .get(y, 0);
-        const deltaDays = days - oldDays;
+        const availability = this.props.availabilityPerWeek
+            .get(x.employeeId, new Map())
+            .get(y);
+        const maxDeltaDays = availability.availableDays - availability.staffedDays;
+        const deltaDays = Math.min(days - oldDays, maxDeltaDays);
         const startOfWeek =
           dateFns.startOfWeek(this.props.currentDays
                                   .find((z) => dateFns.getISOWeek(z) === y));
