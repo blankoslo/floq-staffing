@@ -35,6 +35,14 @@ const getNumber = (keyCode) => {
   }
 };
 
+const getDeltaWeeks = (keyCode) => {
+  switch (keyCode) {
+    case 37: return -1;
+    case 9: case 39: return 1;
+    default: return 0;
+  }
+};
+
 class Staffing extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -57,6 +65,16 @@ class Staffing extends React.PureComponent {
       const number = getNumber(e.keyCode);
       if (number >= 0) {
         this.handleSetDays(number);
+      } else {
+        const deltaWeeks = getDeltaWeeks(e.keyCode);
+        if (deltaWeeks !== 0) {
+          const currentWeek = this.props.selectedWeeks.first();
+          if (currentWeek) {
+            const nextWeek = currentWeek + deltaWeeks;
+            this.props.staffingToolDeselectWeeks(new Set([currentWeek]));
+            this.props.staffingToolSelectWeeks(new Set([nextWeek]));
+          }
+        }
       }
     });
   }
