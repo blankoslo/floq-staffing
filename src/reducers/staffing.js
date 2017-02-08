@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
         loading: false,
         data: state.data.update(
           action.employee,
-          newDays,
+          new OrderedMap(),
           (x) => x.merge(newDays)
         )
       });
