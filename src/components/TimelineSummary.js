@@ -32,7 +32,7 @@ TimelineSummaryRow.propTypes = {
 };
 
 const getStaffedPercentage = ({ totalStaffedDays, totalAvailableDays }) =>
-  Math.round((totalStaffedDays / totalAvailableDays) * 1000) / 10;
+  ((totalStaffedDays / totalAvailableDays) * 100).toFixed(1);
 
 const TimelineSummary = (props) => (
   <div>
