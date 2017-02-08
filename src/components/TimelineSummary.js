@@ -4,7 +4,7 @@ const TimelineSummaryRow = (props) => (
   <div className='timeline-summary-row'>
     <div className='timeline-summary-key'>
       <div className='timeline-summary-label'>
-        Test
+        {props.label}
       </div>
     </div>
     <div className='timeline-summary-values'>
@@ -16,7 +16,7 @@ const TimelineSummaryRow = (props) => (
               className='timeline-summary-week'
               style={{ width: `${v * 100}%` }}
             >
-              {Math.round(v * 100)}%
+              {props.summaryData.get(k, 0)}
             </div>
           ))
         }
@@ -26,25 +26,37 @@ const TimelineSummaryRow = (props) => (
 );
 
 TimelineSummaryRow.propTypes = {
-  weeks: React.PropTypes.object.isRequired
+  label: React.PropTypes.string.isRequired,
+  weeks: React.PropTypes.object.isRequired,
+  summaryData: React.PropTypes.object.isRequired
 };
+
+const getStaffedPercentage = ({ totalStaffedDays, totalAvailableDays }) =>
+  Math.round((totalStaffedDays / totalAvailableDays) * 1000) / 10;
 
 const TimelineSummary = (props) => (
   <div>
     <TimelineSummaryRow
+      label='Available hours'
       weeks={props.weeks}
+      summaryData={props.summaryPerWeek.map((x) => x.totalAvailableDays * 7.5)}
     />
     <TimelineSummaryRow
+      label='Staffed hours'
       weeks={props.weeks}
+      summaryData={props.summaryPerWeek.map((x) => x.totalStaffedDays * 7.5)}
     />
     <TimelineSummaryRow
+      label='Staffed percentage'
       weeks={props.weeks}
+      summaryData={props.summaryPerWeek.map((x) => `${getStaffedPercentage(x)}%`)}
     />
   </div>
 );
 
 TimelineSummary.propTypes = {
-  weeks: React.PropTypes.object.isRequired
+  weeks: React.PropTypes.object.isRequired,
+  summaryPerWeek: React.PropTypes.object.isRequired
 };
 
 export default TimelineSummary;

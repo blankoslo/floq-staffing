@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {
   currentDays, currentWeeks, currentMonths, employees, customers, projectNames,
   events, availabilityPerWeek, staffingPerWeek, employeesByProject,
-  projectsByEmployee
+  projectsByEmployee, summaryPerWeek
 } from '../selectors';
 
 import {
@@ -201,6 +201,7 @@ class Staffing extends React.PureComponent {
         >
           <TimelineSummary
             weeks={this.props.currentWeeks}
+            summaryPerWeek={this.props.summaryPerWeek}
           />
         </div>
         <div className='timeline-data'>
@@ -294,6 +295,7 @@ Staffing.propTypes = {
   projectsByEmployee: React.PropTypes.object.isRequired,
   selectedEmployeeProjects: React.PropTypes.object.isRequired,
   selectedWeeks: React.PropTypes.object.isRequired,
+  summaryPerWeek: React.PropTypes.object.isRequired,
 
   fetchProjects: React.PropTypes.func.isRequired,
   fetchEmployees: React.PropTypes.func.isRequired,
@@ -330,6 +332,7 @@ const mapStateToProps = (state) => ({
   projectsByEmployee: projectsByEmployee(state),
   selectedEmployeeProjects: state.staffingTool.selectedProjects,
   selectedWeeks: state.staffingTool.selectedWeeks,
+  summaryPerWeek: summaryPerWeek(state)
 });
 
 const mapDispatchToProps = {

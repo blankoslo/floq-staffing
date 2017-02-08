@@ -184,3 +184,26 @@ export const staffingPerWeek = createSelector(
     return new OrderedMap(staffingMap);
   }
 );
+
+const defaultAvailability = {
+  availableDays: 0,
+  staffedDays: 0,
+  absentDays: 0
+};
+
+export const summaryPerWeek = createSelector(
+  currentWeeks,
+  availabilityPerWeek,
+  (weeks, apw) =>
+    weeks.map((x, k) => apw
+              .valueSeq()
+              .reduce((s, y) => ({
+                totalAvailableDays: s.totalAvailableDays
+                  + y.get(k, defaultAvailability).availableDays,
+                totalStaffedDays: s.totalStaffedDays
+                  + y.get(k, defaultAvailability).staffedDays
+              }), {
+                totalAvailableDays: 0,
+                totalStaffedDays: 0
+              }))
+);
