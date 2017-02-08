@@ -149,7 +149,8 @@ class Staffing extends React.PureComponent {
         const deltaDays = Math.min(days - oldDays, maxDeltaDays);
         const startOfWeek =
           dateFns.startOfWeek(this.props.currentDays
-                                  .find((z) => dateFns.getISOWeek(z) === y));
+                                  .find((z) => dateFns.getISOWeek(z) === y)
+                             , { weekStartsOn: 1 });
         if (deltaDays > 0) {
           this.props.addStaffing(
             x.employeeId,
