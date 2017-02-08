@@ -58,7 +58,7 @@ export const isAbsence = (event) => {
   }
 };
 
-const getAvailability = (e, weekDays, evts) => {
+const getAvailability = (projects, e, weekDays, evts) => {
   const weekDayStrs = weekDays
           .filter((x) =>
                   dateFns.isAfter(x, dateFns.parse(e.date_of_employment)))
@@ -69,6 +69,10 @@ const getAvailability = (e, weekDays, evts) => {
           .filter((x) => evts.get(x, new List())
                   .some((y) => !isAbsence(y)))
           .count();
+  const billableDays = weekDayStrs
+          .filter((x) => evts.get(x, new List())
+                  .some((y) => projects.get(y.name, {}).billable === 'billable'))
+          .count();
   const absentDays = weekDayStrs
           .filter((x) => evts.get(x, new List())
                   .some(isAbsence))
@@ -76,6 +80,7 @@ const getAvailability = (e, weekDays, evts) => {
   const availableDays = weekDayStrs.count() - absentDays;
   return ({
     staffedDays,
+    billableDays,
     absentDays,
     availableDays
   });
@@ -83,13 +88,14 @@ const getAvailability = (e, weekDays, evts) => {
 
 export const availabilityPerWeek = createSelector(
   (state) => state.employees.data || new OrderedMap(),
+  (state) => state.projects.data || new OrderedMap(),
   events,
   daysByWeek,
-  (e, evts, weeks) => {
+  (e, projects, evts, weeks) => {
     const availability = evts.entrySeq()
             .map(([k, v]) => ([
               k,
-              weeks.map((x) => getAvailability(e.get(k), x, v))
+              weeks.map((x) => getAvailability(projects, e.get(k), x, v))
             ]));
     return new OrderedMap(availability);
   }
@@ -188,7 +194,8 @@ export const staffingPerWeek = createSelector(
 const defaultAvailability = {
   availableDays: 0,
   staffedDays: 0,
-  absentDays: 0
+  absentDays: 0,
+  billableDays: 0
 };
 
 export const summaryPerWeek = createSelector(
@@ -201,9 +208,12 @@ export const summaryPerWeek = createSelector(
                 totalAvailableDays: s.totalAvailableDays
                   + y.get(k, defaultAvailability).availableDays,
                 totalStaffedDays: s.totalStaffedDays
-                  + y.get(k, defaultAvailability).staffedDays
+                  + y.get(k, defaultAvailability).staffedDays,
+                totalBillableDays: s.totalBillableDays
+                  + y.get(k, defaultAvailability).billableDays
               }), {
                 totalAvailableDays: 0,
-                totalStaffedDays: 0
+                totalStaffedDays: 0,
+                totalBillableDays: 0
               }))
 );

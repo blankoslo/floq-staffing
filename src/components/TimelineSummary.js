@@ -31,25 +31,30 @@ TimelineSummaryRow.propTypes = {
   summaryData: React.PropTypes.object.isRequired
 };
 
-const getStaffedPercentage = ({ totalStaffedDays, totalAvailableDays }) =>
-  ((totalStaffedDays / totalAvailableDays) * 100).toFixed(1);
+const getBillablePercentage = ({ totalBillableDays, totalAvailableDays }) =>
+  ((totalBillableDays / totalAvailableDays) * 100).toFixed(1);
 
 const TimelineSummary = (props) => (
   <div>
     <TimelineSummaryRow
-      label='Available hours'
+      label='Tilgjengelige timer'
       weeks={props.weeks}
       summaryData={props.summaryPerWeek.map((x) => x.totalAvailableDays * 7.5)}
     />
     <TimelineSummaryRow
-      label='Staffed hours'
+      label='Bemannede timer'
       weeks={props.weeks}
       summaryData={props.summaryPerWeek.map((x) => x.totalStaffedDays * 7.5)}
     />
     <TimelineSummaryRow
-      label='Staffed percentage'
+      label='Fakturerbare timer'
       weeks={props.weeks}
-      summaryData={props.summaryPerWeek.map((x) => `${getStaffedPercentage(x)}%`)}
+      summaryData={props.summaryPerWeek.map((x) => x.totalBillableDays * 7.5)}
+    />
+    <TimelineSummaryRow
+      label='Faktureringsgrad'
+      weeks={props.weeks}
+      summaryData={props.summaryPerWeek.map((x) => `${getBillablePercentage(x)}%`)}
     />
   </div>
 );
