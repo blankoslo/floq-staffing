@@ -1,14 +1,19 @@
-import * as Immutable from 'immutable';
+import { OrderedMap } from 'immutable';
 
-import { GET_PROJECTS } from '../actions/index';
+import { FETCH_PROJECTS } from '../actions/index';
 
-export default (state = { loading: true, data: new Immutable.Map() }, action) => {
+const initialState = {
+  loading: true,
+  data: new OrderedMap()
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_PROJECTS:
+    case FETCH_PROJECTS:
       return {
         loading: false,
-        data: new Immutable.OrderedMap(action.payload.map(e => [e.id, e]))
-            .sortBy(p => p.id.toLowerCase())
+        data: new OrderedMap(action.payload.map((x) => [x.id, x]))
+          .sortBy((x) => x.id.toLowerCase())
       };
     default:
       return state;

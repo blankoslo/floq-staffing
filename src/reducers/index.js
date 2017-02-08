@@ -1,21 +1,19 @@
-import ErrorReducer from './error';
-import EmployeesReducer from './employees';
-import ProjectsReducer from './projects';
-import HolidaysReducer from './holidays';
-import EmployeeWorkedDaysPerWeekReducer from './employeeWorkedDaysPerWeek';
-import WorkedDaysPerWeekReducer from './workedDaysPerWeek';
-import SelectedStartOfWeekReducer from './selectedStartOfWeek';
-import SelectedWeekSpanReducer from './selectedWeekSpan';
+import error from './error';
+import employees from './employees';
+import projects from './projects';
+import holidays from './holidays';
+import staffing from './staffing';
+import staffingTool from './staffingTool';
+import absence from './absence';
+import timeline from './timeline';
 
-const rootReducer = {
-  error: ErrorReducer,
-  employees: EmployeesReducer,
-  projects: ProjectsReducer,
-  holidays: HolidaysReducer,
-  employee_worked_days_per_week: EmployeeWorkedDaysPerWeekReducer,
-  worked_days_per_week: WorkedDaysPerWeekReducer,
-  selected_start_of_week: SelectedStartOfWeekReducer,
-  selected_week_span: SelectedWeekSpanReducer,
+export default {
+  error,
+  employees,
+  projects,
+  holidays,
+  staffing,
+  staffingTool,
+  absence,
+  timeline
 };
-
-export default rootReducer;

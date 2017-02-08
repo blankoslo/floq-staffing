@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import dateFns from 'date-fns';
 
 const baseURL =
   typeof window !== 'undefined' && window.config && window.config.apiUri
@@ -10,7 +11,7 @@ const apiToken =
 
 const headers = {
   Authorization: `Bearer ${apiToken}`,
-  Prefer: 'return=representation', // ask for the updated entity after modifications (e.g. PATCH)
+  Prefer: 'return=representation',
   Accept: 'application/json'
 };
 
@@ -18,12 +19,7 @@ const dataHeaders = Object.assign({}, headers, {
   'Content-Type': 'application/json; charset=utf-8'
 });
 
-export const getProjects = () =>
-fetch(`${baseURL}/projects?select=id,name,billable&order=id.desc`, {
-  headers
-}).then(response => response.json());
-
-export const getEmployees = () =>
+export const fetchEmployees = () =>
   fetch(`${baseURL}/employees?select=
     id,
     first_name,
@@ -34,32 +30,50 @@ export const getEmployees = () =>
       headers
     }).then(response => response.json());
 
-export const getHolidays = () =>
+export const fetchProjects = () =>
+  fetch(`${baseURL}/projects?select=id,name,billable,customer{*}&order=id.desc`, {
+    headers
+  }).then(response => response.json());
+
+export const fetchHolidays = () =>
   fetch(`${baseURL}/holidays?select=name,date`, {
     headers
   }).then(response => response.json());
 
-export const getWorkedDaysPerWeek = body => fetch(`${baseURL}/rpc/worked_days_per_week`, {
-  method: 'POST',
-  headers: dataHeaders,
-  body: JSON.stringify(body)
-}).then(response => response.json());
+export const fetchStaffing = (fromDate, toDate) => {
+  const endPoint = `${baseURL}/staffing?select=employee,project,date` +
+          `,date=gte.${dateFns.format(fromDate, 'YYYY-MM-DD')}` +
+          `,date=lte.${dateFns.format(toDate, 'YYYY-MM-DD')}`;
+  return fetch(endPoint, { headers }).then(response => response.json());
+};
 
-export const getEmployeeWorkedDaysPerWeek = body =>
-  fetch(`${baseURL}/rpc/employee_worked_days_per_week`, {
+export const fetchAbsence = (fromDate, toDate) => {
+  const endPoint = `${baseURL}/absence?select=employee_id,reason,date` +
+          `,date=gte.${dateFns.format(fromDate, 'YYYY-MM-DD')}` +
+          `,date=lte.${dateFns.format(toDate, 'YYYY-MM-DD')}`;
+  return fetch(endPoint, { headers }).then(response => response.json());
+};
+
+export const addStaffing = (employee, project, startOfWeek, days) =>
+  fetch(`${baseURL}/rpc/add_days_to_week`, {
     method: 'POST',
     headers: dataHeaders,
-    body: JSON.stringify(body)
+    body: JSON.stringify({
+      in_employee: employee,
+      in_project: project,
+      in_start_of_week: startOfWeek,
+      in_days: days
+    })
   }).then(response => response.json());
 
-export const addStaffing = body => fetch(`${baseURL}/rpc/add_days_to_week`, {
-  method: 'POST',
-  headers: dataHeaders,
-  body: JSON.stringify(body)
-}).then(response => response.json());
-
-export const removeStaffing = body => fetch(`${baseURL}/rpc/remove_days_from_week`, {
-  method: 'POST',
-  headers: dataHeaders,
-  body: JSON.stringify(body)
-}).then(response => response.json());
+export const removeStaffing = (employee, project, startOfWeek, days) =>
+  fetch(`${baseURL}/rpc/remove_days_from_week`, {
+    method: 'POST',
+    headers: dataHeaders,
+    body: JSON.stringify({
+      in_employee: employee,
+      in_project: project,
+      in_start_of_week: startOfWeek,
+      in_days: days
+    })
+  }).then(response => response.json());

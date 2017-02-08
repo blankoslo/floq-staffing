@@ -1,17 +1,34 @@
 import * as api from '../apiclient';
-import { formatDate } from '../utils/weekUtil';
 
 export const API_ERROR = 'API_ERROR';
 export const API_ERROR_CLEAR = 'API_ERROR_CLEAR';
-export const GET_EMPLOYEES = 'GET_EMPLOYEES';
-export const GET_PROJECTS = 'GET_PROJECTS';
-export const GET_WORKED_DAYS_PER_WEEK = 'GET_WORKED_DAYS_PER_WEEK';
-export const GET_EMPLOYEE_WORKED_DAYS_PER_WEEK = 'GET_EMPLOYEE_WORKED_DAYS_PER_WEEK';
-export const SELECT_START_OF_WEEK = 'SELECT_START_OF_WEEK';
-export const SELECT_WEEK_SPAN = 'SELECT_WEEK_SPAN';
+
+export const FETCH_EMPLOYEES = 'FETCH_EMPLOYEES';
+export const FETCH_PROJECTS = 'FETCH_PROJECTS';
+export const FETCH_HOLIDAYS = 'FETCH_HOLIDAYS';
+export const FETCH_ABSENCE = 'FETCH_ABSENCE';
+export const FETCH_STAFFING = 'FETCH_STAFFING';
+
+export const SET_TIMELINE = 'SET_TIMELINE';
+export const SET_TIMELINE_MODE = 'SET_TIMELINE_MODE';
+export const TIMELINE_MODE_CUSTOMERS = 'TIMELINE_MODE_CUSTOMERS';
+export const TIMELINE_MODE_EMPLOYEES = 'TIMELINE_MODE_EMPLOYEES';
+export const SET_TIMELINE_SHOW_SUMMARY = 'SET_TIMELINE_SHOW_SUMMARY';
+export const SET_TIMELINE_FILTER = 'SET_TIMELINE_FILTER';
+export const SET_TIMELINE_FILTER_AVAILABLE_TIME = 'SET_TIMELINE_FILTER_AVAILABLE_TIME';
+export const EXPAND_CUSTOMERS = 'EXPAND_CUSTOMERS';
+export const COLLAPSE_CUSTOMERS = 'COLLAPSE_CUSTOMERS';
+export const EXPAND_EMPLOYEES = 'EXPAND_EMPLOYEES';
+export const COLLAPSE_EMPLOYEES = 'COLLAPSE_EMPLOYEES';
+
+export const STAFFING_TOOL_SELECT_PROJECTS = 'STAFFING_TOOL_SELECT_PROJECTS';
+export const STAFFING_TOOL_DESELECT_PROJECTS = 'STAFFING_TOOL_DESELECT_PROJECTS';
+export const STAFFING_TOOL_SELECT_WEEKS = 'STAFFING_TOOL_SELECT_WEEKS';
+export const STAFFING_TOOL_DESELECT_WEEKS = 'STAFFING_TOOL_DESELECT_WEEKS';
+export const STAFFING_TOOL_CLEAR = 'STAFFING_TOOL_CLEAR';
+
 export const ADD_STAFFING = 'ADD_STAFFING';
 export const REMOVE_STAFFING = 'REMOVE_STAFFING';
-export const GET_HOLIDAYS = 'GET_HOLIDAYS';
 export const ADD_PROJECT = 'ADD_PROJECT';
 
 export const apiError = (message) => ({
@@ -23,66 +40,121 @@ export const clearApiError = () => ({
   type: API_ERROR_CLEAR
 });
 
-export const getEmployees = () => ({
-  type: GET_EMPLOYEES,
-  payload: api.getEmployees()
+export const fetchEmployees = () => ({
+  type: FETCH_EMPLOYEES,
+  payload: api.fetchEmployees()
 });
 
-export const getProjects = () => ({
-  type: GET_PROJECTS,
-  payload: api.getProjects()
+export const fetchProjects = () => ({
+  type: FETCH_PROJECTS,
+  payload: api.fetchProjects()
 });
 
-export const getHolidays = () => ({
-  type: GET_HOLIDAYS,
-  payload: api.getHolidays()
+export const fetchHolidays = () => ({
+  type: FETCH_HOLIDAYS,
+  payload: api.fetchHolidays()
 });
 
-export const getWorkedDaysPerWeek = (startOfWeek, weekSpan) => ({
-  type: GET_WORKED_DAYS_PER_WEEK,
-  payload: api.getWorkedDaysPerWeek(
-    { in_start_of_week: formatDate(startOfWeek), in_number_of_weeks: weekSpan }
-  )
+export const fetchAbsence = (fromDate, toDate) => ({
+  type: FETCH_ABSENCE,
+  payload: api.fetchAbsence(fromDate, toDate)
 });
 
-export const getEmployeeWorkedDaysPerWeek = (employeeId, startOfWeek, weekSpan) => ({
-  type: GET_EMPLOYEE_WORKED_DAYS_PER_WEEK,
-  payload: api.getEmployeeWorkedDaysPerWeek(
-    { in_employee: employeeId,
-      in_start_of_week: formatDate(startOfWeek),
-      in_number_of_weeks: weekSpan
-    }
-  )
+export const fetchStaffing = (fromDate, toDate) => ({
+  type: FETCH_STAFFING,
+  payload: api.fetchStaffing(fromDate, toDate)
 });
 
-export const selectStartOfWeek = (startOfWeek) => ({
-  type: SELECT_START_OF_WEEK,
-  payload: startOfWeek
+export const setTimeline = (startDate, endDate) => ({
+  type: SET_TIMELINE,
+  startDate,
+  endDate
 });
 
-export const selectWeekSpan = (weekSpan) => ({
-  type: SELECT_WEEK_SPAN,
-  payload: weekSpan
+export const setTimelineMode = (mode) => ({
+  type: SET_TIMELINE_MODE,
+  mode
 });
 
-export const addStaffing = (data) => ({
+export const setTimelineFilterAvailableTime = (filterAvailableTime) => ({
+  type: SET_TIMELINE_FILTER_AVAILABLE_TIME,
+  filterAvailableTime
+});
+
+export const setTimelineShowSummary = (showSummary) => ({
+  type: SET_TIMELINE_SHOW_SUMMARY,
+  showSummary
+});
+
+export const setTimelineFilter = (filter) => ({
+  type: SET_TIMELINE_FILTER,
+  filter
+});
+
+export const expandCustomers = (customers) => ({
+  type: EXPAND_CUSTOMERS,
+  customers
+});
+
+export const collapseCustomers = (customers) => ({
+  type: COLLAPSE_CUSTOMERS,
+  customers
+});
+
+export const expandEmployees = (employees) => ({
+  type: EXPAND_EMPLOYEES,
+  employees
+});
+
+export const collapseEmployees = (employees) => ({
+  type: COLLAPSE_EMPLOYEES,
+  employees
+});
+
+export const staffingToolSelectProjects = (employeeProjects) => ({
+  type: STAFFING_TOOL_SELECT_PROJECTS,
+  employeeProjects
+});
+
+export const staffingToolDeselectProjects = (employeeProjects) => ({
+  type: STAFFING_TOOL_DESELECT_PROJECTS,
+  employeeProjects
+});
+
+export const staffingToolSelectWeeks = (weeks) => ({
+  type: STAFFING_TOOL_SELECT_WEEKS,
+  weeks
+});
+
+export const staffingToolDeselectWeeks = (weeks) => ({
+  type: STAFFING_TOOL_DESELECT_WEEKS,
+  weeks
+});
+
+export const staffingToolClear = () => ({
+  type: STAFFING_TOOL_CLEAR
+});
+
+export const addStaffing = (employee, project, startOfWeek, days) => ({
   type: ADD_STAFFING,
-  payload: api.addStaffing(data),
-  employee: data.in_employee,
-  project: data.in_project,
-  startOfWeek: data.in_start_of_week
+  payload: api.addStaffing(employee, project, startOfWeek, days),
+  employee,
+  project,
+  startOfWeek,
+  days
 });
 
-export const removeStaffing = (data) => ({
+export const removeStaffing = (employee, project, startOfWeek, days) => ({
   type: REMOVE_STAFFING,
-  payload: api.removeStaffing(data),
-  employee: data.in_employee,
-  project: data.in_project,
-  startOfWeek: data.in_start_of_week
+  payload: api.removeStaffing(employee, project, startOfWeek, days),
+  employee,
+  project,
+  startOfWeek,
+  days
 });
 
-export const addProject = (projectid, startOfWeek) => ({
+export const addProject = (employeeId, projectId) => ({
   type: ADD_PROJECT,
-  projectid,
-  startOfWeek
+  employeeId,
+  projectId
 });
