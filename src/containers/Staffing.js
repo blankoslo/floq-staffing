@@ -46,7 +46,7 @@ const getDeltaWeeks = (keyCode) => {
 class Staffing extends React.PureComponent {
   constructor(props) {
     super(props);
-    props.setTimeline(dateFns.startOfMonth(new Date()));
+    props.setTimeline(dateFns.startOfWeek(new Date()));
     props.fetchProjects();
     props.fetchEmployees();
     props.fetchHolidays();

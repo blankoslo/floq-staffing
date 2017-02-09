@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
       return ({
         ...state,
         startDate: action.startDate,
-        endDate: dateFns.endOfMonth(endDate)
+        endDate: dateFns.endOfWeek(endDate)
       });
     case SET_TIMELINE_MODE:
       return ({

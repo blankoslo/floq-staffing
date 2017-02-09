@@ -19,14 +19,14 @@ class StaffingToolbar extends React.PureComponent {
     );
 
   handleShiftTimeline = (delta) => {
-    const startDate = dateFns.addMonths(this.props.timeline.startDate, delta);
+    const startDate = dateFns.addWeeks(this.props.timeline.startDate, delta * 6);
     this.props.setTimeline(startDate);
   }
 
   handleZoomTimeline = (delta) => {
     this.props.setTimeline(
       this.props.timeline.startDate,
-      dateFns.addMonths(this.props.timeline.endDate, delta)
+      dateFns.addWeeks(this.props.timeline.endDate, delta * 6)
     );
   }
 
