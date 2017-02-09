@@ -25,12 +25,12 @@ import StaffingToolbar from './StaffingToolbar';
 
 const getNumber = (keyCode) => {
   switch (keyCode) {
-    case 192: case 48: return 0;
-    case 49: return 1;
-    case 50: return 2;
-    case 51: return 3;
-    case 52: return 4;
-    case 53: return 5;
+    case 96: case 192: case 48: return 0;
+    case 97: case 49: return 1;
+    case 98: case 50: return 2;
+    case 99: case 51: return 3;
+    case 100: case 52: return 4;
+    case 101: case 53: return 5;
     default: return -1;
   }
 };
