@@ -139,19 +139,21 @@ export const projectsByEmployee = createSelector(
   employees,
   (state) => state.staffingTool.newProjects,
   (evts, e, newProjects) => {
-    const es = evts
-            .filter((v, k) => e.keySeq().includes(k))
-            .map((x) => x.valueSeq().flatten()
-                 .groupBy((y) => y.project).keySeq()
-                 .filter((y) => y)
-                 .toOrderedSet())
-            .filter((x) => x.count() > 0)
-            .entrySeq()
+    const es = e.keySeq()
+            .map((x) => [
+              x,
+              evts.get(x, new OrderedMap())
+                .valueSeq().flatten()
+                .groupBy((y) => y.project).keySeq()
+                .filter((y) => y)
+                .toOrderedSet()
+            ])
             .map(([k, v]) => [
               k,
               v.union(newProjects.get(k, new OrderedSet()).toList())
-            ]);
-    return new OrderedMap(es);
+            ])
+            .filter(([k, v]) => v.count() > 0);
+    return new OrderedMap(es).mergeDeep(newProjects);
   }
 );
 
@@ -185,7 +187,7 @@ export const staffingPerWeek = createSelector(
     const staffingMap = pbe
             .map((v, k) => new OrderedMap(v.map((x) => ([
               x,
-              weeks.map((y) => getStaffing(x, y, staffing.get(k)))
+              weeks.map((y) => getStaffing(x, y, staffing.get(k, new OrderedMap())))
             ]))));
     return new OrderedMap(staffingMap);
   }
