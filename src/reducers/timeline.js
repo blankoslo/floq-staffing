@@ -12,7 +12,7 @@ const initialState = {
   mode: TIMELINE_MODE_EMPLOYEES,
   startDate: new Date(2017, 0, 1),
   endDate: new Date(2017, 2, 1),
-  showSummary: false,
+  showSummary: true,
   filterAvailableTime: false,
   filter: '',
   expandedCustomers: new Set(),

@@ -54,6 +54,7 @@ class StaffingToolbar extends React.PureComponent {
             label='Only show with available time'
             labelPosition='right'
             className='toolbar-toggle'
+            toggled={this.props.timeline.filterAvailableTime}
             onToggle={this.handleToggleFilterAvailableTime}
           />
         </ToolbarGroup>
@@ -88,6 +89,7 @@ class StaffingToolbar extends React.PureComponent {
             label='Summary'
             labelPosition='right'
             className='toolbar-toggle'
+            toggled={this.props.timeline.showSummary}
             onToggle={this.handleToggleShowSummary}
           />
         </ToolbarGroup>
