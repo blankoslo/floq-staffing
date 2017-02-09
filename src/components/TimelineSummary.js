@@ -1,5 +1,7 @@
 import React from 'react';
 
+import BillablePercentageChart from './BillablePercentageChart';
+
 const TimelineSummaryRow = (props) => (
   <div className='timeline-summary-row'>
     <div className='timeline-summary-key'>
@@ -31,6 +33,32 @@ TimelineSummaryRow.propTypes = {
   summaryData: React.PropTypes.object.isRequired
 };
 
+const TimelineSummaryGraph = (props) => (
+  <div className='timeline-summary-row'>
+    <div className='timeline-summary-key'>
+      <div className='timeline-summary-label'>
+        {props.label}
+      </div>
+    </div>
+    <div className='timeline-summary-values'>
+      <div
+        style={{ width: '100%', paddingTop: '1rem' }}
+        className='timeline-summary-weeks'
+      >
+        <BillablePercentageChart
+          data={props.data}
+        />
+      </div>
+    </div>
+  </div>
+);
+
+TimelineSummaryGraph.propTypes = {
+  label: React.PropTypes.string.isRequired,
+  weeks: React.PropTypes.object.isRequired,
+  data: React.PropTypes.object.isRequired
+};
+
 const getBillablePercentage = ({ totalBillableDays, totalAvailableDays }) =>
   ((totalBillableDays / totalAvailableDays) * 100).toFixed(1);
 
@@ -55,6 +83,11 @@ const TimelineSummary = (props) => (
       label='Faktureringsgrad'
       weeks={props.weeks}
       summaryData={props.summaryPerWeek.map((x) => `${getBillablePercentage(x)}%`)}
+    />
+    <TimelineSummaryGraph
+      label=''
+      weeks={props.weeks}
+      data={props.summaryPerWeek.map((x) => getBillablePercentage(x))}
     />
   </div>
 );

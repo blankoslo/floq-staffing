@@ -1,14 +1,15 @@
 import React from 'react';
-import { Line } from 'react-chartjs';
+import { Range } from 'immutable';
+import { Bar } from 'react-chartjs-2';
 
 function makeChartData(chartData) {
   return {
-    labels: chartData.map((w) => `Week ${w.week}`).toArray(),
+    labels: new Range(0, chartData.count() + 1).map(() => '').toArray(),
     datasets: [
       {
-        fillColor: 'transparent',
-        strokeColor: 'black',
-        data: chartData.map((w) => Math.round((w.staffed / w.staffable) * 100)).toArray()
+        label: '',
+        borderWidth: 0,
+        data: chartData.toArray()
       }
     ]
   };
@@ -17,22 +18,41 @@ function makeChartData(chartData) {
 const options = {
   responsive: true,
   maintainAspectRatio: false,
-  scaleLabel: '<%=value%>%',
-  tooltipTitleTemplate: '<%= label%>%',
-  tooltipTemplate: '<%if (label){%><%=label%>: <%}%><%= value %>%',
+  scales: {
+    xAxes: [{
+      display: false,
+      gridLines: {
+        display: false,
+        offsetGridLines: false
+      },
+      categoryPercentage: 1,
+      barPercentage: 0.6
+    }],
+    yAxes: [{
+      display: true,
+      ticks: {
+        beginAtZero: true,
+        min: 0,
+        max: 100
+      }
+    }]
+  },
   legend: {
     display: false
   }
 };
 
-const BillablePercentageChart = (props) => {
-  const chartData = makeChartData(props.data);
-  return <Line data={chartData} options={options} width={props.width} height={200} redraw />;
-};
+const BillablePercentageChart = (props) => (
+  <Bar
+    data={makeChartData(props.data)}
+    options={options}
+    height={200}
+    redraw
+  />
+);
 
 BillablePercentageChart.propTypes = {
-  data: React.PropTypes.object.isRequired,
-  width: React.PropTypes.number,
+  data: React.PropTypes.object.isRequired
 };
 
 export default BillablePercentageChart;
