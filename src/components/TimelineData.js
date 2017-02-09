@@ -36,12 +36,18 @@ const TimelineWeek = (props) => {
                            .map((x) => dateFns.format(x, 'YYYY-MM-DD'));
   const staffedDays = props.availabilityPerWeek.staffedDays;
   const availableDays = props.availabilityPerWeek.availableDays;
+  const overstaffed = staffedDays > availableDays;
   return (
     <div
       className='timeline-data-week'
       style={{ width: `calc(${props.weekSpanPercentage}%)` }}
     >
-      <div className='timeline-data-week-staffing'>
+      <div
+        className={classnames({
+          'timeline-data-week-staffing': true,
+          'timeline-data-week-staffing-overstaffed': overstaffed
+        })}
+      >
         {`${staffedDays}/${availableDays}`}
       </div>
       <div className='timeline-data-days'>
