@@ -12,11 +12,14 @@ const TimelineDay = (props) => {
   const events = props.events;
   const eventsStr = events.count() > 0
                  && ` | ${events.map((x) => x.name).join(', ')}`;
-  const absent = events.filter(isAbsence).count() > 0;
+  const absent = events.some(isAbsence);
+  const billable = events
+    .some((x) => props.projects.get(x.name, {}).billable === 'billable');
   const dayClassNames = classnames({
     'timeline-data-day': true,
     'timeline-data-day-event-absent': absent,
-    'timeline-data-day-event-staffed': !absent && events.count() > 0
+    'timeline-data-day-event-staffed': !absent && events.count() > 0,
+    'timeline-data-day-event-staffed-billable': billable
   });
   return (
     <div
@@ -28,7 +31,8 @@ const TimelineDay = (props) => {
 
 TimelineDay.propTypes = {
   day: React.PropTypes.object.isRequired,
-  events: React.PropTypes.object.isRequired
+  events: React.PropTypes.object.isRequired,
+  projects: React.PropTypes.object.isRequired
 };
 
 const TimelineWeek = (props) => {
@@ -57,6 +61,7 @@ const TimelineWeek = (props) => {
               key={`day-${x}`}
               day={props.weekDays.get(i)}
               events={props.events.get(x, new List())}
+              projects={props.projects}
             />
           ))
         }
@@ -69,7 +74,8 @@ TimelineWeek.propTypes = {
   weekSpanPercentage: React.PropTypes.number.isRequired,
   weekDays: React.PropTypes.object.isRequired,
   events: React.PropTypes.object.isRequired,
-  availabilityPerWeek: React.PropTypes.object.isRequired
+  availabilityPerWeek: React.PropTypes.object.isRequired,
+  projects: React.PropTypes.object.isRequired
 };
 
 const TimelineProject = (props) => (
@@ -145,7 +151,8 @@ const TimelineEmployee = (props) => (
                 weekDays={props.weekDays.get(k)}
                 events={props.events.get(props.employee.id, new OrderedMap())}
                 availabilityPerWeek={props.availabilityPerWeek
-                                      .get(k, new OrderedMap())}
+                                          .get(k, new OrderedMap())}
+                projects={props.projects}
               />
             ))
           }
@@ -156,7 +163,7 @@ const TimelineEmployee = (props) => (
       {props.expand &&
        (
          <div style={{ textAlign: 'left' }}>
-           { props.projects.map((x) =>
+           { props.employeeProjects.map((x) =>
              (
                <TimelineProject
                  key={`${props.employee.id}-${x}`}
@@ -187,6 +194,7 @@ TimelineEmployee.propTypes = {
   employee: React.PropTypes.object.isRequired,
   events: React.PropTypes.object.isRequired,
   projects: React.PropTypes.object.isRequired,
+  employeeProjects: React.PropTypes.object.isRequired,
   availabilityPerWeek: React.PropTypes.object.isRequired,
   staffingPerWeek: React.PropTypes.object.isRequired,
   expand: React.PropTypes.bool,
@@ -210,7 +218,8 @@ const TimelineData = (props) => {
             events={props.events}
             availabilityPerWeek={props.availabilityPerWeek.get(x.id, new OrderedMap())}
             staffingPerWeek={props.staffingPerWeek.get(x.id, new OrderedMap())}
-            projects={props.projectsByEmployee.get(x.id, new List())}
+            projects={props.projects}
+            employeeProjects={props.projectsByEmployee.get(x.id, new List())}
             projectNames={props.projectNames}
             expand={props.expandedEmployees.has(x.id)}
             onToggleExpand={props.onToggleExpand}
@@ -231,6 +240,7 @@ TimelineData.propTypes = {
   events: React.PropTypes.object.isRequired,
   availabilityPerWeek: React.PropTypes.object.isRequired,
   staffingPerWeek: React.PropTypes.object.isRequired,
+  projects: React.PropTypes.object.isRequired,
   projectsByEmployee: React.PropTypes.object.isRequired,
   projectNames: React.PropTypes.object.isRequired,
   expandedEmployees: React.PropTypes.object.isRequired,

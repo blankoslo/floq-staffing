@@ -4,9 +4,9 @@ import dateFns from 'date-fns';
 import FlatButton from 'material-ui/FlatButton';
 
 import {
-  currentDays, currentWeeks, currentMonths, employees, customers, projectNames,
-  events, availabilityPerWeek, staffingPerWeek, employeesByProject,
-  projectsByEmployee, summaryPerWeek
+  currentDays, currentWeeks, currentMonths, employees, customers, projects,
+  projectNames, events, availabilityPerWeek, staffingPerWeek,
+  employeesByProject, projectsByEmployee, summaryPerWeek
 } from '../selectors';
 
 import {
@@ -232,6 +232,7 @@ class Staffing extends React.PureComponent {
                             events={this.props.events}
                             availabilityPerWeek={this.props.availabilityPerWeek}
                             staffingPerWeek={this.props.staffingPerWeek}
+                            projects={this.props.projects}
                             projectsByEmployee={this.props.projectsByEmployee}
                             projectNames={this.props.projectNames}
                             expandedEmployees={this.props.timeline.expandedEmployees}
@@ -255,6 +256,7 @@ class Staffing extends React.PureComponent {
                 events={this.props.events}
                 availabilityPerWeek={this.props.availabilityPerWeek}
                 staffingPerWeek={this.props.staffingPerWeek}
+                projects={this.props.projects}
                 projectsByEmployee={this.props.projectsByEmployee}
                 projectNames={this.props.projectNames}
                 expandedEmployees={this.props.timeline.expandedEmployees}
@@ -286,6 +288,7 @@ Staffing.propTypes = {
   currentMonths: React.PropTypes.object.isRequired,
   employees: React.PropTypes.object.isRequired,
   customers: React.PropTypes.object.isRequired,
+  projects: React.PropTypes.object.isRequired,
   projectNames: React.PropTypes.object.isRequired,
   timeline: React.PropTypes.object.isRequired,
   events: React.PropTypes.object.isRequired,
@@ -323,6 +326,7 @@ const mapStateToProps = (state) => ({
   currentMonths: currentMonths(state),
   employees: employees(state),
   customers: customers(state),
+  projects: projects(state),
   projectNames: projectNames(state),
   events: events(state),
   timeline: state.timeline,

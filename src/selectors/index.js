@@ -118,10 +118,7 @@ export const employees = createSelector(
 
 export const projects = createSelector(
   (state) => state.projects.data || new OrderedMap(),
-  (state) => state.timeline.filter.toLowerCase(),
-  (p, filter) => p
-    .filter((x) => x.id.toLowercase().includes(filter) ||
-            x.name.toLowerCase().includes(filter))
+  (p) => p
 );
 
 export const customers = createSelector(
