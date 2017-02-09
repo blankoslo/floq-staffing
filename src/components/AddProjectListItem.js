@@ -4,11 +4,10 @@ const addProject = (func, projectId) =>
   () => func(projectId);
 
 const StaffingEditProjectListItem = (props) => (
-  <li
-    className='mdl-list__item project-list'
-    onClick={addProject(props.addProject, props.projectId)}
-  >
-    <span><b>{props.customerName}:</b> {props.projectName}</span>
+  <li className='mdl-list__item project-list'>
+    <span onClick={addProject(props.addProject, props.projectId)}>
+      <b>{props.customerName}:</b> {props.projectName}
+    </span>
   </li>
 );
 
