@@ -144,7 +144,8 @@ export const projectsByEmployee = createSelector(
               x,
               evts.get(x, new OrderedMap())
                 .valueSeq().flatten()
-                .groupBy((y) => y.project).keySeq()
+                .groupBy((y) => y.project)
+                .keySeq()
                 .filter((y) => y)
                 .toOrderedSet()
             ])
@@ -152,7 +153,7 @@ export const projectsByEmployee = createSelector(
               k,
               v.union(newProjects.get(k, new OrderedSet()).toList())
             ])
-            .filter(([k, v]) => v.count() > 0);
+            .filter((x) => x[1].count() > 0);
     return new OrderedMap(es).mergeDeep(newProjects);
   }
 );
