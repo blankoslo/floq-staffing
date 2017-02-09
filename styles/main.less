@@ -125,18 +125,19 @@ h1 {
 // TIMELINE SUMMARY
 
 #staffing-summary {
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
   margin-right: @rightMargin;
 }
 
 .timeline-summary-row {
   display: flex;
   justify-content: left;
+  border-bottom: 1px solid #ccc;
 }
 
 .timeline-summary-key {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
   display: flex;
   width: @labelSize;
   min-height: 100%;
@@ -150,6 +151,7 @@ h1 {
   overflow: hidden;
   white-space: nowrap;
   padding: 1rem;
+  font-weight: 700;
   width: @labelSize;
 }
 
@@ -172,10 +174,11 @@ h1 {
   justify-content: center;
   align-items: space-between;
   text-align: center;
+  border-right: 1px solid #ccc;
 }
 
-.timeline-summary-week {
-  text-align: center;
+.timeline-summary-week:last-child {
+  border-right: 0;
 }
 
 // TIMELINE DATA

@@ -195,15 +195,6 @@ class Staffing extends React.PureComponent {
             />
           </div>
         </div>
-        <div
-          id='staffing-summary'
-          className={this.props.timeline.showSummary || 'hidden'}
-        >
-          <TimelineSummary
-            weeks={this.props.currentWeeks}
-            summaryPerWeek={this.props.summaryPerWeek}
-          />
-        </div>
         <div className='timeline-data'>
           { this.props.timeline.mode === TIMELINE_MODE_CUSTOMERS &&
             this.props.employeesByProject
@@ -275,6 +266,15 @@ class Staffing extends React.PureComponent {
               />
             )
           }
+        </div>
+        <div
+          id='staffing-summary'
+          className={this.props.timeline.showSummary || 'hidden'}
+        >
+          <TimelineSummary
+            weeks={this.props.currentWeeks}
+            summaryPerWeek={this.props.summaryPerWeek}
+          />
         </div>
       </div>
     );
