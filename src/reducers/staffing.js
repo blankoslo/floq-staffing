@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
     case ADD_STAFFING:
       newDays = new OrderedMap(
         new List(action.payload)
-          .map((x) => x.add_days_to_week)
+          .map((x) => x.add_staffing)
           .map((x) => [x, new List([{
             employee: action.employee,
             project: action.project,
@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
     case REMOVE_STAFFING:
       oldDays = new OrderedMap(
         new List(action.payload)
-          .map((x) => x.remove_days_from_week)
+          .map((x) => x.remove_staffing)
           .map((x) => [x, new List([])])
       );
       return ({

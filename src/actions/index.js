@@ -135,21 +135,23 @@ export const staffingToolClear = () => ({
   type: STAFFING_TOOL_CLEAR
 });
 
-export const addStaffing = (employee, project, startOfWeek, days) => ({
+export const addStaffing = (employee, project, year, week, days) => ({
   type: ADD_STAFFING,
-  payload: api.addStaffing(employee, project, startOfWeek, days),
+  payload: api.addStaffing(employee, project, year, week, days),
   employee,
   project,
-  startOfWeek,
+  year,
+  week,
   days
 });
 
-export const removeStaffing = (employee, project, startOfWeek, days) => ({
+export const removeStaffing = (employee, project, year, week, days) => ({
   type: REMOVE_STAFFING,
-  payload: api.removeStaffing(employee, project, startOfWeek, days),
+  payload: api.removeStaffing(employee, project, year, week, days),
   employee,
   project,
-  startOfWeek,
+  year,
+  week,
   days
 });
 

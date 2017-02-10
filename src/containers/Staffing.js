@@ -157,14 +157,16 @@ class Staffing extends React.PureComponent {
           this.props.addStaffing(
             x.employeeId,
             x.projectId,
-            dateFns.format(startOfWeek, 'YYYY-MM-DD'),
+            dateFns.getYear(startOfWeek),
+            dateFns.getISOWeek(startOfWeek),
             Math.abs(deltaDays)
           );
         } else if (deltaDays < 0) {
           this.props.removeStaffing(
             x.employeeId,
             x.projectId,
-            dateFns.format(startOfWeek, 'YYYY-MM-DD'),
+            dateFns.getYear(startOfWeek),
+            dateFns.getISOWeek(startOfWeek),
             Math.abs(deltaDays)
           );
         }

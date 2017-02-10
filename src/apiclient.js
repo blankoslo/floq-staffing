@@ -54,26 +54,28 @@ export const fetchAbsence = (fromDate, toDate) => {
   return fetch(endPoint, { headers }).then(response => response.json());
 };
 
-export const addStaffing = (employee, project, startOfWeek, days) =>
-  fetch(`${baseURL}/rpc/add_days_to_week`, {
+export const addStaffing = (employee, project, year, week, days) =>
+  fetch(`${baseURL}/rpc/add_staffing`, {
     method: 'POST',
     headers: dataHeaders,
     body: JSON.stringify({
       in_employee: employee,
       in_project: project,
-      in_start_of_week: startOfWeek,
+      in_year: year,
+      in_week: week,
       in_days: days
     })
   }).then(response => response.json());
 
-export const removeStaffing = (employee, project, startOfWeek, days) =>
-  fetch(`${baseURL}/rpc/remove_days_from_week`, {
+export const removeStaffing = (employee, project, year, week, days) =>
+  fetch(`${baseURL}/rpc/remove_staffing`, {
     method: 'POST',
     headers: dataHeaders,
     body: JSON.stringify({
       in_employee: employee,
       in_project: project,
-      in_start_of_week: startOfWeek,
+      in_year: year,
+      in_week: week,
       in_days: days
     })
   }).then(response => response.json());
