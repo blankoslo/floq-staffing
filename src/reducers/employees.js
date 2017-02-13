@@ -1,16 +1,20 @@
-import * as Immutable from 'immutable';
+import { OrderedMap } from 'immutable';
 
-import { GET_EMPLOYEES } from '../actions/index';
+import { FETCH_EMPLOYEES } from '../actions/index';
 
-const lowerCaseName = e => `${e.first_name}${e.last_name}`.toLowerCase();
+const initialState = {
+  loading: true,
+  data: new OrderedMap()
+};
 
-export default (state = { loading: true, data: new Immutable.Map() }, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_EMPLOYEES:
+    case FETCH_EMPLOYEES:
       return {
         loading: false,
-        data: new Immutable.OrderedMap(action.payload.map(e => [e.id, e]))
-            .sortBy(lowerCaseName)
+        data: new OrderedMap(action.payload
+                             .map((e) => [e.id, e]))
+          .sortBy((e) => `${e.first_name}${e.last_name}`.toLowerCase())
       };
     default:
       return state;

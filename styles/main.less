@@ -1,163 +1,345 @@
 @import "reset.less";
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,700);
+@backgroundColor: #f5f6f5;
+@highlightColor: #59cbe8;
+@labelSize: 14rem;
+@rightMargin: 1.2rem;
 
-@backgroundPanelColor: #c3c3c3;
-@inputColor: #EEE;
-
-@gray: #e6e6e6;
-@dark-gray: #646464;
-
-body {
-  font-family: 'Roboto', sans-serif;
+html, body, h1, h2, h3, h4, h5, h6 {
+  font-family: museo-sans;
 }
 
-/** Copied h1-h6 font-sizes from Chrome 51*/
 h1 {
-    font-size: 2em;
-}
-h2 {
-    font-size: 1.5em;
+  font-size: 3rem;
 }
 
-h3 {
-    font-size: 1.17em;
+#app-main {
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
-h4 {
-    font-size: 1.00em;
+#staffing {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: @backgroundColor;
 }
 
-h5 {
-    font-size: 0.83em;
+// TIMELINE HEADER
+
+.timeline-data-group-expanded {
+  border-top: 3px solid @highlightColor;
+  border-bottom: 3px solid @highlightColor;
 }
 
-h6 {
-    font-size: 0.67em;
+.toolbar-toggle {
+  padding: 1rem;
 }
 
-hr {
-    border-bottom: 1px solid #eee;
+.staffing-header, .staffing-footer {
+  display: flex;
 }
 
-label {
-  width: 15rem;
+#staffing-header-sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: @labelSize;
+}
+
+#staffing-header-main {
   display: inline-block;
+  flex: 1;
+  margin-right: @rightMargin;
 }
 
-form {
-  display: table;
+.staffing-header {
+  border-bottom: 1px solid #ccc;
 }
 
-input, select {
-  position: relative;
-  font-size: 16px;
-  border-style: none;
-  border-bottom: 1px solid black;
-  line-height: 19px;
-  padding: 6px 10px 5px;
-  width: 12rem;
-  margin-bottom: 1rem;
-  background-color: @inputColor;
+.staffing-footer {
+  border-top: 1px solid #ccc;
+  height: 10rem;
 }
 
-table.staffing-view-table {
-  border-spacing: 0;
-  border: 1px solid @backgroundPanelColor;
-  table-layout: fixed;
-  
-  tfoot.summary-info {
-    td.first-col {
-      background-color: cadetblue;
-      color: white;
-      text-align: center;
-    }
+.staffing-title {
+  text-align: center;
+  display: none;
+}
+
+.timeline-header {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.timeline-header-months {
+  display: flex;
+  justify-content: left;
+}
+
+.timeline-header-month {
+  text-align: left;
+  padding: 0.6rem 1rem 0.6rem 1rem;
+  border-right: 1px solid #ccc;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.timeline-header-month:last-child {
+  border-color: @backgroundColor;
+}
+
+.timeline-header-weeks {
+  display: flex;
+  justify-content: left;
+  margin-top: 1rem;
+}
+
+.timeline-header-week {
+  text-align: center;
+  border-right: 1px solid #ccc;
+}
+
+.timeline-header-week:last-child {
+  border-color: @backgroundColor;
+}
+
+.timeline-header-days {
+  display: flex;
+  justify-content: left;
+}
+
+.timeline-header-day {
+  text-align: center;
+  height: 0.6rem;
+  flex: 1;
+  border-right: 1px solid #ccc;
+}
+
+.timeline-header-day:last-child {
+  border-color: @backgroundColor;
+}
+
+// TIMELINE SUMMARY
+
+#staffing-summary {
+  border-top: 1px solid #ccc;
+  margin-right: @rightMargin;
+}
+
+.timeline-summary-row {
+  display: flex;
+  justify-content: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.timeline-summary-key {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  display: flex;
+  width: @labelSize;
+  min-height: 100%;
+}
+
+.timeline-summary-label {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 1rem;
+  font-weight: 700;
+  width: @labelSize;
+}
+
+.timeline-summary-values {
+  display: flex;
+  width: 100%;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.timeline-summary-weeks {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: left;
+}
+
+.timeline-summary-week {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-between;
+  text-align: center;
+  border-right: 1px solid #ccc;
+}
+
+.timeline-summary-week:last-child {
+  border-right: 0;
+}
+
+// TIMELINE DATA
+
+.timeline-data {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  overflow-x: hidden;
+  overflow-y: overlay;
+}
+
+.timeline-data-rows {
+  margin-right: @rightMargin;
+}
+
+.timeline-data-row {
+  display: flex;
+  justify-content: left;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.timeline-data-row:hover {
+  box-shadow: inset 0 0 0.8rem @highlightColor;
+}
+
+.timeline-data-row:nth-child(even) {
+  background-color: @backgroundColor;
+}
+
+.timeline-data-row:nth-child(odd) {
+  background-color: #fff;
+}
+
+.timeline-data-key {
+  display: flex;
+  width: @labelSize;
+  min-height: 100%;
+}
+
+.timeline-data-label {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 1rem;
+  width: @labelSize;
+}
+
+.timeline-data-values {
+  display: flex;
+  width: 100%;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.timeline-data-value {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 1rem;
+}
+
+.timeline-data-weeks {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: left;
+}
+
+.timeline-data-week {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-between;
+  text-align: center;
+  border-right: 1px solid #ccc;
+}
+
+.timeline-data-week-selected {
+  background-color: #ffc;
+}
+
+.timeline-data-week-staffing {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeline-data-week-staffing-overstaffed {
+  color: #e00;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 640px) {
+  .timeline-data-week-staffing {
+    display: none;
   }
 
-  tr {
-    th, td{
-      // TODO: Get rid of !important
-      padding: 4px !important;
-      text-align: center;
-      vertical-align: middle;
-      border: 1px solid @backgroundPanelColor;
-      overflow: hidden;
-      min-width: 2px;
-      width: 2px;
-      max-width: 2px;
+  .timeline-data-days {
+    border: 0;
+  }
 
-      div.edit-selected:focus {
-        background-color: @gray;
-      }
-    }
+  .timeline-data-day {
+    height: 2rem !important;
+  }
+}
 
-    th.holiday {
-      background-color: red;
-    }
+.timeline-data-week:last-child {
+  border-color: @backgroundColor;
+}
 
-    th.weekend {
-      background-color: darkblue;
-    }
+.timeline-data-days {
+  display: flex;
+  justify-content: left;
+  height: 0.6rem;
+}
+
+.timeline-data-day {
+  text-align: center;
+  flex: 1 0 auto;
+  border-right: 1px solid #ccc;
+}
+
+.timeline-data-day:last-child {
+  border-color: @backgroundColor;
+}
+
+// TIMELINE EVENTS
+
+.timeline-data-day-event-staffed {
+  background-color: #eea;
+}
+
+.timeline-data-day-event-staffed-billable {
+  background-color: #ccf;
+}
+
+.timeline-data-day-event-absent {
+  background-color: #fcc;
+}
+
+.timeline-data-day-event-conflict {
+  background-color: #f00;
+}
+
+// PROJECT LISTING
+
+li.project-list {
+  span {
+    cursor: pointer;
 
     &:hover {
-      background-color: inherit;
-    }
-
-    td.first-col, th.first-col {
-      background-color: @gray;
-      color: black;
-      max-width: 30em;
-    }
-
-    td.view-selected, th.view-selected {
-      background-color: @dark-gray;
-      color: white;
-    }
-
-    td.edit, th.edit {
-      background-color: white;
-      color: black;
-    }
-
-    td {
-      color: @backgroundPanelColor;
-    }
-
-    th.no-bottom-border {
-      border-bottom: 0;
-    }
-
-    th.no-top-border {
-      border-top: 0 !important;
-    }
-
-    th.half-height {
-      height: 24px;
-    }
-
-    th.small-text {
-      font-size: 9px;
-    }
-
-    td.bold {
-      font-weight: bold;
-    }
-
-    td.medium-color {
-      color: black;
+      color: #ccf;
     }
   }
-}
-
-.mdl-layout__content--horizontal-scroll {
-  overflow-x: auto;
-}
-
-a {
-  color: black;
-}
-
-li.project-list:hover {
-  background-color: rgba(158,158,158,.2);
-  cursor: pointer;
 }

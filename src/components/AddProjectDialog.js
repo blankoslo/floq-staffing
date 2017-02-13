@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
-import AddProjectListItem from './addProjectListItem';
 
-import { addProject } from '../../../actions/index';
+import { addProject } from '../actions/index';
+
+import AddProjectListItem from './AddProjectListItem';
 
 class AddProjectDialog extends Component {
   state = {
@@ -11,7 +12,7 @@ class AddProjectDialog extends Component {
   };
 
   addProject = (projectId) => {
-    this.props.addProject(projectId, this.props.selectedStartOfWeek);
+    this.props.addProject(this.props.employeeId, projectId);
     this.handleClose();
   };
 
@@ -25,7 +26,7 @@ class AddProjectDialog extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ padding: '1rem' }}>
         <button
           className='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab'
           onClick={this.handleOpen}
@@ -61,15 +62,18 @@ class AddProjectDialog extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  projects: state.projects,
-  selectedStartOfWeek: state.selected_start_of_week
-});
-
 AddProjectDialog.propTypes = {
+  employeeId: React.PropTypes.number.isRequired,
   addProject: React.PropTypes.func.isRequired,
-  projects: React.PropTypes.object.isRequired,
-  selectedStartOfWeek: React.PropTypes.object.isRequired
+  projects: React.PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, { addProject })(AddProjectDialog);
+const mapStateToProps = (state) => ({
+  projects: state.projects
+});
+
+const mapDispatchToProps = {
+  addProject
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProjectDialog);

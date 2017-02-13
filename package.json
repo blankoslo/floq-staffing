@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The frontend application for staffing",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --port=8081",
     "dist": "webpack --config ./webpack-prod.config.js",
     "lint": "eslint src test",
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js --recursive ./test",
@@ -50,18 +50,19 @@
     "webpack-dev-server": "^1.15.0"
   },
   "dependencies": {
+    "chart.js": "^2.5.0",
+    "classnames": "^2.2.5",
+    "date-fns": "^1.25.0",
     "immutable": "^3.8.1",
     "material-ui": "^0.15.4",
-    "moment": "^2.14.1",
     "react": "^15.3.1",
     "react-addons-pure-render-mixin": "^15.3.1",
+    "react-chartjs-2": "^2.0.0",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
     "react-router-redux": "^4.0.5",
-    "react-tap-event-plugin": "^1.0.0",
-    "chart.js": "^1.1.1",
-    "react-chartjs": "^0.8.0",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.5.2",
     "reselect": "^2.5.3",
     "whatwg-fetch": "^1.0.0"

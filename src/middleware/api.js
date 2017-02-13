@@ -8,7 +8,6 @@ export default store => next => action => (
       result => store.dispatch({ ...action, payload: result }),
       error => {
         store.dispatch(apiError(`${error.data.message}: ${error.data.details}`));
-
         return Promise.reject(error);
       }
     )
