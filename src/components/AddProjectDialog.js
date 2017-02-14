@@ -60,6 +60,7 @@ class AddProjectDialog extends Component {
               {
                 this.props.projects.data
                     .toIndexedSeq()
+                    .filter((x) => x.active)
                     .filter((x) => (x.id && x.id.toLowerCase()
                                              .includes(this.state.filter.toLowerCase()))
                               || (x.name && x.name.toLowerCase()

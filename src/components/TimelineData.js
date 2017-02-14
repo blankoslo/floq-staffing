@@ -163,7 +163,7 @@ const TimelineEmployee = (props) => (
       {props.expand &&
        (
          <div style={{ textAlign: 'left' }}>
-           { props.employeeProjects.map((x) =>
+           { props.employeeProjects.map((x) => props.projects.get(x).active &&
              (
                <TimelineProject
                  key={`${props.employee.id}-${x}`}

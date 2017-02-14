@@ -201,7 +201,7 @@ class Staffing extends React.PureComponent {
           { this.props.timeline.mode === TIMELINE_MODE_CUSTOMERS &&
             this.props.employeesByProject
                 .entrySeq()
-                .map(([k, v]) =>
+                .map(([k, v]) => this.props.projects.get(k).active &&
                   (
                     <div
                       key={`project-${k}`}
