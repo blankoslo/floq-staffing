@@ -31,7 +31,7 @@ export const fetchEmployees = () =>
     }).then(response => response.json());
 
 export const fetchProjects = () =>
-  fetch(`${baseURL}/projects?select=id,name,billable,customer{*}&order=id.desc`, {
+  fetch(`${baseURL}/projects?select=id,name,billable,active,customer{*}&order=id.desc`, {
     headers
   }).then(response => response.json());
 
