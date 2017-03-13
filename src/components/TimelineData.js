@@ -181,7 +181,12 @@ const TimelineEmployee = (props) => (
                />
              ))
            }
-           <AddProjectDialog employeeId={props.employee.id} />
+           <div style={{ display: 'flex', alignItems: 'center' }}>
+             <AddProjectDialog employeeId={props.employee.id} />
+             <a href={`https://inni.blank.no/calendar/${props.employee.id}`} target='_blank' rel='noopener noreferrer'>
+              Gå til fraværskalenderen
+            </a>
+           </div>
          </div>
        )
       }
