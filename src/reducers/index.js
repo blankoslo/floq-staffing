@@ -5,6 +5,7 @@ import holidays from './holidays';
 import staffing from './staffing';
 import staffingTool from './staffingTool';
 import absence from './absence';
+import absenceReasons from './absenceReasons';
 import timeline from './timeline';
 
 export default {
@@ -15,5 +16,6 @@ export default {
   staffing,
   staffingTool,
   absence,
+  absenceReasons,
   timeline
 };

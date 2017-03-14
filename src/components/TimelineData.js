@@ -12,7 +12,7 @@ const TimelineDay = (props) => {
   const events = props.events;
   const eventsStr = events.count() > 0
                  && ` | ${events.map((x) => x.name).join(', ')}`;
-  const absent = events.some(isAbsence);
+  const absent = events.some((e) => isAbsence(e, props.absenceReasons));
   const billable = events
     .some((x) => props.projects.get(x.name, {}).billable === 'billable');
   const dayClassNames = classnames({
@@ -32,7 +32,8 @@ const TimelineDay = (props) => {
 TimelineDay.propTypes = {
   day: React.PropTypes.object.isRequired,
   events: React.PropTypes.object.isRequired,
-  projects: React.PropTypes.object.isRequired
+  projects: React.PropTypes.object.isRequired,
+  absenceReasons: React.PropTypes.object.isRequired
 };
 
 const TimelineWeek = (props) => {
@@ -62,6 +63,7 @@ const TimelineWeek = (props) => {
               day={props.weekDays.get(i)}
               events={props.events.get(x, new List())}
               projects={props.projects}
+              absenceReasons={props.absenceReasons}
             />
           ))
         }
@@ -75,7 +77,8 @@ TimelineWeek.propTypes = {
   weekDays: React.PropTypes.object.isRequired,
   events: React.PropTypes.object.isRequired,
   availabilityPerWeek: React.PropTypes.object.isRequired,
-  projects: React.PropTypes.object.isRequired
+  projects: React.PropTypes.object.isRequired,
+  absenceReasons: React.PropTypes.object.isRequired
 };
 
 const TimelineProject = (props) => (
@@ -153,6 +156,7 @@ const TimelineEmployee = (props) => (
                 availabilityPerWeek={props.availabilityPerWeek
                                           .get(k, new OrderedMap())}
                 projects={props.projects}
+                absenceReasons={props.absenceReasons}
               />
             ))
           }
@@ -206,7 +210,8 @@ TimelineEmployee.propTypes = {
   onToggleExpand: React.PropTypes.func,
   selectedEmployeeProjects: React.PropTypes.object.isRequired,
   selectedWeeks: React.PropTypes.object.isRequired,
-  onSelectEmployeeProjectWeek: React.PropTypes.func.isRequired
+  onSelectEmployeeProjectWeek: React.PropTypes.func.isRequired,
+  absenceReasons: React.PropTypes.object.isRequired
 };
 
 const TimelineData = (props) => {
@@ -231,6 +236,7 @@ const TimelineData = (props) => {
             selectedEmployeeProjects={props.selectedEmployeeProjects}
             selectedWeeks={props.selectedWeeks}
             onSelectEmployeeProjectWeek={props.onSelectEmployeeProjectWeek}
+            absenceReasons={props.absenceReasons}
           />
         ))
       }
@@ -252,7 +258,8 @@ TimelineData.propTypes = {
   onToggleExpand: React.PropTypes.func,
   selectedEmployeeProjects: React.PropTypes.object.isRequired,
   selectedWeeks: React.PropTypes.object.isRequired,
-  onSelectEmployeeProjectWeek: React.PropTypes.func.isRequired
+  onSelectEmployeeProjectWeek: React.PropTypes.func.isRequired,
+  absenceReasons: React.PropTypes.object.isRequired
 };
 
 export default TimelineData;
