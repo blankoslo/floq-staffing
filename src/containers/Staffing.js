@@ -6,11 +6,11 @@ import FlatButton from 'material-ui/FlatButton';
 import {
   currentDays, currentWeeks, currentMonths, employees, customers, projects,
   projectNames, events, availabilityPerWeek, staffingPerWeek,
-  employeesByProject, projectsByEmployee, summaryPerWeek
+  employeesByProject, projectsByEmployee, summaryPerWeek, absenceReasons
 } from '../selectors';
 
 import {
-  fetchProjects, fetchEmployees, fetchHolidays, fetchStaffing, fetchAbsence,
+  fetchProjects, fetchEmployees, fetchHolidays, fetchStaffing, fetchAbsence, fetchAbsenceReasons,
   setTimeline, setTimelineMode, expandCustomers, collapseCustomers,
   expandEmployees, collapseEmployees, staffingToolSelectProjects,
   staffingToolDeselectProjects, staffingToolSelectWeeks,
@@ -58,6 +58,7 @@ class Staffing extends React.PureComponent {
       props.currentDays.first(),
       props.currentDays.last()
     );
+    props.fetchAbsenceReasons();
   }
 
   componentDidMount = () => {
@@ -267,6 +268,7 @@ class Staffing extends React.PureComponent {
                 selectedWeeks={this.props.selectedWeeks}
                 onSelectEmployeeProjectWeek={this.handleSelectEmployeeProjectWeek}
                 onSetDays={this.handleSetDays}
+                absenceReasons={this.props.absenceReasons}
               />
             )
           }
@@ -301,12 +303,14 @@ Staffing.propTypes = {
   selectedEmployeeProjects: React.PropTypes.object.isRequired,
   selectedWeeks: React.PropTypes.object.isRequired,
   summaryPerWeek: React.PropTypes.object.isRequired,
+  absenceReasons: React.PropTypes.object.isRequired,
 
   fetchProjects: React.PropTypes.func.isRequired,
   fetchEmployees: React.PropTypes.func.isRequired,
   fetchHolidays: React.PropTypes.func.isRequired,
   fetchStaffing: React.PropTypes.func.isRequired,
   fetchAbsence: React.PropTypes.func.isRequired,
+  fetchAbsenceReasons: React.PropTypes.func.isRequired,
   setTimeline: React.PropTypes.func.isRequired,
   setTimelineMode: React.PropTypes.func.isRequired,
   expandCustomers: React.PropTypes.func.isRequired,
@@ -333,6 +337,7 @@ const mapStateToProps = (state) => ({
   events: events(state),
   timeline: state.timeline,
   availabilityPerWeek: availabilityPerWeek(state),
+  absenceReasons: absenceReasons(state),
   staffingPerWeek: staffingPerWeek(state),
   employeesByProject: employeesByProject(state),
   projectsByEmployee: projectsByEmployee(state),
@@ -347,6 +352,7 @@ const mapDispatchToProps = {
   fetchHolidays,
   fetchStaffing,
   fetchAbsence,
+  fetchAbsenceReasons,
   setTimeline,
   setTimelineMode,
   expandCustomers,
