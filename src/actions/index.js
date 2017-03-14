@@ -7,6 +7,7 @@ export const FETCH_EMPLOYEES = 'FETCH_EMPLOYEES';
 export const FETCH_PROJECTS = 'FETCH_PROJECTS';
 export const FETCH_HOLIDAYS = 'FETCH_HOLIDAYS';
 export const FETCH_ABSENCE = 'FETCH_ABSENCE';
+export const FETCH_ABSENCE_REASONS = 'FETCH_ABSENCE_REASONS';
 export const FETCH_STAFFING = 'FETCH_STAFFING';
 
 export const SET_TIMELINE = 'SET_TIMELINE';
@@ -58,6 +59,11 @@ export const fetchHolidays = () => ({
 export const fetchAbsence = (fromDate, toDate) => ({
   type: FETCH_ABSENCE,
   payload: api.fetchAbsence(fromDate, toDate)
+});
+
+export const fetchAbsenceReasons = () => ({
+  type: FETCH_ABSENCE_REASONS,
+  payload: api.fetchAbsenceReasons()
 });
 
 export const fetchStaffing = (fromDate, toDate) => ({

@@ -45,20 +45,17 @@ export const events = createSelector(
           .mergeWith((a, b) => a.concat(b), staffing.get(x.id)))
 );
 
-export const isAbsence = (event) => {
-  switch (event.name) {
-    case 'FER1000':
-    case 'SYK1001':
-    case 'SYK1002':
-    case 'PER1000':
-    case 'PER1001':
-      return true;
-    default:
-      return !event.project;
+const isHoliday = (event) => !event.project;
+
+export const isAbsence = (event, abReasons) => {
+  if (event.reason) {
+    return abReasons.find((ar) => ar.id === event.reason && ar.billable === 'unavailable');
   }
+  return isHoliday(event);
 };
 
-const getAvailability = (projects, e, weekDays, evts) => {
+
+const getAvailability = (projects, e, weekDays, evts, absenceReasons) => {
   const weekDayStrs = weekDays
           .filter((x) =>
                   dateFns.isAfter(x, dateFns.parse(e.date_of_employment)))
@@ -67,7 +64,7 @@ const getAvailability = (projects, e, weekDays, evts) => {
           .map((x) => dateFns.format(x, 'YYYY-MM-DD'));
   const staffedDays = weekDayStrs
           .filter((x) => evts.get(x, new List())
-                  .some((y) => !isAbsence(y)))
+                  .some((y) => !isAbsence(y, absenceReasons)))
           .count();
   const billableDays = weekDayStrs
           .filter((x) => evts.get(x, new List())
@@ -75,7 +72,7 @@ const getAvailability = (projects, e, weekDays, evts) => {
           .count();
   const absentDays = weekDayStrs
           .filter((x) => evts.get(x, new List())
-                  .some(isAbsence))
+                  .some((y) => isAbsence(y, absenceReasons)))
           .count();
   const availableDays = weekDayStrs.count() - absentDays;
   return ({
@@ -86,16 +83,22 @@ const getAvailability = (projects, e, weekDays, evts) => {
   });
 };
 
+export const absenceReasons = createSelector(
+  (state) => state.absenceReasons.data || new OrderedMap(),
+  (p) => p
+);
+
 export const availabilityPerWeek = createSelector(
   (state) => state.employees.data || new OrderedMap(),
   (state) => state.projects.data || new OrderedMap(),
+  (state) => state.absenceReasons.data || new OrderedMap(),
   events,
   daysByWeek,
-  (e, projects, evts, weeks) => {
+  (e, projects, abReasons, evts, weeks) => {
     const availability = evts.entrySeq()
             .map(([k, v]) => ([
               k,
-              weeks.map((x) => getAvailability(projects, e.get(k), x, v))
+              weeks.map((x) => getAvailability(projects, e.get(k), x, v, abReasons))
             ]));
     return new OrderedMap(availability);
   }
