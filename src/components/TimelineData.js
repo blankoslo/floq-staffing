@@ -4,7 +4,7 @@ import dateFns from 'date-fns';
 import classnames from 'classnames';
 
 import { EmployeeProject } from '../reducers/staffingTool';
-import { isAbsence } from '../selectors';
+import { UNAVAILABLE, BILLABLE } from '../selectors/index';
 
 import AddProjectDialog from './AddProjectDialog';
 
@@ -12,13 +12,12 @@ const TimelineDay = (props) => {
   const events = props.events;
   const eventsStr = events.count() > 0
                  && ` | ${events.map((x) => x.name).join(', ')}`;
-  const absent = events.some(isAbsence);
-  const billable = events
-    .some((x) => props.projects.get(x.name, {}).billable === 'billable');
+  const unavailable = events.some((x) => x.billable === UNAVAILABLE);
+  const billable = events.some((x) => x.billable === BILLABLE);
   const dayClassNames = classnames({
     'timeline-data-day': true,
-    'timeline-data-day-event-absent': absent,
-    'timeline-data-day-event-staffed': !absent && events.count() > 0,
+    'timeline-data-day-event-unavailable': unavailable,
+    'timeline-data-day-event-staffed': !unavailable && events.count() > 0,
     'timeline-data-day-event-staffed-billable': billable
   });
   return (
@@ -31,8 +30,7 @@ const TimelineDay = (props) => {
 
 TimelineDay.propTypes = {
   day: React.PropTypes.object.isRequired,
-  events: React.PropTypes.object.isRequired,
-  projects: React.PropTypes.object.isRequired
+  events: React.PropTypes.object.isRequired
 };
 
 const TimelineWeek = (props) => {
@@ -61,7 +59,6 @@ const TimelineWeek = (props) => {
               key={`day-${x}`}
               day={props.weekDays.get(i)}
               events={props.events.get(x, new List())}
-              projects={props.projects}
             />
           ))
         }
@@ -74,8 +71,7 @@ TimelineWeek.propTypes = {
   weekSpanPercentage: React.PropTypes.number.isRequired,
   weekDays: React.PropTypes.object.isRequired,
   events: React.PropTypes.object.isRequired,
-  availabilityPerWeek: React.PropTypes.object.isRequired,
-  projects: React.PropTypes.object.isRequired
+  availabilityPerWeek: React.PropTypes.object.isRequired
 };
 
 const TimelineProject = (props) => (
@@ -152,7 +148,6 @@ const TimelineEmployee = (props) => (
                 events={props.events.get(props.employee.id, new OrderedMap())}
                 availabilityPerWeek={props.availabilityPerWeek
                                           .get(k, new OrderedMap())}
-                projects={props.projects}
               />
             ))
           }

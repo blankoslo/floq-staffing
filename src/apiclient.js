@@ -54,6 +54,11 @@ export const fetchAbsence = (fromDate, toDate) => {
   return fetch(endPoint, { headers }).then(response => response.json());
 };
 
+export const fetchAbsenceReasons = () => {
+  const endPoint = `${baseURL}/absence_reasons`;
+  return fetch(endPoint, { headers }).then(response => response.json());
+};
+
 export const addStaffing = (employee, project, year, week, days) =>
   fetch(`${baseURL}/rpc/add_staffing`, {
     method: 'POST',
