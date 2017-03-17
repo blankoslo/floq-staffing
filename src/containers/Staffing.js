@@ -10,7 +10,7 @@ import {
 } from '../selectors';
 
 import {
-  fetchProjects, fetchEmployees, fetchHolidays, fetchStaffing, fetchAbsence,
+  fetchProjects, fetchEmployees, fetchHolidays, fetchStaffing, fetchAbsence, fetchAbsenceReasons,
   setTimeline, setTimelineMode, expandCustomers, collapseCustomers,
   expandEmployees, collapseEmployees, staffingToolSelectProjects,
   staffingToolDeselectProjects, staffingToolSelectWeeks,
@@ -58,6 +58,7 @@ class Staffing extends React.PureComponent {
       props.currentDays.first(),
       props.currentDays.last()
     );
+    props.fetchAbsenceReasons();
   }
 
   componentDidMount = () => {
@@ -307,6 +308,7 @@ Staffing.propTypes = {
   fetchHolidays: React.PropTypes.func.isRequired,
   fetchStaffing: React.PropTypes.func.isRequired,
   fetchAbsence: React.PropTypes.func.isRequired,
+  fetchAbsenceReasons: React.PropTypes.func.isRequired,
   setTimeline: React.PropTypes.func.isRequired,
   setTimelineMode: React.PropTypes.func.isRequired,
   expandCustomers: React.PropTypes.func.isRequired,
@@ -347,6 +349,7 @@ const mapDispatchToProps = {
   fetchHolidays,
   fetchStaffing,
   fetchAbsence,
+  fetchAbsenceReasons,
   setTimeline,
   setTimelineMode,
   expandCustomers,
