@@ -3,6 +3,9 @@ import { createSelector } from 'reselect';
 import dateFns from 'date-fns';
 import nbLocale from 'date-fns/locale/nb';
 
+export const UNAVAILABLE = 'unavailable';
+export const BILLABLE = 'billable';
+
 export const currentDays = createSelector(
   (state) => state.timeline.startDate,
   (state) => state.timeline.endDate,
@@ -38,24 +41,27 @@ export const events = createSelector(
   (state) => state.holidays.data || new OrderedMap(),
   (state) => state.absence.data || new OrderedMap(),
   (state) => state.staffing.data || new OrderedMap(),
-  (e, holidays, absence, staffing) =>
-    e.map((x) => absence
+  (state) => state.projects.data || new OrderedMap(),
+  (state) => state.absenceReasons.data || new OrderedMap(),
+  (e, holidays, absence, staffing, projects, absReasons) => {
+    const holidaysWithBillable = holidays.map(days => days.map(day =>
+      Object.assign({ billable: UNAVAILABLE }, day)));
+
+    const absenceWithBillable = absence.map(employee => employee.map(days => days.map(day =>
+      Object.assign({ billable: absReasons.find((ar) => ar.id === day.reason).billable }, day))));
+
+    const staffingWithBillable = staffing.map(emp => emp.map(days => days.map(day =>
+      Object.assign({ billable: projects.get(day.project).billable }, day))));
+
+    const eventsWithBillable = e.map((x) => absenceWithBillable
           .get(x.id, new OrderedMap())
-          .mergeWith((a, b) => a.concat(b), holidays)
-          .mergeWith((a, b) => a.concat(b), staffing.get(x.id)))
+          .mergeWith((a, b) => a.concat(b), holidaysWithBillable)
+          .mergeWith((a, b) => a.concat(b), staffingWithBillable.get(x.id)));
+    return eventsWithBillable;
+  }
 );
 
-const isHoliday = (event) => !event.project;
-
-export const isAbsence = (event, abReasons) => {
-  if (event.reason) {
-    return abReasons.find((ar) => ar.id === event.reason && ar.billable === 'unavailable');
-  }
-  return isHoliday(event);
-};
-
-
-const getAvailability = (projects, e, weekDays, evts, absenceReasons) => {
+const getAvailability = (projects, e, weekDays, evts) => {
   const weekDayStrs = weekDays
           .filter((x) =>
                   dateFns.isAfter(x, dateFns.parse(e.date_of_employment)))
@@ -64,21 +70,21 @@ const getAvailability = (projects, e, weekDays, evts, absenceReasons) => {
           .map((x) => dateFns.format(x, 'YYYY-MM-DD'));
   const staffedDays = weekDayStrs
           .filter((x) => evts.get(x, new List())
-                  .some((y) => !isAbsence(y, absenceReasons)))
+                  .some((y) => y.billable !== UNAVAILABLE))
           .count();
   const billableDays = weekDayStrs
           .filter((x) => evts.get(x, new List())
-                  .some((y) => projects.get(y.name, {}).billable === 'billable'))
+                  .some((y) => y.billable === BILLABLE))
           .count();
-  const absentDays = weekDayStrs
+  const unavailableDays = weekDayStrs
           .filter((x) => evts.get(x, new List())
-                  .some((y) => isAbsence(y, absenceReasons)))
+                  .some((y) => y.billable === UNAVAILABLE))
           .count();
-  const availableDays = weekDayStrs.count() - absentDays;
+  const availableDays = weekDayStrs.count() - unavailableDays;
   return ({
     staffedDays,
     billableDays,
-    absentDays,
+    unavailableDays,
     availableDays
   });
 };
@@ -91,14 +97,13 @@ export const absenceReasons = createSelector(
 export const availabilityPerWeek = createSelector(
   (state) => state.employees.data || new OrderedMap(),
   (state) => state.projects.data || new OrderedMap(),
-  (state) => state.absenceReasons.data || new OrderedMap(),
   events,
   daysByWeek,
-  (e, projects, abReasons, evts, weeks) => {
+  (e, projects, evts, weeks) => {
     const availability = evts.entrySeq()
             .map(([k, v]) => ([
               k,
-              weeks.map((x) => getAvailability(projects, e.get(k), x, v, abReasons))
+              weeks.map((x) => getAvailability(projects, e.get(k), x, v))
             ]));
     return new OrderedMap(availability);
   }
@@ -197,7 +202,7 @@ export const staffingPerWeek = createSelector(
 const defaultAvailability = {
   availableDays: 0,
   staffedDays: 0,
-  absentDays: 0,
+  unavailableDays: 0,
   billableDays: 0
 };
 
