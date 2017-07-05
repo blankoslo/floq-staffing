@@ -206,9 +206,19 @@ TimelineEmployee.propTypes = {
 
 const TimelineData = (props) => {
   const weekDays = props.days.groupBy(dateFns.getISOWeek);
+  const isEmployedInActiveTimeline = (employee) => {
+    const firstDayInTimeline = props.days.get(0);
+    const lastDayInTimeline = props.days.get(props.days.size - 1);
+    const startedBeforeTimelineEnd = new Date(employee.date_of_employment) <= lastDayInTimeline;
+    const hasTerminationDate = employee.termination_date !== null;
+    const quitBeforeTimelineStart = new Date(employee.termination_date) < firstDayInTimeline;
+
+    return startedBeforeTimelineEnd && (!hasTerminationDate || !quitBeforeTimelineStart);
+  };
+
   return (
     <div className='timeline-data-rows'>
-      { props.employees.valueSeq().map((x) =>
+      { props.employees.valueSeq().filter(isEmployedInActiveTimeline).map((x) =>
         (
           <TimelineEmployee
             key={`employee-${x.id}`}
