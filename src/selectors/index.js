@@ -64,9 +64,9 @@ export const events = createSelector(
 const getAvailability = (projects, e, weekDays, evts) => {
   const weekDayStrs = weekDays
           .filter((x) =>
-                  dateFns.isAfter(x, dateFns.parse(e.date_of_employment)))
+                  !dateFns.isBefore(x, dateFns.parse(e.date_of_employment)))
           .filter((x) => !e.termination_date ||
-                  dateFns.isBefore(x, dateFns.parse(e.termination_date)))
+                  !dateFns.isAfter(x, dateFns.parse(e.termination_date)))
           .map((x) => dateFns.format(x, 'YYYY-MM-DD'));
   const staffedDays = weekDayStrs
           .filter((x) => evts.get(x, new List())
