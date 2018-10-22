@@ -8,7 +8,7 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
 import {
   setTimeline, setTimelineMode, setTimelineFilterAvailableTime,
-  setTimelineShowSummary, setTimelineFilter
+  setTimelineShowSummary, setTimelineFilter, fetchAbsence, fetchStaffing
 } from '../actions';
 
 class StaffingToolbar extends React.PureComponent {
@@ -104,7 +104,9 @@ StaffingToolbar.propTypes = {
   setTimelineMode: React.PropTypes.func.isRequired,
   setTimelineShowSummary: React.PropTypes.func.isRequired,
   setTimelineFilterAvailableTime: React.PropTypes.func.isRequired,
-  setTimelineFilter: React.PropTypes.func.isRequired
+  setTimelineFilter: React.PropTypes.func.isRequired,
+  fetchAbsence: React.PropTypes.func.isRequired,
+  fetchStaffing: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -116,7 +118,9 @@ const mapDispatchToProps = {
   setTimelineMode,
   setTimelineShowSummary,
   setTimelineFilterAvailableTime,
-  setTimelineFilter
+  setTimelineFilter,
+  fetchStaffing,
+  fetchAbsence
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaffingToolbar);

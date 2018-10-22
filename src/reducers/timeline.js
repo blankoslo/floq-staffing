@@ -8,10 +8,18 @@ import {
   EXPAND_CUSTOMERS, COLLAPSE_CUSTOMERS, EXPAND_EMPLOYEES, COLLAPSE_EMPLOYEES
 } from '../actions';
 
+
+const addWeeks = (today, numOfWeeks) => {
+  today.setDate(numOfWeeks * 7);
+  return today;
+};
+
+const today = () => new Date();
+
 const initialState = {
   mode: TIMELINE_MODE_EMPLOYEES,
-  startDate: new Date(2017, 0, 1),
-  endDate: new Date(2017, 2, 1),
+  startDate: today(),
+  endDate: addWeeks(today(), 12),
   showSummary: false,
   filterAvailableTime: false,
   filter: '',

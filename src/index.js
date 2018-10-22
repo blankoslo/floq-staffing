@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { combineReducers, compose, createStore, applyMiddleware } from 'redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import { Router, browserHistory } from 'react-router';
+import thunk from 'redux-thunk';
 
 import apiMiddleware from './middleware/api';
 import routes from './routes';
@@ -20,7 +21,7 @@ const reducers = combineReducers({
 });
 
 const createStoreWithMiddleware = compose(
-  applyMiddleware(apiMiddleware),
+  applyMiddleware(apiMiddleware, thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore);
 

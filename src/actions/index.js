@@ -1,3 +1,4 @@
+import dateFns from 'date-fns';
 import * as api from '../apiclient';
 
 export const API_ERROR = 'API_ERROR';
@@ -31,6 +32,7 @@ export const STAFFING_TOOL_CLEAR = 'STAFFING_TOOL_CLEAR';
 export const ADD_STAFFING = 'ADD_STAFFING';
 export const REMOVE_STAFFING = 'REMOVE_STAFFING';
 export const ADD_PROJECT = 'ADD_PROJECT';
+
 
 export const apiError = (message) => ({
   type: API_ERROR,
@@ -66,16 +68,31 @@ export const fetchAbsenceReasons = () => ({
   payload: api.fetchAbsenceReasons()
 });
 
-export const fetchStaffing = (fromDate, toDate) => ({
-  type: FETCH_STAFFING,
-  payload: api.fetchStaffing(fromDate, toDate)
-});
+export const fetchStaffing = (startDate, endDate) => (dispatch) => {
+  dispatch({
+    type: FETCH_STAFFING,
+    payload: api.fetchStaffing(startDate, endDate)
+  });
+};
 
-export const setTimeline = (startDate, endDate) => ({
-  type: SET_TIMELINE,
-  startDate,
-  endDate
-});
+export const setTimeline = (startDate, endDateIn) =>
+  (dispatch, getState) => {
+    const state = getState().timeline;
+    const defaultDeltaMonths = dateFns.differenceInMonths(
+      state.endDate,
+      state.startDate
+    );
+    const defaultEndDate = dateFns.addMonths(
+      startDate,
+      defaultDeltaMonths
+    );
+    const endDate =
+            (dateFns.isAfter(endDateIn, startDate) &&
+             endDateIn) || defaultEndDate;
+    dispatch({ type: SET_TIMELINE, startDate, endDate });
+    dispatch(fetchStaffing(startDate, endDate));
+    dispatch(fetchAbsence(startDate, endDate));
+  };
 
 export const setTimelineMode = (mode) => ({
   type: SET_TIMELINE_MODE,
