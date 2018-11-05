@@ -11,7 +11,7 @@ import AddProjectDialog from './AddProjectDialog';
 const TimelineDay = (props) => {
   const events = props.events;
   const eventsStr = events.count() > 0
-                 && ` | ${events.map((x) => x.name).join(', ')}`;
+    && ` | ${events.map((x) => x.name).join(', ')}`;
   const unavailable = events.some((x) => x.billable === UNAVAILABLE);
   const billable = events.some((x) => x.billable === BILLABLE);
   const dayClassNames = classnames({
@@ -35,7 +35,7 @@ TimelineDay.propTypes = {
 
 const TimelineWeek = (props) => {
   const weekDayStrs = props.weekDays
-                           .map((x) => dateFns.format(x, 'YYYY-MM-DD'));
+    .map((x) => dateFns.format(x, 'YYYY-MM-DD'));
   const staffedDays = props.availabilityPerWeek.staffedDays;
   const availableDays = props.availabilityPerWeek.availableDays;
   const overstaffed = staffedDays > availableDays;
@@ -53,7 +53,7 @@ const TimelineWeek = (props) => {
         {`${staffedDays}/${availableDays}`}
       </div>
       <div className='timeline-data-days'>
-        { weekDayStrs.map((x, i) =>
+        {weekDayStrs.map((x, i) =>
           (
             <TimelineDay
               key={`day-${x}`}
@@ -89,7 +89,7 @@ const TimelineProject = (props) => (
     </div>
     <div className='timeline-data-values'>
       <div className='timeline-data-weeks'>
-        { props.weeks.entrySeq().map(([k, v]) =>
+        {props.weeks.entrySeq().map(([k, v]) =>
           (
             <div
               key={`week-${k}`}
@@ -124,22 +124,48 @@ TimelineProject.propTypes = {
   onSelectEmployeeProjectWeek: React.PropTypes.func.isRequired
 };
 
+const openTimestamp = (id) => window.open(`https://inni.blank.no/timestamp/${id}`, '_blank');
+const openCalendar = (id) => window.open(`https://inni.blank.no/calendar/${id}`, '_blank');
+
 const TimelineEmployee = (props) => (
   <div className={props.expand && 'timeline-data-group-expanded'}>
     <div
       className='timeline-data-row'
       onClick={() => props.onToggleExpand &&
-                   props.onToggleExpand(props.employee.id)
-              }
+        props.onToggleExpand(props.employee.id)
+      }
     >
       <div className='timeline-data-key'>
-        <div className='timeline-data-label'>
+        <div
+          className='timeline-data-label'
+          style={{ justifyContent: 'space-between', padding: '0.5rem' }}
+        >
           {`${props.employee.first_name} ${props.employee.last_name}`}
+          <div style={{ display: 'flex' }}>
+            <div>
+              <i
+                className='material-icons'
+                style={{ fontSize: '18px', color: '#000000b0', cursor: 'pointer' }}
+                onClick={() => openCalendar(props.employee.id)}
+              >
+                event
+              </i>
+            </div>
+            <div>
+              <i
+                className='material-icons'
+                style={{ fontSize: '18px', color: '#000000b0', cursor: 'pointer' }}
+                onClick={() => openTimestamp(props.employee.id)}
+              >
+                timer
+              </i>
+            </div>
+          </div>
         </div>
       </div>
       <div className='timeline-data-values'>
         <div className='timeline-data-weeks'>
-          { props.weeks.entrySeq().map(([k, v]) =>
+          {props.weeks.entrySeq().map(([k, v]) =>
             (
               <TimelineWeek
                 key={`week-${k}`}
@@ -147,7 +173,7 @@ const TimelineEmployee = (props) => (
                 weekDays={props.weekDays.get(k)}
                 events={props.events.get(props.employee.id, new OrderedMap())}
                 availabilityPerWeek={props.availabilityPerWeek
-                                          .get(k, new OrderedMap())}
+                  .get(k, new OrderedMap())}
               />
             ))
           }
@@ -156,34 +182,31 @@ const TimelineEmployee = (props) => (
     </div>
     <div>
       {props.expand &&
-       (
-         <div style={{ textAlign: 'left' }}>
-           { props.employeeProjects.map((x) => props.projects.get(x).active &&
-             (
-               <TimelineProject
-                 key={`${props.employee.id}-${x}`}
-                 employeeId={props.employee.id}
-                 projectId={x}
-                 name={props.projectNames.get(x, '')}
-                 weeks={props.weeks}
-                 staffingPerWeek={props.staffingPerWeek.get(x, new OrderedMap())}
-                 selected={props.selectedEmployeeProjects.has(new EmployeeProject({
-                   employeeId: props.employee.id,
-                   projectId: x
-                 }))}
-                 selectedWeeks={props.selectedWeeks}
-                 onSelectEmployeeProjectWeek={props.onSelectEmployeeProjectWeek}
-               />
-             ))
-           }
-           <div style={{ display: 'flex', alignItems: 'center' }}>
-             <AddProjectDialog employeeId={props.employee.id} />
-             <a href={`https://inni.blank.no/calendar/${props.employee.id}`} target='_blank' rel='noopener noreferrer'>
-              Gå til fraværskalenderen
-            </a>
-           </div>
-         </div>
-       )
+        (
+          <div style={{ textAlign: 'left' }}>
+            {props.employeeProjects.map((x) => props.projects.get(x).active &&
+              (
+                <TimelineProject
+                  key={`${props.employee.id}-${x}`}
+                  employeeId={props.employee.id}
+                  projectId={x}
+                  name={props.projectNames.get(x, '')}
+                  weeks={props.weeks}
+                  staffingPerWeek={props.staffingPerWeek.get(x, new OrderedMap())}
+                  selected={props.selectedEmployeeProjects.has(new EmployeeProject({
+                    employeeId: props.employee.id,
+                    projectId: x
+                  }))}
+                  selectedWeeks={props.selectedWeeks}
+                  onSelectEmployeeProjectWeek={props.onSelectEmployeeProjectWeek}
+                />
+              ))
+            }
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <AddProjectDialog employeeId={props.employee.id} />
+            </div>
+          </div>
+        )
       }
     </div>
   </div>
@@ -218,7 +241,7 @@ const TimelineData = (props) => {
 
   return (
     <div className='timeline-data-rows'>
-      { props.employees.valueSeq().filter(isEmployedInActiveTimeline).map((x) =>
+      {props.employees.valueSeq().filter(isEmployedInActiveTimeline).map((x) =>
         (
           <TimelineEmployee
             key={`employee-${x.id}`}
