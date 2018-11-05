@@ -38,10 +38,10 @@ class AddProjectDialog extends Component {
     return (
       <div style={{ padding: '1rem' }}>
         <button
-          className='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab'
+          className='mdl-button mdl-js-button mdl-button--accent'
           onClick={this.handleOpen}
         >
-          <i className='material-icons'>add</i>
+          Legg til prosjekt
         </button>
         <Dialog
           title='Legg til prosjekt'
@@ -59,21 +59,21 @@ class AddProjectDialog extends Component {
             <ul className='mdl-list'>
               {
                 this.props.projects.data
-                    .toIndexedSeq()
-                    .filter((x) => x.active)
-                    .filter((x) => (x.id && x.id.toLowerCase()
-                                             .includes(this.state.filter.toLowerCase()))
-                              || (x.name && x.name.toLowerCase()
-                                             .includes(this.state.filter.toLowerCase())))
-                    .map(p =>
-                      <AddProjectListItem
-                        projectId={p.id}
-                        projectName={p.name}
-                        customerName={p.id}
-                        addProject={this.addProject}
-                        key={p.id}
-                      />
-                    )}
+                  .toIndexedSeq()
+                  .filter((x) => x.active)
+                  .filter((x) => (x.id && x.id.toLowerCase()
+                    .includes(this.state.filter.toLowerCase()))
+                    || (x.name && x.name.toLowerCase()
+                      .includes(this.state.filter.toLowerCase())))
+                  .map(p =>
+                    <AddProjectListItem
+                      projectId={p.id}
+                      projectName={p.name}
+                      customerName={p.id}
+                      addProject={this.addProject}
+                      key={p.id}
+                    />
+                  )}
             </ul>
           </div>
           <button onClick={this.handleClose} style={{ textAlign: 'right' }}>
