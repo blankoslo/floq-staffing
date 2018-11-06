@@ -142,24 +142,20 @@ const TimelineEmployee = (props) => (
         >
           {`${props.employee.first_name} ${props.employee.last_name}`}
           <div style={{ display: 'flex' }}>
-            <div>
-              <i
-                className='material-icons'
-                style={{ fontSize: '18px', color: '#000000b0', cursor: 'pointer' }}
-                onClick={() => openCalendar(props.employee.id)}
-              >
-                event
-              </i>
-            </div>
-            <div>
-              <i
-                className='material-icons'
-                style={{ fontSize: '18px', color: '#000000b0', cursor: 'pointer' }}
-                onClick={() => openTimestamp(props.employee.id)}
-              >
-                timer
-              </i>
-            </div>
+            <i
+              className='material-icons timeline-link-icon'
+              title='fraværskalender'
+              onClick={() => openCalendar(props.employee.id)}
+            >
+              event
+            </i>
+            <i
+              className='material-icons timeline-link-icon'
+              title='timeføring'
+              onClick={() => openTimestamp(props.employee.id)}
+            >
+              timer
+            </i>
           </div>
         </div>
       </div>
