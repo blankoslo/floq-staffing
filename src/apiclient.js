@@ -42,15 +42,15 @@ export const fetchHolidays = () =>
 
 export const fetchStaffing = (fromDate, toDate) => {
   const endPoint = `${baseURL}/staffing?select=employee,project,date` +
-          `,date=gte.${dateFns.format(fromDate, 'YYYY-MM-DD')}` +
-          `,date=lte.${dateFns.format(toDate, 'YYYY-MM-DD')}`;
+          `&date=gte.${dateFns.format(fromDate, 'YYYY-MM-DD')}` +
+          `&date=lte.${dateFns.format(toDate, 'YYYY-MM-DD')}`;
   return fetch(endPoint, { headers }).then(response => response.json());
 };
 
 export const fetchAbsence = (fromDate, toDate) => {
   const endPoint = `${baseURL}/absence?select=employee_id,reason,date` +
-          `,date=gte.${dateFns.format(fromDate, 'YYYY-MM-DD')}` +
-          `,date=lte.${dateFns.format(toDate, 'YYYY-MM-DD')}`;
+          `&date=gte.${dateFns.format(fromDate, 'YYYY-MM-DD')}` +
+          `&date=lte.${dateFns.format(toDate, 'YYYY-MM-DD')}`;
   return fetch(endPoint, { headers }).then(response => response.json());
 };
 
