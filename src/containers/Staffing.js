@@ -157,7 +157,10 @@ class Staffing extends React.PureComponent {
 
         const week = dateFns.getISOWeek(startOfWeek);
         let year = dateFns.getYear(startOfWeek);
-        if (week === 1) {
+
+        // In week 1, startOfWeek may still be in the previous year.
+        // If this is the case, increase year by one
+        if (week === 1 && dateFns.getDayOfYear(startOfWeek) > 300) {
           year += 1;
         }
 
