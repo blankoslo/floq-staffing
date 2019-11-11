@@ -6,12 +6,12 @@ import FlatButton from 'material-ui/FlatButton';
 import {
   currentDays, currentWeeks, currentMonths, employees, customers, projects,
   projectNames, events, availabilityPerWeek, staffingPerWeek,
-  employeesByProject, projectsByEmployee, summaryPerWeek
+  employeesByProject, projectsByEmployee, summaryPerWeek, isLoggedInUserAnAdmin
 } from '../selectors';
 
 import {
   fetchProjects, fetchEmployees, fetchHolidays, fetchStaffing, fetchAbsence, fetchAbsenceReasons,
-  setTimeline, setTimelineMode, expandCustomers, collapseCustomers,
+  fetchAdmins, setTimeline, setTimelineMode, expandCustomers, collapseCustomers,
   expandEmployees, collapseEmployees, staffingToolSelectProjects,
   staffingToolDeselectProjects, staffingToolSelectWeeks,
   staffingToolDeselectWeeks, staffingToolClear, addStaffing, removeStaffing,
@@ -59,6 +59,7 @@ class Staffing extends React.PureComponent {
       props.currentDays.last()
     );
     props.fetchAbsenceReasons();
+    props.fetchAdmins();
   }
 
   componentDidMount = () => {
@@ -239,6 +240,7 @@ class Staffing extends React.PureComponent {
                       { this.props.timeline.expandedCustomers.has(k) &&
                         (
                           <TimelineData
+                            loggedInUserIsAdmin={this.props.loggedInUserIsAdmin}
                             days={this.props.currentDays}
                             weeks={this.props.currentWeeks}
                             employees={v.map((x) => this.props.employees.get(x))}
@@ -263,6 +265,7 @@ class Staffing extends React.PureComponent {
           { this.props.timeline.mode === TIMELINE_MODE_EMPLOYEES &&
             (
               <TimelineData
+                loggedInUserIsAdmin={this.props.loggedInUserIsAdmin}
                 days={this.props.currentDays}
                 weeks={this.props.currentWeeks}
                 employees={this.props.employees}
@@ -309,6 +312,7 @@ Staffing.propTypes = {
   staffingPerWeek: React.PropTypes.object.isRequired,
   employeesByProject: React.PropTypes.object.isRequired,
   projectsByEmployee: React.PropTypes.object.isRequired,
+  loggedInUserIsAdmin: React.PropTypes.bool.isRequired,
   selectedEmployeeProjects: React.PropTypes.object.isRequired,
   selectedWeeks: React.PropTypes.object.isRequired,
   summaryPerWeek: React.PropTypes.object.isRequired,
@@ -319,6 +323,7 @@ Staffing.propTypes = {
   fetchStaffing: React.PropTypes.func.isRequired,
   fetchAbsence: React.PropTypes.func.isRequired,
   fetchAbsenceReasons: React.PropTypes.func.isRequired,
+  fetchAdmins: React.PropTypes.func.isRequired,
   setTimeline: React.PropTypes.func.isRequired,
   setTimelineMode: React.PropTypes.func.isRequired,
   expandCustomers: React.PropTypes.func.isRequired,
@@ -348,6 +353,7 @@ const mapStateToProps = (state) => ({
   staffingPerWeek: staffingPerWeek(state),
   employeesByProject: employeesByProject(state),
   projectsByEmployee: projectsByEmployee(state),
+  loggedInUserIsAdmin: isLoggedInUserAnAdmin(state),
   selectedEmployeeProjects: state.staffingTool.selectedProjects,
   selectedWeeks: state.staffingTool.selectedWeeks,
   summaryPerWeek: summaryPerWeek(state)
@@ -360,6 +366,7 @@ const mapDispatchToProps = {
   fetchStaffing,
   fetchAbsence,
   fetchAbsenceReasons,
+  fetchAdmins,
   setTimeline,
   setTimelineMode,
   expandCustomers,

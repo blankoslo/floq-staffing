@@ -225,3 +225,14 @@ export const summaryPerWeek = createSelector(
                 totalBillableDays: 0
               }))
 );
+
+export const isLoggedInUserAnAdmin = createSelector(
+  (state) => state.admin.data || new List(),
+  (state) => state.employees.data || new OrderedMap(),
+  (admins, employees) => {
+    const currentUserEmail = window.data.userEmail;
+    const currentEmployee = employees.find(value => value.email === currentUserEmail);
+
+    return currentEmployee && admins.includes(currentEmployee.id);
+  }
+);
