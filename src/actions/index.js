@@ -79,7 +79,7 @@ export const fetchStaffing = (startDate, endDate) => (dispatch) => {
 export const fetchAdmins = () => ({
   type: FETCH_ADMINS,
   payload: api.fetchAdmins()
-})
+});
 
 export const setTimeline = (startDate, endDateIn) =>
   (dispatch, getState) => {

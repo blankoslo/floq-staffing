@@ -229,9 +229,9 @@ export const summaryPerWeek = createSelector(
 export const isLoggedInUserAnAdmin = createSelector(
   (state) => state.admin.data || new List(),
   (state) => state.employees.data || new OrderedMap(),
-  (admins, employees) => {
+  (admins, allEmployees) => {
     const currentUserEmail = window.data.userEmail;
-    const currentEmployee = employees.find(value => value.email === currentUserEmail);
+    const currentEmployee = allEmployees.find(value => value.email === currentUserEmail);
 
     return currentEmployee && admins.includes(currentEmployee.id);
   }
