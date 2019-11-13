@@ -10,6 +10,7 @@ export const FETCH_HOLIDAYS = 'FETCH_HOLIDAYS';
 export const FETCH_ABSENCE = 'FETCH_ABSENCE';
 export const FETCH_ABSENCE_REASONS = 'FETCH_ABSENCE_REASONS';
 export const FETCH_STAFFING = 'FETCH_STAFFING';
+export const FETCH_ADMINS = 'FETCH_ADMINS';
 
 export const SET_TIMELINE = 'SET_TIMELINE';
 export const SET_TIMELINE_MODE = 'SET_TIMELINE_MODE';
@@ -74,6 +75,11 @@ export const fetchStaffing = (startDate, endDate) => (dispatch) => {
     payload: api.fetchStaffing(startDate, endDate)
   });
 };
+
+export const fetchAdmins = () => ({
+  type: FETCH_ADMINS,
+  payload: api.fetchAdmins()
+});
 
 export const setTimeline = (startDate, endDateIn) =>
   (dispatch, getState) => {

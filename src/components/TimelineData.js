@@ -198,9 +198,11 @@ const TimelineEmployee = (props) => (
                 />
               ))
             }
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <AddProjectDialog employeeId={props.employee.id} />
-            </div>
+            { props.loggedInUserIsAdmin &&
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <AddProjectDialog employeeId={props.employee.id} />
+              </div>
+            }
           </div>
         )
       }
@@ -216,6 +218,7 @@ TimelineEmployee.propTypes = {
   employeeProjects: React.PropTypes.object.isRequired,
   availabilityPerWeek: React.PropTypes.object.isRequired,
   staffingPerWeek: React.PropTypes.object.isRequired,
+  loggedInUserIsAdmin: React.PropTypes.bool.isRequired,
   expand: React.PropTypes.bool,
   onToggleExpand: React.PropTypes.func,
   selectedEmployeeProjects: React.PropTypes.object.isRequired,
@@ -251,6 +254,7 @@ const TimelineData = (props) => {
             employeeProjects={props.projectsByEmployee.get(x.id, new List())}
             projectNames={props.projectNames}
             expand={props.expandedEmployees.has(x.id)}
+            loggedInUserIsAdmin={props.loggedInUserIsAdmin}
             onToggleExpand={props.onToggleExpand}
             selectedEmployeeProjects={props.selectedEmployeeProjects}
             selectedWeeks={props.selectedWeeks}
@@ -272,6 +276,7 @@ TimelineData.propTypes = {
   projects: React.PropTypes.object.isRequired,
   projectsByEmployee: React.PropTypes.object.isRequired,
   projectNames: React.PropTypes.object.isRequired,
+  loggedInUserIsAdmin: React.PropTypes.bool.isRequired,
   expandedEmployees: React.PropTypes.object.isRequired,
   onToggleExpand: React.PropTypes.func,
   selectedEmployeeProjects: React.PropTypes.object.isRequired,
