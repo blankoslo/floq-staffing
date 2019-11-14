@@ -7,6 +7,7 @@ import staffingTool from './staffingTool';
 import absence from './absence';
 import absenceReasons from './absenceReasons';
 import timeline from './timeline';
+import admin from './admin';
 
 export default {
   error,
@@ -17,5 +18,6 @@ export default {
   staffingTool,
   absence,
   absenceReasons,
-  timeline
+  timeline,
+  admin
 };

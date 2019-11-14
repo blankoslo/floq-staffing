@@ -24,6 +24,7 @@ export const fetchEmployees = () =>
     id,
     first_name,
     last_name,
+    email,
     date_of_employment,
     termination_date
     &order=first_name.desc`, {
@@ -58,6 +59,12 @@ export const fetchAbsenceReasons = () => {
   const endPoint = `${baseURL}/absence_reasons`;
   return fetch(endPoint, { headers }).then(response => response.json());
 };
+
+export const fetchAdmins = () =>
+  fetch(`${baseURL}/employee_role?role_type=eq.admin`, {
+    headers
+  })
+    .then(response => response.json());
 
 export const addStaffing = (employee, project, year, week, days) =>
   fetch(`${baseURL}/rpc/add_staffing`, {
